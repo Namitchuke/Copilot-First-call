@@ -1874,6 +1874,10 @@
             </div>
             <div class="prof-body">
               <div class="fg s3">
+                <label>Reason for Study Abroad</label>
+                <textarea class="fc" id="f-whyabroad" rows="2" placeholder="Why does the student want to study abroad?" oninput="sf('whyAbroad',this.value)"></textarea>
+              </div>
+              <div class="fg s3">
                 <label class="req">Country Preference <span
                     style="font-weight:400;color:var(--text2);font-size:10px">(select all that apply)</span></label>
                 <div class="chip-wrap" id="cg-countries">
@@ -2063,7 +2067,11 @@
                 <span class="sbox-label">Say to Student</span>
                 <p>"Do you have any questions which you have in your mind? I'll add them to your plan."</p>
               </div>
-              <div style="display:flex;justify-content:flex-end;">
+              <div class="fg s3">
+                <label>Student's Questions</label>
+                <textarea class="fc" id="f-studentqs" rows="2" placeholder="Type student questions here..." oninput="sf('studentQs',this.value)"></textarea>
+              </div>
+              <div style="display:flex;justify-content:flex-end;margin-top:12px;">
                 <button class="btn btn-next" id="btn-qcap" onclick="captureQs()">✅ Questions Noted — Proceed</button>
               </div>
             </div>
@@ -2158,6 +2166,10 @@
             <div class="sum-body" id="sum-intent"></div>
           </div>
           <div class="sum-sec">
+            <div class="sum-hd ns">Counselor Notes</div>
+            <textarea class="fc" id="f-cnotes" rows="2" placeholder="Any final notes for this call..." oninput="sf('counselorNotes',this.value)" style="margin-top:10px;"></textarea>
+          </div>
+          <div class="sum-sec">
             <div class="sum-hd call">Follow-up Slot</div>
             <div class="sum-body" id="sum-slot"></div>
           </div>
@@ -2195,7 +2207,8 @@
     // ════════════════════════════════════════════
     //  CONFIG — Replace with your Render URL
     // ════════════════════════════════════════════
-    const SHEET_URL = 'https://your-app-name.onrender.com/submit'; // Replace with your actual Render URL
+    const SHEET_URL = 'http://localhost:8000/submit'; // Currently set to local for testing
+    // const SHEET_URL = 'https://your-app-name.onrender.com/submit'; // Uncomment this once deployed to Render
 
     // ════════════════════════════════════════════
     //  STATE
@@ -2235,6 +2248,7 @@
         eltBookDate: '', eltWhy: '', eltWaiver: '',
         hasPrefs: '', locPref: '', coursePref: '', uniPref: '', otherPref: '',
         intake: '', budget: '', fiveYear: '',
+        whyAbroad: '', studentQs: '', counselorNotes: '',
         qNoted: false, planDelivered: false,
         slotDate: '', slotTime: '',
       };
@@ -2717,6 +2731,8 @@
         uniPref:      p.uniPref,     otherPref:    p.otherPref,
         intake:       p.intake,      budget:       p.budget,
         fiveYear:     p.fiveYear,    
+        whyAbroad:    p.whyAbroad,   studentQs:    p.studentQs,
+        counselorNotes: p.counselorNotes,
         qNoted:       p.qNoted,      planExplained: p.planDelivered,
         slotDate:     p.slotDate,    slotTime:     p.slotTime,
         // Checklists (Mapped to legacy headers)
