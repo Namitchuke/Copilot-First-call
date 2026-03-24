@@ -2859,6 +2859,8 @@
       S.calMonth = now.getMonth();
       renderCalendar();
       updateTabs('intro');
+      // Wake up Render backend early to avoid cold starts
+      fetch('https://copilot-first-call-backend.onrender.com/ping').catch(() => {});
     })();
   </script>
 </body>

@@ -1,10 +1,11 @@
 import os
 import gspread
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Request, Response, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from google.oauth2.service_account import Credentials
 from dotenv import load_dotenv
 import json
+import time
 
 load_dotenv()
 
@@ -28,7 +29,7 @@ app.add_middleware(
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
 SPREADSHEET_ID = os.getenv('SPREADSHEET_ID')
-# Remote Repair: Fallback if the user hasn't updated the Render Env Var yet
+# Remote Repair Fallback
 IF_WRONG_ID = "16reue9Bg6cd7urJeU2l48qWvexzglSN_LuFnfjZlObickDFW1f1DYP8t"
 IF_CORRECT_ID = "1hyRaNJXnAn-7qvHnmNQinWp0UfYgIpeaUqOQDz88rpA"
 if SPREADSHEET_ID == IF_WRONG_ID or not SPREADSHEET_ID:
@@ -37,38 +38,23 @@ if SPREADSHEET_ID == IF_WRONG_ID or not SPREADSHEET_ID:
 GOOGLE_CREDENTIALS_JSON = os.getenv('GOOGLE_CREDENTIALS')
 
 def get_sheet():
-    if not SPREADSHEET_ID: raise ValueError("Backend Error: SPREADSHEET_ID is not set in Render Environment Variables.")
-    if not GOOGLE_CREDENTIALS_JSON: raise ValueError("Backend Error: GOOGLE_CREDENTIALS is not set in Render Environment Variables.")
-    
     try:
         creds_dict = json.loads(GOOGLE_CREDENTIALS_JSON)
         credentials = Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
         gc = gspread.authorize(credentials)
-        
-        print(f"DEBUG: Attempting to open sheet with ID: {SPREADSHEET_ID}")
         spreadsheet = gc.open_by_key(SPREADSHEET_ID)
         return spreadsheet.sheet1
-    except gspread.exceptions.SpreadsheetNotFound:
-        raise ValueError(f"Spreadsheet Not Found. Ensure the ID '{SPREADSHEET_ID}' is correct and the sheet is NOT deleted.")
-    except gspread.exceptions.APIError as e:
-        if "403" in str(e):
-            raise ValueError(f"Permission Denied. You MUST share your Google Sheet with the service account as an Editor: {creds_dict.get('client_email')}")
-        raise ValueError(f"Google API Error: {str(e)}")
     except Exception as e:
-        raise ValueError(f"Connection Error: {str(e)}")
+        print(f"CRITICAL: Failed to get sheet: {str(e)}")
+        return None
 
-@app.get("/")
-async def health():
-    return {"status": "ok", "id_used": SPREADSHEET_ID[:5] + "..." if SPREADSHEET_ID else "None"}
-
-@app.post("/submit")
-async def submit_profile(request: Request, response: Response):
+def process_submission(data):
+    """Background task to sync data to Google Sheets"""
     try:
-        data = await request.json()
         sheet = get_sheet()
-        # Optimization: only read top row for headers, not whole sheet
-        headers = sheet.row_values(1)
+        if not sheet: return
         
+        headers = sheet.row_values(1)
         missing = [k for k in data.keys() if k not in headers]
         if missing:
             headers.extend(missing)
@@ -76,12 +62,27 @@ async def submit_profile(request: Request, response: Response):
         
         row = [str(data.get(h, "")) for h in headers]
         sheet.append_row(row)
-        
-        return {"status": "ok", "message": "Successfully Synced to Google Sheets!"}
+        print(f"SUCCESS: Synced userId {data.get('userId')} to Sheets.")
     except Exception as e:
-        print(f"SERVER ERROR: {str(e)}")
-        # We return a 200 with status:error so the frontend can alert the specific message
-        return {"status": "error", "message": str(e)}
+        print(f"ASYNC ERROR: {str(e)}")
+
+@app.get("/")
+async def health():
+    return {"status": "ok", "time": time.time()}
+
+@app.get("/ping")
+async def ping():
+    return {"status": "pong"}
+
+@app.post("/submit")
+async def submit_profile(request: Request, background_tasks: BackgroundTasks):
+    try:
+        data = await request.json()
+        # Return success immediately to UI
+        background_tasks.add_task(process_submission, data)
+        return {"status": "ok", "message": "Submission received and syncing in background!"}
+    except Exception as e:
+        return {"status": "error", "message": f"Server Error: {str(e)}"}
 
 if __name__ == "__main__":
     import uvicorn
