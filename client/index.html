@@ -1776,7 +1776,8 @@
               </div>
               <div class="fg">
                 <label>Class 12th Mathematics Marks (Optional)</label>
-                <input type="text" class="fc" id="f-edu12maths" placeholder="e.g. 90/100" oninput="sf('edu12Maths',this.value)" />
+                <input type="text" class="fc" id="f-edu12maths" placeholder="e.g. 90/100"
+                  oninput="sf('edu12Maths',this.value)" />
               </div>
             </div>
 
@@ -1882,7 +1883,8 @@
 
               <div class="fg s3">
                 <label class="req">Career Outcome (Specifics)</label>
-                <textarea class="fc" id="f-fiveyear" rows="2" placeholder="e.g. Working as a Data Scientist in the UK" oninput="sf('fiveYear',this.value)"></textarea>
+                <textarea class="fc" id="f-fiveyear" rows="2" placeholder="e.g. Working as a Data Scientist in the UK"
+                  oninput="sf('fiveYear',this.value)"></textarea>
                 <div class="ve" id="e-fiveyear">Required</div>
               </div>
 
@@ -2092,31 +2094,10 @@
               <div class="sec-sub">Complete these four steps in order</div>
             </div>
           </div>
-
-          <!-- Step 0: Profile Review -->
-          <div class="ns-step" id="ns0">
-            <div class="ns-head">
-              <div class="ns-num" id="ns-num-0">1</div>
-              <div>
-                <div class="ns-step-title">Review Student Profile</div>
-                <div class="ns-step-sub">Quickly verify the captured details</div>
-              </div>
-            </div>
-            <div class="ns-body">
-              <div id="ns-profile-preview" style="font-size:12.5px; color:var(--text2); background:var(--bg); padding:10px; border-radius:8px; border:1px solid var(--border); margin-bottom:12px;">
-                <!-- Filled dynamically via renderProfilePreview() -->
-                Loading profile details...
-              </div>
-              <div style="display:flex;justify-content:flex-end;">
-                <button class="btn btn-next" onclick="markProfileReviewed()">✅ Profile Verified — Proceed</button>
-              </div>
-            </div>
-          </div>
-
           <!-- Step 1 -->
-          <div class="ns-step disabled" id="ns1">
+          <div class="ns-step" id="ns1">
             <div class="ns-head">
-              <div class="ns-num" id="ns-num-1">2</div>
+              <div class="ns-num" id="ns-num-1">1</div>
               <div>
                 <div class="ns-step-title">Collect Student Questions</div>
                 <div class="ns-step-sub">Ask the student if they have any questions before wrapping up</div>
@@ -2141,7 +2122,7 @@
           <!-- Step 2 -->
           <div class="ns-step disabled" id="ns2">
             <div class="ns-head">
-              <div class="ns-num" id="ns-num-2">3</div>
+              <div class="ns-num" id="ns-num-2">2</div>
               <div>
                 <div class="ns-step-title">Plan Delivery</div>
                 <div class="ns-step-sub">Share next steps with the student</div>
@@ -2163,7 +2144,7 @@
           <!-- Step 3 -->
           <div class="ns-step disabled" id="ns3">
             <div class="ns-head">
-              <div class="ns-num" id="ns-num-3">4</div>
+              <div class="ns-num" id="ns-num-3">3</div>
               <div>
                 <div class="ns-step-title">Schedule Follow-up Call</div>
                 <div class="ns-step-sub">Confirm the second call slot with the student before ending</div>
