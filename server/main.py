@@ -5,6 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from google.oauth2.service_account import Credentials
 from dotenv import load_dotenv
 
+import json
+
 load_dotenv()
 
 # Setup API App
@@ -24,20 +26,55 @@ SCOPES = [
     'https://www.googleapis.com/auth/drive'
 ]
 
-CREDENTIALS_FILE = os.path.join(os.path.dirname(__file__), 'credentials.json')
 SPREADSHEET_ID = os.getenv('SPREADSHEET_ID')
+GOOGLE_CREDENTIALS_JSON = os.getenv('GOOGLE_CREDENTIALS')
 
 def get_sheet():
     if not SPREADSHEET_ID:
-        raise ValueError("SPREADSHEET_ID is missing from .env")
+        raise ValueError("SPREADSHEET_ID is missing from environment")
         
-    credentials = Credentials.from_service_account_file(
-        CREDENTIALS_FILE, scopes=SCOPES
-    )
+    if GOOGLE_CREDENTIALS_JSON:
+        # Load from env var (for cloud deployment)
+        creds_dict = json.loads(GOOGLE_CREDENTIALS_JSON)
+        credentials = Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
+    else:
+        # Load from local file (for local development)
+        credentials_file = os.path.join(os.path.dirname(__file__), 'credentials.json')
+        if not os.path.exists(credentials_file):
+            raise FileNotFoundError("Neither GOOGLE_CREDENTIALS env var nor credentials.json file found")
+        credentials = Credentials.from_service_account_file(credentials_file, scopes=SCOPES)
+        
     gc = gspread.authorize(credentials)
-    # Open the Google Spreadsheet
     spreadsheet = gc.open_by_key(SPREADSHEET_ID)
     return spreadsheet.sheet1
+
+@app.get("/")
+async def health_check():
+    return {"status": "ok", "message": "Counsellor Co-Pilot Backend is running"}
+
+@app.post("/admin/add-field")
+async def add_field(request: Request):
+    data = await request.json()
+    field_name = data.get("field_name")
+    if not field_name:
+        return {"status": "error", "message": "field_name is required"}
+    
+    sheet = get_sheet()
+    all_values = sheet.get_all_values()
+    headers = all_values[0] if len(all_values) > 0 else []
+    
+    if field_name in headers:
+        return {"status": "warning", "message": f"Field '{field_name}' already exists"}
+    
+    headers.append(field_name)
+    if len(all_values) == 0:
+        sheet.append_row(headers)
+    else:
+        # Update row 1 with expanded headers
+        cell_range = f"A1:{gspread.utils.rowcol_to_a1(1, len(headers))}"
+        sheet.update(range_name=cell_range, values=[headers])
+    
+    return {"status": "success", "message": f"Field '{field_name}' added successfully!"}
 
 @app.post("/submit")
 async def submit_profile(request: Request):
@@ -68,6 +105,9 @@ async def submit_profile(request: Request):
     row_data = []
     for header in headers:
         val = data.get(header, "")
+        # Convert booleans to Yes/No
+        if isinstance(val, bool):
+            val = "Yes" if val else "No"
         row_data.append(str(val))
 
     # 5. Append Row Data
@@ -77,4 +117,5 @@ async def submit_profile(request: Request):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)

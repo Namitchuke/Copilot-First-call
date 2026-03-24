@@ -1789,6 +1789,25 @@
             </div>
           </div>
 
+          <!-- 12TH DETAILS (RESTORED) -->
+          <div class="prof-sec">
+            <div class="prof-head grey">Senior Secondary (12th)</div>
+            <div class="prof-body">
+              <div class="fg">
+                <label>12th Year</label>
+                <input type="number" class="fc" id="f-12yr" placeholder="e.g. 2020" oninput="sf('twelveYear',this.value)" />
+              </div>
+              <div class="fg">
+                <label>12th Board</label>
+                <input type="text" class="fc" id="f-12board" placeholder="e.g. CBSE / ICSE" oninput="sf('twelveBoard',this.value)" />
+              </div>
+              <div class="fg">
+                <label>12th English Score</label>
+                <input type="number" class="fc" id="f-12eng" placeholder="e.g. 85" oninput="sf('twelveEng',this.value)" />
+              </div>
+            </div>
+          </div>
+
           <!-- WORK EXPERIENCE -->
           <div class="prof-sec">
             <div class="prof-head work">
@@ -1905,6 +1924,39 @@
                     <input type="text" class="fc" id="f-eltscore" placeholder="e.g. 7.0 / 95 / 65"
                       oninput="sf('eltScore',this.value);clearE('e-eltscore',this)" />
                     <div class="ve" id="e-eltscore">Required if ELT Given is Yes</div>
+                  </div>
+                  <div class="fg">
+                    <label>Exam Date</label>
+                    <input type="date" class="fc" id="f-eltdate" oninput="sf('eltDate',this.value)" />
+                  </div>
+                  <div class="fg">
+                    <label>Exam Status</label>
+                    <select class="fc" id="f-eltstatus" onchange="sf('eltStatus',this.value)">
+                      <option value="">Select</option>
+                      <option>Completed</option>
+                      <option>Scheduled</option>
+                      <option>Planning</option>
+                    </select>
+                  </div>
+                  <div class="fg">
+                    <label>Willing to take?</label>
+                    <select class="fc" id="f-eltwilling" onchange="sf('eltWilling',this.value)">
+                      <option value="">Select</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                  </div>
+                  <div class="fg">
+                    <label>Prep Stage</label>
+                    <input type="text" class="fc" id="f-eltprep" placeholder="e.g. Started classes" oninput="sf('eltPrep',this.value)" />
+                  </div>
+                  <div class="fg">
+                    <label>Require Waiver?</label>
+                    <select class="fc" id="f-eltwaiver" onchange="sf('eltWaiver',this.value)">
+                      <option value="">Select</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
                   </div>
                 </div>
                 <div class="ve" id="e-elt">Required</div>
@@ -2176,10 +2228,14 @@
       return {
         userId: '',
         ugCourse: '', college: '', cgpa: '', backlogs: '', gradYr: '',
+        twelveYear: '', twelveBoard: '', twelveEng: '',
         hasWorkEx: '', role: '', expYears: '', gapYears: '', targetCourse: '', fieldSwitch: '',
         whyAbroad: '', countries: [], eltGiven: '', eltExam: '', eltScore: '',
+        eltDate: '', eltWilling: '', eltStatus: '', eltPlanWhen: '', eltPrep: '', 
+        eltBookDate: '', eltWhy: '', eltWaiver: '',
         hasPrefs: '', locPref: '', coursePref: '', uniPref: '', otherPref: '',
         intake: '', budget: '', fiveYear: '',
+        qNoted: false, planDelivered: false,
         slotDate: '', slotTime: '',
       };
     }
@@ -2451,7 +2507,15 @@
     function captureQs() {
       const btn = document.getElementById('btn-qcap');
       if (btn) { btn.textContent = '✅ Done'; btn.disabled = true; }
+      S.prof.qNoted = true;
       document.getElementById('ns1').classList.add('done');
+    }
+
+    function planDelivered() {
+      const btn = document.getElementById('btn-plan');
+      if (btn) { btn.textContent = '✅ Done'; btn.disabled = true; }
+      S.prof.planDelivered = true;
+      document.getElementById('ns2').classList.add('done');
     }
 
     // ════════════════════════════════════════════
@@ -2584,6 +2648,9 @@
         ['CGPA / %', p.cgpa],
         ['Backlogs', p.backlogs],
         ['Years of Graduation', p.gradYr],
+        ['12th Year', p.twelveYear],
+        ['12th Board', p.twelveBoard],
+        ['12th English', p.twelveEng],
       ]);
       rowsIn('sum-work', [
         ['Role', p.role],
@@ -2596,6 +2663,8 @@
         ['Country Preference', Array.isArray(p.countries) ? p.countries.join(', ') : ''],
         ['ELT Given', p.eltGiven],
         ['ELT Exam & Score', [p.eltExam, p.eltScore].filter(Boolean).join(' — ')],
+        ['ELT Date', p.eltDate],
+        ['ELT Status', p.eltStatus],
         ['Target Intake', p.intake],
         ['Other Preferences?', p.hasPrefs],
         ['Location Pref', p.locPref],
@@ -2640,17 +2709,24 @@
         targetCourse: p.targetCourse,fieldSwitch:  p.fieldSwitch,
         countries:    Array.isArray(p.countries) ? p.countries.join(', ') : p.countries,
         eltGiven:     p.eltGiven,    eltExam:      p.eltExam,    eltScore: p.eltScore,
+        eltDate:      p.eltDate,     eltStatus:    p.eltStatus,  eltWilling: p.eltWilling,
+        eltPrep:      p.eltPrep,     eltWaiver:    p.eltWaiver,
+        twelveYear:   p.twelveYear,  twelveBoard:  p.twelveBoard,twelveEng:  p.twelveEng,
         hasPrefs:     p.hasPrefs,    locPref:      p.locPref,
         coursePref:   p.coursePref,
         uniPref:      p.uniPref,     otherPref:    p.otherPref,
         intake:       p.intake,      budget:       p.budget,
         fiveYear:     p.fiveYear,    
+        qNoted:       p.qNoted,      planExplained: p.planDelivered,
         slotDate:     p.slotDate,    slotTime:     p.slotTime,
-        // Checklists
-        ...Object.keys(S.cl.academics).reduce((acc, k) => ({ ...acc, ['CL_Acad_' + k]: S.cl.academics[k] }), {}),
-        ...Object.keys(S.cl.work).reduce((acc, k) => ({ ...acc, ['CL_Work_' + k]: S.cl.work[k] }), {}),
-        ...Object.keys(S.cl.i1).reduce((acc, k) => ({ ...acc, ['CL_Intent1_' + k]: S.cl.i1[k] }), {}),
-        ...Object.keys(S.cl.i2).reduce((acc, k) => ({ ...acc, ['CL_Intent2_' + k]: S.cl.i2[k] }), {}),
+        // Checklists (Mapped to legacy headers)
+        '✓ Course': S.cl.academics.course, '✓ College': S.cl.academics.college, '✓ Stream Motivation': S.cl.academics.motivation,
+        '✓ CGPA': S.cl.academics.cgpa, '✓ Backlogs': S.cl.academics.backlogs, '✓ Extra-curricular': S.cl.academics.extra,
+        '✓ Exact Role': S.cl.work.exactrole, '✓ Field Switch?': S.cl.work.fieldswitch, '✓ Switch Reason': S.cl.work.switchreason,
+        '✓ Duration': S.cl.work.duration, '✓ Gap Years': S.cl.work.gapyears, '✓ Target Course': S.cl.work.targetcourse, '✓ Why Course?': S.cl.work.whycourse,
+        '✓ Why Abroad?': S.cl.i1.why, '✓ Country Pref': S.cl.i1.country, '✓ ELT Status': S.cl.i1.elt, '✓ College Prefs': S.cl.i1.prefs,
+        '✓ Target Intake': S.cl.i1.intake, '✓ Parents Support': S.cl.i1.parents, '✓ Budget': S.cl.i1.budget,
+        '✓ Career Goals': S.cl.i2.career, '✓ Stay Back': S.cl.i2.stay, '✓ Alternate Plans': S.cl.i2.alternate,
       };
       fetch(SHEET_URL, {
         method: 'POST', mode: 'cors',
