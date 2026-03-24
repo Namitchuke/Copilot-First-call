@@ -16,7 +16,11 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://copilot-first-call.vercel.app",
+        "https://copilot-first-call-namitchukes-projects.vercel.app",
+        "*"
+    ],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -102,42 +106,23 @@ async def add_field(request: Request):
 
 @app.post("/submit")
 async def submit_profile(request: Request):
-    data = await request.json()
-    sheet = get_sheet()
-
-    # 1. Fetch Existing Headers
-    all_values = sheet.get_all_values()
-    headers = all_values[0] if len(all_values) > 0 else []
-
-    # 2. Check for novel columns in the incoming payload
-    missing_headers = []
-    for key in data.keys():
-        if key not in headers:
-            missing_headers.append(key)
-
-    # 3. Append missing columns to the header row (Row 1)
-    if missing_headers:
-        headers.extend(missing_headers)
-        if len(all_values) == 0:
-            sheet.append_row(headers)
-        else:
-            # Update row 1 with expanded headers
+    try:
+        data = await request.json()
+        print(f"DEBUG: Received payload")
+        sheet = get_sheet()
+        all_values = sheet.get_all_values()
+        headers = all_values[0] if len(all_values) > 0 else []
+        missing_headers = [key for key in data.keys() if key not in headers]
+        if missing_headers:
+            headers.extend(missing_headers)
             cell_range = f"A1:{gspread.utils.rowcol_to_a1(1, len(headers))}"
             sheet.update(range_name=cell_range, values=[headers])
-
-    # 4. Construct Row Array logically based on the final header mapping
-    row_data = []
-    for header in headers:
-        val = data.get(header, "")
-        # Convert booleans to Yes/No
-        if isinstance(val, bool):
-            val = "Yes" if val else "No"
-        row_data.append(str(val))
-
-    # 5. Append Row Data
-    sheet.append_row(row_data)
-
-    return {"status": "success", "message": "Profile synced successfully!"}
+        row_data = [str(data.get(header, "")) for header in headers]
+        sheet.append_row(row_data)
+        return {"status": "ok", "message": "Profile synced successfully!"}
+    except Exception as e:
+        print(f"ERROR: {str(e)}")
+        return {"status": "error", "message": str(e)}
 
 if __name__ == "__main__":
     import uvicorn
