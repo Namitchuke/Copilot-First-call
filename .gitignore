@@ -1,0 +1,6 @@
+.vercel
+polished-bridge-488810-p3-47d134fc6bed.json
+credentials.json
+.env
+__pycache__/
+*.pyc
