@@ -1788,10 +1788,6 @@
             </div>
 
             <!-- Masters Details -->
-            <div id="edu-bach-fields" style="display:none;" class="prof-body">
-               <!-- Use id edu-mast-fields to avoid duplication -->
-            </div>
-            <!-- Wait, I'll fix the IDs in the next block so I don't hit token limit -->
             <div id="edu-mast-fields" style="display:none;" class="prof-body">
               <div class="fg s2">
                 <label class="req">Masters Course</label>
@@ -2398,12 +2394,40 @@
     }
 
     function validateProfile() {
+      // Sweep all current input values into S.prof to ensure they're captured
+      S.prof.userId = document.getElementById('f-userid').value.trim();
+      S.prof.edu12Grade = document.getElementById('f-edu12grade').value;
+      S.prof.eduBachCourse = document.getElementById('f-edubachcourse').value;
+      S.prof.eduBachCGPA = document.getElementById('f-edubachcgpa').value;
+      S.prof.eduBachBacklogs = document.getElementById('f-edubachbacklogs').value;
+      S.prof.eduBachYear = document.getElementById('f-edubachyear').value;
+      S.prof.eduMastCourse = document.getElementById('f-edumastcourse').value;
+      S.prof.eduMastCGPA = document.getElementById('f-edumastcgpa').value;
+      S.prof.eduMastBacklogs = document.getElementById('f-edumastbacklogs').value;
+      S.prof.eduMastYear = document.getElementById('f-edumastyear').value;
+      
+      S.prof.edu12Board = document.getElementById('f-12board').value;
+      S.prof.edu12Year = document.getElementById('f-12year').value;
+      S.prof.edu12Eng = document.getElementById('f-12eng').value;
+      
+      S.prof.workRole = document.getElementById('f-workrole').value;
+      S.prof.workYears = document.getElementById('f-workyears').value;
+      S.prof.gapYears = document.getElementById('f-gapyears').value;
+      
+      S.prof.fiveYear = document.getElementById('f-fiveyear').value.trim();
+      S.prof.prefDegree = document.getElementById('f-prefdegree').value;
+      S.prof.targetCourse = document.getElementById('f-targetcourse').value;
+      S.prof.targetCountry = document.getElementById('f-targetcountry').value;
+      S.prof.targetIntake = document.getElementById('f-targetintake').value;
+      S.prof.targetBudget = document.getElementById('f-targetbudget').value;
+      S.prof.modeFinancing = document.getElementById('f-modefinancing').value;
+
       let ok = true;
       const uid = document.getElementById('f-userid');
-      if (!uid.value.trim()) { showE('e-userid', uid); ok = false; } else { clearE('e-userid', uid); S.prof.userId = uid.value.trim(); }
-
+      if (!S.prof.userId) { showE('e-userid', uid); ok = false; } else { clearE('e-userid', uid); }
+      
       const fv = document.getElementById('f-fiveyear');
-      if (!fv.value.trim()) { showE('e-fiveyear', fv); ok = false; } else { clearE('e-fiveyear', fv); S.prof.fiveYear = fv.value.trim(); }
+      if (!S.prof.fiveYear) { showE('e-fiveyear', fv); ok = false; } else { clearE('e-fiveyear', fv); }
 
       if (!S.prof.eduHighest) { ok = false; alert('Please select Highest Education'); }
       if (!ok) return;
@@ -2433,7 +2457,9 @@
       const work = `Has Work Ex: ${p.workHas}<br>Gap Years: ${p.gapYears}`;
       document.getElementById('sum-work').innerHTML = work;
 
-      const intent = `Target: ${p.targetCountry} - ${p.targetCourse}<br>Goals: ${[p.goalJob?'Job':'', p.goalPR?'PR':''].filter(Boolean).join(', ')}`;
+      const intent = `Target: ${p.targetCountry} - ${p.targetCourse}<br>` +
+                     `Goals: ${[p.goalJob?'Job':null, p.goalPR?'PR':null, p.goalUpskill?'Upskill':null, p.goalResearch?'Research':null].filter(Boolean).join(', ')}<br>` +
+                     `5-Year: ${p.fiveYear}`;
       document.getElementById('sum-intent').innerHTML = intent;
 
       document.getElementById('sum-slot').textContent = p.slotDate ? `${p.slotDate} at ${p.slotTime}` : 'Not scheduled';
