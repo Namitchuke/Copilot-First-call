@@ -2759,7 +2759,11 @@
           body: JSON.stringify(payload)
         });
         const res = await resp.json();
-        if (res.status === 'ok') goTo('success');
+        if (res.status === 'ok') {
+          goTo('success');
+          // Auto-redirect to new call after 4 seconds
+          setTimeout(() => { if (S.cur === 'success') resetForNextCall(); }, 4000);
+        }
         else alert('Error: ' + res.message);
       } catch (err) {
         alert('Submission failed. Check console.');
@@ -2803,6 +2807,16 @@
 
       // Chips visual reset
       document.querySelectorAll('.chip').forEach(c => c.classList.remove('sel'));
+
+      // Next Steps UI reset
+      ['ns1', 'ns2', 'ns3'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.remove('done');
+          if (id === 'ns1') el.classList.remove('disabled'); // First step active
+          else el.classList.add('disabled');
+        }
+      });
 
       // Scheduling reset
       S.selectedSlotDate = null;

@@ -66,9 +66,8 @@ async def submit_profile(request: Request, response: Response):
     try:
         data = await request.json()
         sheet = get_sheet()
-        
-        all_values = sheet.get_all_values()
-        headers = all_values[0] if len(all_values) > 0 else []
+        # Optimization: only read top row for headers, not whole sheet
+        headers = sheet.row_values(1)
         
         missing = [k for k in data.keys() if k not in headers]
         if missing:
