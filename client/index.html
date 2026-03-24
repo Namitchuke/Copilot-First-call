@@ -1734,7 +1734,7 @@
             <div class="prof-head grey">Personal Details</div>
             <div class="prof-body">
               <div class="fg s3">
-                <label class="req">Student's Full Name (User ID)</label>
+                <label class="req">Pre-user ID</label>
                 <input type="text" class="fc" id="f-userid" placeholder="e.g. John Doe" oninput="sf('userId',this.value);clearE('e-userid',this)" />
                 <div class="ve" id="e-userid">Required</div>
               </div>
@@ -1866,7 +1866,7 @@
             </div>
             <div class="prof-body">
               <div class="fg s3">
-                <label class="req">5-Year Career Goal (Select all that apply)</label>
+                <label class="req">Career Outcome (Select all that apply)</label>
                 <div class="chip-wrap">
                   <div class="chip" onclick="toggleGoal(this, 'goalJob')">To get a job abroad</div>
                   <div class="chip" onclick="toggleGoal(this, 'goalPR')">To get a PR / settle abroad</div>
@@ -1875,6 +1875,44 @@
                 </div>
               </div>
 
+              <div class="fg s3">
+                <label class="req">Target Country (Multi-select)</label>
+                <div class="chip-wrap" id="cw-country">
+                  <div class="chip" onclick="tagC(this,'Belgium')">🇧🇪 Belgium</div>
+                  <div class="chip" onclick="tagC(this,'France')">🇫🇷 France</div>
+                  <div class="chip" onclick="tagC(this,'U.A.E')">🇦🇪 U.A.E</div>
+                  <div class="chip" onclick="tagC(this,'Italy')">🇮🇹 Italy</div>
+                  <div class="chip" onclick="tagC(this,'Spain')">🇪🇸 Spain</div>
+                  <div class="chip" onclick="tagC(this,'Germany')">🇩🇪 Germany</div>
+                  <div class="chip" onclick="tagC(this,'Australia')">🇦🇺 Australia</div>
+                  <div class="chip" onclick="tagC(this,'New Zealand')">🇳🇿 New Zealand</div>
+                  <div class="chip" onclick="tagC(this,'USA')">🇺🇸 USA</div>
+                  <div class="chip" onclick="tagC(this,'Canada')">🇨🇦 Canada</div>
+                  <div class="chip" onclick="tagC(this,'Poland')">🇵🇱 Poland</div>
+                  <div class="chip" onclick="tagC(this,'Latvia')">🇱🇻 Latvia</div>
+                  <div class="chip" onclick="tagC(this,'Sweden')">🇸🇪 Sweden</div>
+                  <div class="chip" onclick="tagC(this,'Austria')">🇦🇹 Austria</div>
+                  <div class="chip" onclick="tagC(this,'Netherlands')">🇳🇱 Netherlands</div>
+                  <div class="chip" onclick="tagC(this,'UK')">🇬🇧 UK</div>
+                  <div class="chip" onclick="tagC(this,'Ireland')">🇮🇪 Ireland</div>
+                  <div class="chip" onclick="tagC(this,'Lithuania')">🇱🇹 Lithuania</div>
+                  <div class="chip" onclick="tagC(this,'Not decided yet')">🏳️ Not decided yet</div>
+                </div>
+              </div>
+              <div class="fg s3">
+                <label class="req">Target Intake</label>
+                <div class="chip-wrap" id="cw-intake">
+                  <div class="chip" onclick="tagI(this,'Not decided yet')">Not decided yet</div>
+                  <div class="chip" onclick="tagI(this,'May 2026')">May 2026</div>
+                  <div class="chip" onclick="tagI(this,'July 2026')">July 2026</div>
+                  <div class="chip" onclick="tagI(this,'September 2026')">September 2026</div>
+                  <div class="chip" onclick="tagI(this,'January 2027')">January 2027</div>
+                  <div class="chip" onclick="tagI(this,'February 2027')">February 2027</div>
+                  <div class="chip" onclick="tagI(this,'May 2027')">May 2027</div>
+                  <div class="chip" onclick="tagI(this,'July 2027')">July 2027</div>
+                  <div class="chip" onclick="tagI(this,'September 2027')">September 2027</div>
+                </div>
+              </div>
               <div class="fg s2">
                 <label class="req">Preferred Degree</label>
                 <input type="text" class="fc" id="f-prefdegree" placeholder="e.g. Master's, MBA" oninput="sf('prefDegree',this.value)" />
@@ -1882,14 +1920,6 @@
               <div class="fg">
                 <label class="req">Target Course</label>
                 <input type="text" class="fc" id="f-targetcourse" placeholder="e.g. Data Science" oninput="sf('targetCourse',this.value)" />
-              </div>
-              <div class="fg s2">
-                <label class="req">Target Country</label>
-                <input type="text" class="fc" id="f-targetcountry" placeholder="e.g. USA, UK" oninput="sf('targetCountry',this.value)" />
-              </div>
-              <div class="fg">
-                <label class="req">Target Intake</label>
-                <input type="text" class="fc" id="f-targetintake" placeholder="e.g. Fall 2025" oninput="sf('targetIntake',this.value)" />
               </div>
               <div class="fg s2">
                 <label class="req">Budget (Total / Annual)</label>
@@ -1987,7 +2017,7 @@
               </div>
 
               <div class="fg s3">
-                <label class="req">What does the student want to achieve 5 years after the degree?</label>
+                <label class="req">Career Outcome</label>
                 <textarea class="fc" id="f-fiveyear" rows="2" placeholder="e.g. Working as a Data Scientist in the UK" oninput="sf('fiveYear',this.value)"></textarea>
                 <div class="ve" id="e-fiveyear">Required</div>
               </div>
@@ -2079,25 +2109,22 @@
                 <p>"As for the next steps, I'd strongly recommend we reconnect once I've built your plan. Let's schedule a follow-up call."</p>
               </div>
 
-              <!-- Scheduling Table (Mon-Sat, 10-8) -->
-              <div class="prof-head grey" style="margin: 0 -16px 12px; padding: 10px 16px; border-top: 1px solid var(--border)">Schedule Follow-up Call</div>
-              <div class="sched-container" style="overflow-x:auto;">
-                <table class="sched-table" style="width:100%; border-collapse:collapse; font-size:12px;">
-                  <thead>
-                    <tr>
-                      <th style="padding:8px; border:1px solid var(--border); background:var(--bg2)">Time</th>
-                      <th style="padding:8px; border:1px solid var(--border); background:var(--bg2)">Mon</th>
-                      <th style="padding:8px; border:1px solid var(--border); background:var(--bg2)">Tue</th>
-                      <th style="padding:8px; border:1px solid var(--border); background:var(--bg2)">Wed</th>
-                      <th style="padding:8px; border:1px solid var(--border); background:var(--bg2)">Thu</th>
-                      <th style="padding:8px; border:1px solid var(--border); background:var(--bg2)">Fri</th>
-                      <th style="padding:8px; border:1px solid var(--border); background:var(--bg2)">Sat</th>
-                    </tr>
-                  </thead>
-                  <tbody id="sched-body">
-                    <!-- Generated by JS -->
-                  </tbody>
-                </table>
+              <!-- Dynamic Calendar -->
+              <div class="cal">
+                <div class="cal-hdr">
+                  <div class="cal-mo" id="cal-mo-lbl">Month Year</div>
+                  <div style="display:flex;gap:8px;">
+                    <button class="cal-nav" onclick="calNav(-1)">←</button>
+                    <button class="cal-nav" onclick="calNav(1)">→</button>
+                  </div>
+                </div>
+                <div class="cal-grid" id="cal-grid"></div>
+              </div>
+
+              <!-- Time Grid -->
+              <div id="time-grid-container" style="display:none; margin-top:15px; border-top:1px solid var(--border); padding-top:15px;">
+                <div id="time-grid-title" style="font-size:13px; font-weight:700; margin-bottom:12px; color:var(--next)">Select Time</div>
+                <div class="time-grid" id="time-grid"></div>
               </div>
               <div id="slot-confirm" style="margin-top:10px; font-weight:600; color:var(--next); text-align:center;"></div>
               <div id="e-slot" class="ve">Please select a slot</div>
@@ -2183,6 +2210,8 @@
     // ════════════════════════════════════════════
     //  STATE
     // ════════════════════════════════════════════
+    const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
     const S = {
       callStart: null,
       timerInt: null,
@@ -2195,7 +2224,11 @@
         work: ['exactrole', 'fieldswitch', 'switchreason', 'duration', 'gapyears', 'targetcourse', 'whycourse'],
         i1: ['why', 'country', 'elt', 'prefs', 'intake', 'parents', 'budget'],
         i2: ['career', 'stay', 'alternate']
-      }
+      },
+      // Calendar State
+      calMonth: new Date().getMonth(),
+      calYear: new Date().getFullYear(),
+      selectedSlotDate: null
     };
 
     function freshProf() {
@@ -2296,6 +2329,27 @@
       }
     }
 
+    function tagC(el, val) {
+      el.classList.toggle('sel');
+      const chips = document.querySelectorAll('#cw-country .chip');
+      if (val === 'Not decided yet') {
+        if (el.classList.contains('sel')) {
+          chips.forEach(c => { if (c !== el) c.classList.remove('sel'); });
+          S.prof.targetCountry = 'Not decided yet';
+        } else { S.prof.targetCountry = ''; }
+      } else {
+        chips.forEach(c => { if (c.textContent.includes('Not decided')) c.classList.remove('sel'); });
+        const sel = Array.from(chips).filter(c => c.classList.contains('sel')).map(c => c.textContent.replace(/^[^\s]+\s/, ''));
+        S.prof.targetCountry = sel.join(', ');
+      }
+    }
+
+    function tagI(el, val) {
+      document.querySelectorAll('#cw-intake .chip').forEach(c => c.classList.remove('sel'));
+      el.classList.add('sel');
+      S.prof.targetIntake = val;
+    }
+
     function updateELT(status) {
       S.prof.eltStatus = status;
       const common = document.getElementById('elt-fields-common');
@@ -2317,30 +2371,88 @@
     // ════════════════════════════════════════════
     //  SCHEDULING
     // ════════════════════════════════════════════
-    function renderSchedule() {
-      const tbody = document.getElementById('sched-body');
-      const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      let html = '';
-      for (let h = 10; h <= 20; h++) {
-        const timeStr = (h % 12 || 12) + (h >= 12 ? ' PM' : ' AM');
-        html += `<tr><td style="padding:8px; border:1px solid var(--border); font-weight:700;">${timeStr}</td>`;
-        days.forEach(d => {
-          html += `<td style="padding:4px; border:1px solid var(--border); text-align:center;">
-            <button class="slot-btn" onclick="selectSlot('${d}', '${timeStr}', this)">Select</button>
-          </td>`;
-        });
-        html += `</tr>`;
-      }
-      tbody.innerHTML = html;
+    function calNav(dir) {
+      S.calMonth += dir;
+      if (S.calMonth > 11) { S.calMonth = 0; S.calYear++; }
+      if (S.calMonth < 0) { S.calMonth = 11; S.calYear--; }
+      renderCalendar();
     }
 
-    function selectSlot(day, time, el) {
-      document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('sel'));
-      el.classList.add('sel');
-      S.prof.slotDate = day;
-      S.prof.slotTime = time;
-      document.getElementById('slot-confirm').textContent = `Follow-up: ${day} at ${time}`;
-      document.getElementById('e-slot').style.display = 'none';
+    function renderCalendar() {
+      document.getElementById('cal-mo-lbl').textContent = MONTHS[S.calMonth] + ' ' + S.calYear;
+      const grid = document.getElementById('cal-grid');
+      const today = new Date(); today.setHours(0, 0, 0, 0);
+      const firstDay = new Date(S.calYear, S.calMonth, 1).getDay();
+      const daysInMonth = new Date(S.calYear, S.calMonth + 1, 0).getDate();
+      const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+      let h = dayNames.map(d => `<div class="cal-dn" style="${d==='Su'?'color:#D1D5DB;':''}">` + d + '</div>').join('');
+      for (let i = 0; i < firstDay; i++) h += `<div class="cal-d empty"></div>`;
+      for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(S.calYear, S.calMonth, d);
+        const isSun = date.getDay() === 0;
+        const isPast = date < today;
+        const isToday = date.toDateString() === today.toDateString();
+        const isSel = S.selectedSlotDate && date.toDateString() === S.selectedSlotDate.toDateString();
+        let cls = 'cal-d';
+        if (isPast || isSun) cls += ' past';
+        if (isToday && !isSun) cls += ' today';
+        if (isSel) cls += ' sel';
+        const click = (isPast || isSun) ? '' : ` onclick="selectDay(${d})"`;
+        h += `<div class="${cls}"${click}>${d}</div>`;
+      }
+      grid.innerHTML = h;
+    }
+
+    function selectDay(d) {
+      S.selectedSlotDate = new Date(S.calYear, S.calMonth, d);
+      const p = n => String(n).padStart(2, '0');
+      S.prof.slotDate = `${S.calYear}-${p(S.calMonth + 1)}-${p(d)}`;
+      renderCalendar();
+      renderTimeGrid();
+    }
+
+    function renderTimeGrid() {
+      const tc = document.getElementById('time-grid-container');
+      const tt = document.getElementById('time-grid-title');
+      const tg = document.getElementById('time-grid');
+      if (!S.selectedSlotDate) { tc.style.display = 'none'; return; }
+      tc.style.display = 'block';
+      const ds = S.selectedSlotDate.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+      tt.textContent = 'Available Slots — ' + ds;
+      let html = '';
+      for (let m = 600; m <= 1200; m += 30) {
+        const hh = Math.floor(m / 60);
+        const mm = m % 60;
+        const timeStr = String(hh).padStart(2, '0') + ':' + String(mm).padStart(2, '0');
+        const isSel = S.prof.slotTime === timeStr;
+        const cls = isSel ? 'time-slot-btn sel' : 'time-slot-btn';
+        html += `<button class="${cls}" onclick="selectTime('${timeStr}')">${fmtTime(timeStr)}</button>`;
+      }
+      tg.innerHTML = html;
+      updateSlotConfirm();
+    }
+
+    function selectTime(timeStr) {
+      S.prof.slotTime = timeStr;
+      renderTimeGrid();
+    }
+
+    function updateSlotConfirm() {
+      const conf = document.getElementById('slot-confirm');
+      if (S.selectedSlotDate && S.prof.slotTime) {
+        const ds = S.selectedSlotDate.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+        conf.textContent = '📅 Follow-up booked: ' + ds + ' at ' + fmtTime(S.prof.slotTime);
+        conf.style.display = 'block';
+        document.getElementById('e-slot').style.display = 'none';
+      } else {
+        conf.style.display = 'none';
+      }
+    }
+
+    function fmtTime(t) {
+      if (!t) return '';
+      const [h, m] = t.split(':').map(Number);
+      return (h % 12 || 12) + ':' + String(m).padStart(2, '0') + ' ' + (h >= 12 ? 'PM' : 'AM');
     }
 
     // ════════════════════════════════════════════
@@ -2364,7 +2476,7 @@
       const target = document.getElementById('sec-' + key);
       if (target) target.classList.add('active');
       S.cur = key;
-      if (key === 'nextsteps') renderSchedule();
+      if (key === 'nextsteps') renderCalendar();
       updateTabs(key);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -2417,8 +2529,6 @@
       S.prof.fiveYear = document.getElementById('f-fiveyear').value.trim();
       S.prof.prefDegree = document.getElementById('f-prefdegree').value;
       S.prof.targetCourse = document.getElementById('f-targetcourse').value;
-      S.prof.targetCountry = document.getElementById('f-targetcountry').value;
-      S.prof.targetIntake = document.getElementById('f-targetintake').value;
       S.prof.targetBudget = document.getElementById('f-targetbudget').value;
       S.prof.modeFinancing = document.getElementById('f-modefinancing').value;
 
@@ -2459,7 +2569,7 @@
 
       const intent = `Target: ${p.targetCountry} - ${p.targetCourse}<br>` +
                      `Goals: ${[p.goalJob?'Job':null, p.goalPR?'PR':null, p.goalUpskill?'Upskill':null, p.goalResearch?'Research':null].filter(Boolean).join(', ')}<br>` +
-                     `5-Year: ${p.fiveYear}`;
+                     `Career Outcome: ${p.fiveYear}`;
       document.getElementById('sum-intent').innerHTML = intent;
 
       document.getElementById('sum-slot').textContent = p.slotDate ? `${p.slotDate} at ${p.slotTime}` : 'Not scheduled';
@@ -2541,11 +2651,18 @@
       S.callDuration = '00:00';
       document.getElementById('timer-disp').textContent = '00:00';
       document.getElementById('e-slot').style.display = 'none';
-      // Errors
       document.querySelectorAll('.ve,.slot-err').forEach(el => el.style.display = 'none');
-      // Submit btn
+      
+      // Chips visual reset
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('sel'));
+      
+      // Scheduling reset
+      S.selectedSlotDate = null;
+      const tgc = document.getElementById('time-grid-container'); if(tgc) tgc.style.display = 'none';
+      const conf = document.getElementById('slot-confirm'); if(conf) conf.style.display = 'none';
+
       const sb = document.getElementById('btn-submit'); if (sb) { sb.textContent = '📤 Submit to Google Sheets'; sb.disabled = false; }
-      // Re-render calendar
+      
       const now = new Date(); S.calYear = now.getFullYear(); S.calMonth = now.getMonth();
       renderCalendar();
       updateTabs('intro');
