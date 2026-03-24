@@ -1878,6 +1878,7 @@
               <div class="fg s3">
                 <label class="req">Target Country (Multi-select)</label>
                 <div class="chip-wrap" id="cw-country">
+                  <div class="chip" onclick="tagC(this,'Not decided yet')">🏳️ Not decided yet</div>
                   <div class="chip" onclick="tagC(this,'Belgium')">🇧🇪 Belgium</div>
                   <div class="chip" onclick="tagC(this,'France')">🇫🇷 France</div>
                   <div class="chip" onclick="tagC(this,'U.A.E')">🇦🇪 U.A.E</div>
@@ -1896,7 +1897,6 @@
                   <div class="chip" onclick="tagC(this,'UK')">🇬🇧 UK</div>
                   <div class="chip" onclick="tagC(this,'Ireland')">🇮🇪 Ireland</div>
                   <div class="chip" onclick="tagC(this,'Lithuania')">🇱🇹 Lithuania</div>
-                  <div class="chip" onclick="tagC(this,'Not decided yet')">🏳️ Not decided yet</div>
                 </div>
               </div>
               <div class="fg s3">
@@ -1913,6 +1913,12 @@
                   <div class="chip" onclick="tagI(this,'September 2027')">September 2027</div>
                 </div>
               </div>
+
+              <div class="fg s3">
+                <label class="req">Career Outcome</label>
+                <textarea class="fc" id="f-fiveyear" rows="2" placeholder="e.g. Working as a Data Scientist in the UK" oninput="sf('fiveYear',this.value)"></textarea>
+                <div class="ve" id="e-fiveyear">Required</div>
+              </div>
               <div class="fg s2">
                 <label class="req">Preferred Degree</label>
                 <input type="text" class="fc" id="f-prefdegree" placeholder="e.g. Master's, MBA" oninput="sf('prefDegree',this.value)" />
@@ -1927,22 +1933,43 @@
               </div>
               <div class="fg">
                 <label class="req">Mode of Financing</label>
-                <input type="text" class="fc" id="f-modefinancing" placeholder="e.g. Self, Loan" oninput="sf('modeFinancing',this.value)" />
+                <select class="fc" id="f-modefinancing" onchange="sf('modeFinancing',this.value)">
+                  <option value="">Select Mode</option>
+                  <option value="Self-fund">Self-fund</option>
+                  <option value="Education Loan">Education Loan</option>
+                  <option value="Scholarship">Scholarship</option>
+                  <option value="Family Support">Family Support</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
 
               <div class="fg s3">
-                <label>Any Preferences (Click to select)</label>
+                <label>Any Preferences (Select to add details)</label>
                 <div class="chip-wrap">
-                  <div class="chip" onclick="togglePref(this)">Preferred course</div>
-                  <div class="chip" onclick="togglePref(this)">Preferred location</div>
-                  <div class="chip" onclick="togglePref(this)">University ranking</div>
-                  <div class="chip" onclick="togglePref(this)">Low fee colleges</div>
-                  <div class="chip" onclick="togglePref(this)">High admin chance</div>
-                  <div class="chip" onclick="togglePref(this)">High job placement</div>
-                  <div class="chip" onclick="togglePref(this)">Research opportunities</div>
-                  <div class="chip" onclick="togglePref(this)">Strong alumni network</div>
-                  <div class="chip" onclick="togglePref(this)">English exam waivers</div>
-                  <div class="chip" onclick="togglePref(this)">Scholarship Opportunity</div>
+                  <div class="chip" onclick="togglePref(this, 'prefCourse')">Preferred course</div>
+                  <div class="chip" onclick="togglePref(this, 'prefLoc')">Preferred location</div>
+                  <div class="chip" onclick="togglePref(this, 'prefRank')">University ranking</div>
+                  <div class="chip" onclick="togglePref(this, 'prefFee')">Low fee colleges</div>
+                  <div class="chip" onclick="togglePref(this, 'prefAdmin')">High admin chance</div>
+                  <div class="chip" onclick="togglePref(this, 'prefJob')">High job placement</div>
+                  <div class="chip" onclick="togglePref(this, 'prefRes')">Research opportunities</div>
+                  <div class="chip" onclick="togglePref(this, 'prefAlum')">Strong alumni network</div>
+                  <div class="chip" onclick="togglePref(this, 'prefWaiver')">English exam waivers</div>
+                  <div class="chip" onclick="togglePref(this, 'prefScholar')">Scholarship Opportunity</div>
+                </div>
+                
+                <!-- Dynamic Preference Inputs -->
+                <div id="pref-inputs-wrap" style="display:none; margin-top:15px; background:var(--bg2); padding:12px; border-radius:10px; border:1px solid var(--border); grid-template-columns:1fr 1fr; gap:10px;">
+                  <div class="fg" id="pi-prefCourse" style="display:none;"><label>Course Details</label><input type="text" class="fc" placeholder="e.g. Data Science" oninput="sf('prefCourseDetail',this.value)"></div>
+                  <div class="fg" id="pi-prefLoc" style="display:none;"><label>Location Details</label><input type="text" class="fc" placeholder="e.g. London, Berlin" oninput="sf('prefLocDetail',this.value)"></div>
+                  <div class="fg" id="pi-prefRank" style="display:none;"><label>Ranking Pref</label><input type="text" class="fc" placeholder="e.g. Top 100 QS" oninput="sf('prefRankDetail',this.value)"></div>
+                  <div class="fg" id="pi-prefFee" style="display:none;"><label>Budget/Fee Notes</label><input type="text" class="fc" placeholder="e.g. Under €10k/year" oninput="sf('prefFeeDetail',this.value)"></div>
+                  <div class="fg" id="pi-prefAdmin" style="display:none;"><label>Admin Chance Notes</label><input type="text" class="fc" placeholder="e.g. High acceptance" oninput="sf('prefAdminDetail',this.value)"></div>
+                  <div class="fg" id="pi-prefJob" style="display:none;"><label>Placement Notes</label><input type="text" class="fc" placeholder="e.g. In-built internships" oninput="sf('prefJobDetail',this.value)"></div>
+                  <div class="fg" id="pi-prefRes" style="display:none;"><label>Research Notes</label><input type="text" class="fc" placeholder="e.g. AI Labs" oninput="sf('prefResDetail',this.value)"></div>
+                  <div class="fg" id="pi-prefAlum" style="display:none;"><label>Alumni Notes</label><input type="text" class="fc" placeholder="e.g. Strong LinkedIn network" oninput="sf('prefAlumDetail',this.value)"></div>
+                  <div class="fg" id="pi-prefWaiver" style="display:none;"><label>Waiver Notes</label><input type="text" class="fc" placeholder="e.g. Based on 12th score" oninput="sf('prefWaiverDetail',this.value)"></div>
+                  <div class="fg" id="pi-prefScholar" style="display:none;"><label>Scholarship Notes</label><input type="text" class="fc" placeholder="e.g. Merit based" oninput="sf('prefScholarDetail',this.value)"></div>
                 </div>
               </div>
 
@@ -2016,11 +2043,6 @@
                 </div>
               </div>
 
-              <div class="fg s3">
-                <label class="req">Career Outcome</label>
-                <textarea class="fc" id="f-fiveyear" rows="2" placeholder="e.g. Working as a Data Scientist in the UK" oninput="sf('fiveYear',this.value)"></textarea>
-                <div class="ve" id="e-fiveyear">Required</div>
-              </div>
             </div>
           </div>
 
@@ -2248,6 +2270,10 @@
         targetBudget: '', modeFinancing: '',
         studentPrefs: [],
         fiveYear: '',
+        // Preference Details
+        prefCourseDetail: '', prefLocDetail: '', prefRankDetail: '', prefFeeDetail: '',
+        prefAdminDetail: '', prefJobDetail: '', prefResDetail: '', prefAlumDetail: '',
+        prefWaiverDetail: '', prefScholarDetail: '',
         // ELT
         eltStatus: '', // Appeared, Score Ready, Not Appeared
         eltExam: '', eltDate: '', eltScore: '',
@@ -2319,14 +2345,25 @@
       S.prof[key] = el.classList.contains('sel');
     }
 
-    function togglePref(el) {
+    function togglePref(el, prefKey) {
       const txt = el.textContent.trim();
       el.classList.toggle('sel');
-      if (el.classList.contains('sel')) {
+      
+      const isSel = el.classList.contains('sel');
+      if (isSel) {
         if (!S.prof.studentPrefs.includes(txt)) S.prof.studentPrefs.push(txt);
       } else {
         S.prof.studentPrefs = S.prof.studentPrefs.filter(p => p !== txt);
       }
+      
+      // Toggle Detail Input
+      const pi = document.getElementById('pi-' + prefKey);
+      if (pi) pi.style.display = isSel ? 'block' : 'none';
+      
+      // Toggle Wrap
+      const wrap = document.getElementById('pref-inputs-wrap');
+      const anySel = document.querySelectorAll('.chip.sel').length > 0;
+      if (wrap) wrap.style.display = anySel ? 'grid' : 'none';
     }
 
     function tagC(el, val) {
@@ -2531,6 +2568,23 @@
       S.prof.targetCourse = document.getElementById('f-targetcourse').value;
       S.prof.targetBudget = document.getElementById('f-targetbudget').value;
       S.prof.modeFinancing = document.getElementById('f-modefinancing').value;
+      
+      // Preference Details
+      const p = S.prof;
+      const getP = id => {
+        const input = document.querySelector(`#pi-${id} input`);
+        return input ? input.value : '';
+      };
+      p.prefCourseDetail = getP('prefCourse');
+      p.prefLocDetail = getP('prefLoc');
+      p.prefRankDetail = getP('prefRank');
+      p.prefFeeDetail = getP('prefFee');
+      p.prefAdminDetail = getP('prefAdmin');
+      p.prefJobDetail = getP('prefJob');
+      p.prefResDetail = getP('prefRes');
+      p.prefAlumDetail = getP('prefAlum');
+      p.prefWaiverDetail = getP('prefWaiver');
+      p.prefScholarDetail = getP('prefScholar');
 
       let ok = true;
       const uid = document.getElementById('f-userid');
@@ -2561,18 +2615,49 @@
       document.getElementById('sum-duration-row').textContent = 'Duration: ' + S.callDuration;
       document.getElementById('sum-date-row').textContent = new Date().toLocaleDateString();
 
-      const acad = `Level: ${p.eduHighest}<br>12th: ${p.edu12Grade} (${p.edu12Board})`;
+      const b = (l, v) => v ? `<div class="sum-row"><strong>${l}:</strong> <span>${v}</span></div>` : '';
+
+      // ACADEMICS
+      let acad = b('Education Level', p.eduHighest);
+      if (p.eduHighest === '12th') acad += b('Grade', p.edu12Grade) + b('Maths', p.edu12Maths) + b('Board', p.edu12Board);
+      else if (p.eduHighest === 'Bachelors') acad += b('Course', p.eduBachCourse) + b('CGPA', p.eduBachCGPA) + b('Backlogs', p.eduBachBacklogs);
+      else if (p.eduHighest === 'Masters') acad += b('Course', p.eduMastCourse) + b('CGPA', p.eduMastCGPA) + b('Backlogs', p.eduMastBacklogs);
       document.getElementById('sum-acad').innerHTML = acad;
 
-      const work = `Has Work Ex: ${p.workHas}<br>Gap Years: ${p.gapYears}`;
+      // WORK
+      let work = b('Work Ex', p.workHas);
+      if (p.workHas === 'Yes') work += b('Role', p.workRole) + b('Years', p.workYears);
+      work += b('Gap Strategy', p.gapYears);
       document.getElementById('sum-work').innerHTML = work;
 
-      const intent = `Target: ${p.targetCountry} - ${p.targetCourse}<br>` +
-                     `Goals: ${[p.goalJob?'Job':null, p.goalPR?'PR':null, p.goalUpskill?'Upskill':null, p.goalResearch?'Research':null].filter(Boolean).join(', ')}<br>` +
-                     `Career Outcome: ${p.fiveYear}`;
-      document.getElementById('sum-intent').innerHTML = intent;
+      // INTENT
+      let goals = [p.goalJob?'Job':0, p.goalPR?'PR':0, p.goalUpskill?'Upskill':0, p.goalResearch?'Research':0].filter(Boolean).join(', ');
+      let intent = b('Career Outcome', p.fiveYear);
+      intent += b('Goals', goals);
+      intent += b('Target Countries', p.targetCountry);
+      intent += b('Target Intake', p.targetIntake);
+      intent += b('Degree Pref', p.prefDegree);
+      intent += b('Target Course', p.targetCourse);
+      intent += b('Budget', p.targetBudget);
+      intent += b('Financing', p.modeFinancing);
+      
+      // Preferences
+      if (p.studentPrefs.length > 0) {
+        intent += `<div style="margin-top:10px; font-weight:700; color:var(--intent); font-size:12px;">Notes on Preferences</div>`;
+        intent += b('Course Pref', p.prefCourseDetail);
+        intent += b('Location Pref', p.prefLocDetail);
+        intent += b('Budget Pref', p.prefFeeDetail);
+        intent += b('Scholarships', p.prefScholarDetail);
+      }
 
-      document.getElementById('sum-slot').textContent = p.slotDate ? `${p.slotDate} at ${p.slotTime}` : 'Not scheduled';
+      // ELT
+      intent += `<div style="margin-top:10px; font-weight:700; color:var(--intent); font-size:12px;">ELT Details</div>`;
+      intent += b('Status', p.eltStatus);
+      if (p.eltStatus === 'Appeared' || p.eltStatus === 'Score Ready') intent += b('Exam', p.eltExam) + b('Date', p.eltDate) + b('Score', p.eltScore);
+      else if (p.eltStatus === 'Not Appeared') intent += b('Willing?', p.eltWilling) + b('Plan', p.eltPlanWhen) + b('Waiver Prep', p.eltWaiver || p.eltPrepStage);
+      
+      document.getElementById('sum-intent').innerHTML = intent;
+      document.getElementById('sum-slot').innerHTML = p.slotDate ? `<strong>${p.slotDate}</strong> at ${fmtTime(p.slotTime)}` : 'Not scheduled';
     }
 
     async function submitToSheets() {
@@ -2612,16 +2697,22 @@
         five_year_goal: p.fiveYear,
         elt_status: p.eltStatus,
         elt_exam: p.eltExam,
-        elt_date: p.eltDate,
         elt_score: p.eltScore,
+        elt_date: p.eltDate,
         elt_willing: p.eltWilling,
-        elt_plan_when: p.eltPlanWhen,
+        elt_plan: p.eltPlanWhen,
         elt_prep_stage: p.eltPrepStage,
         elt_waiver: p.eltWaiver,
         elt_reason: p.eltReason,
-        follow_up: `${p.slotDate} ${p.slotTime}`,
-        questions: p.studentQs,
-        counselor_notes: p.counselorNotes
+        pref_course_notes: p.prefCourseDetail,
+        pref_location_notes: p.prefLocDetail,
+        pref_ranking_notes: p.prefRankDetail,
+        pref_low_fee_notes: p.prefFeeDetail,
+        pref_scholarship_notes: p.prefScholarDetail,
+        follow_up_date: p.slotDate,
+        follow_up_time: p.slotTime,
+        counselor_notes: p.counselorNotes,
+        student_questions: p.studentQs
       };
 
       try {
@@ -2660,6 +2751,14 @@
       S.selectedSlotDate = null;
       const tgc = document.getElementById('time-grid-container'); if(tgc) tgc.style.display = 'none';
       const conf = document.getElementById('slot-confirm'); if(conf) conf.style.display = 'none';
+      
+      // Preference details reset
+      const pwrap = document.getElementById('pref-inputs-wrap');
+      if (pwrap) {
+        pwrap.style.display = 'none';
+        pwrap.querySelectorAll('input').forEach(i => i.value = '');
+        pwrap.querySelectorAll('.fg').forEach(div => div.style.display = 'none');
+      }
 
       const sb = document.getElementById('btn-submit'); if (sb) { sb.textContent = '📤 Submit to Google Sheets'; sb.disabled = false; }
       
