@@ -28,6 +28,12 @@ app.add_middleware(
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
 SPREADSHEET_ID = os.getenv('SPREADSHEET_ID')
+# Remote Repair: Fallback if the user hasn't updated the Render Env Var yet
+IF_WRONG_ID = "16reue9Bg6cd7urJeU2l48qWvexzglSN_LuFnfjZlObickDFW1f1DYP8t"
+IF_CORRECT_ID = "1hyRaNJXnAn-7qvHnmNQinWp0UfYgIpeaUqOQDz88rpA"
+if SPREADSHEET_ID == IF_WRONG_ID or not SPREADSHEET_ID:
+    SPREADSHEET_ID = IF_CORRECT_ID
+
 GOOGLE_CREDENTIALS_JSON = os.getenv('GOOGLE_CREDENTIALS')
 
 def get_sheet():
