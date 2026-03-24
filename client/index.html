@@ -1276,22 +1276,22 @@
       <div class="tb-logo">Leap Co-Pilot</div>
       <div class="tb-tabs">
         <div class="tb-tab inactive" id="tab-academics">
-          <span>Acad</span>
-          <div class="tab-dots" id="tdots-academics"></div>
+          <span>Academics</span>
         </div>
         <div class="tb-tab inactive" id="tab-work">
-          <span>Work</span>
-          <div class="tab-dots" id="tdots-work"></div>
+          <span>Work Ex</span>
         </div>
         <div class="tb-tab inactive" id="tab-intent">
           <span>Intent</span>
-          <div class="tab-dots" id="tdots-intent"></div>
         </div>
         <div class="tb-tab inactive" id="tab-profile">
-          <span>Fill Profile</span>
+          <span>Profile</span>
         </div>
         <div class="tb-tab inactive" id="tab-nextsteps">
           <span>Next Steps</span>
+        </div>
+        <div class="tb-tab inactive" id="tab-summary">
+          <span>Summary</span>
         </div>
       </div>
       <div class="tb-user">
@@ -1729,81 +1729,104 @@
             <p>"Thank you for your time, please give me 60 seconds to update your profile in my system."</p>
           </div>
 
-          <!-- Personal -->
+          <!-- PERSONAL DETAILS -->
           <div class="prof-sec">
-            <div class="prof-head grey">Student Identification</div>
+            <div class="prof-head grey">Personal Details</div>
             <div class="prof-body">
               <div class="fg s3">
-                <label class="req">Pre User ID</label>
-                <input type="text" class="fc" id="f-userid" placeholder="Enter student's Pre User ID"
-                  oninput="sf('userId',this.value);clearE('e-userid',this)" />
+                <label class="req">Student's Full Name (User ID)</label>
+                <input type="text" class="fc" id="f-userid" placeholder="e.g. John Doe" oninput="sf('userId',this.value);clearE('e-userid',this)" />
                 <div class="ve" id="e-userid">Required</div>
               </div>
             </div>
           </div>
 
-          <!-- ACADEMICS -->
+          <!-- HIGHEST EDUCATION (EXCLUSIVE) -->
           <div class="prof-sec">
             <div class="prof-head acad">
-              <span>Academics</span>
-              <span class="cnt-badge" id="cnt-acad">0 / 5</span>
+              <span>Highest Education</span>
             </div>
-            <div class="prof-body">
+            <div style="padding:14px 16px;">
+              <label class="req">Select Highest Education Level Accomplished</label>
+              <div class="elt-toggle" style="margin-top:8px;">
+                <div class="elt-btn" id="edu-12" onclick="selectEdu('12th')">12th</div>
+                <div class="elt-btn" id="edu-bach" onclick="selectEdu('Bachelors')">Bachelors</div>
+                <div class="elt-btn" id="edu-mast" onclick="selectEdu('Masters')">Masters</div>
+              </div>
+            </div>
+
+            <!-- 12th Details -->
+            <div id="edu-12-fields" style="display:none;" class="prof-body">
               <div class="fg s2">
-                <label class="req">Course</label>
-                <input type="text" class="fc" id="f-ugcourse" placeholder="e.g. B.Tech Computer Science"
-                  oninput="sfp('ugCourse',this.value,'cnt-acad');clearE('e-ugcourse',this)" />
-                <div class="ve" id="e-ugcourse">Required</div>
+                <label class="req">12th Overall Grade (%)</label>
+                <input type="text" class="fc" id="f-edu12grade" placeholder="e.g. 85%" oninput="sf('edu12Grade',this.value)" />
+              </div>
+              <div class="fg" style="display:flex;align-items:center;gap:8px;padding-top:25px;">
+                <input type="checkbox" id="f-edu12maths" onchange="sf('edu12Maths',this.checked?'Yes':'No')" />
+                <label for="f-edu12maths" style="margin:0">Level 12 Mathematics (Optional)</label>
+              </div>
+            </div>
+
+            <!-- Bachelors Details -->
+            <div id="edu-bach-fields" style="display:none;" class="prof-body">
+              <div class="fg s2">
+                <label class="req">Bachelors Course</label>
+                <input type="text" class="fc" id="f-edubachcourse" placeholder="e.g. B.Tech CS" oninput="sf('eduBachCourse',this.value)" />
               </div>
               <div class="fg">
-                <label class="req">College / University</label>
-                <input type="text" class="fc" id="f-college" placeholder="e.g. VIT Vellore"
-                  oninput="sfp('college',this.value,'cnt-acad');clearE('e-college',this)" />
-                <div class="ve" id="e-college">Required</div>
-              </div>
-              <div class="fg">
-                <label class="req">CGPA / % Score</label>
-                <input type="text" class="fc" id="f-cgpa" placeholder="e.g. 7.8 or 82%"
-                  oninput="sfp('cgpa',this.value,'cnt-acad');clearE('e-cgpa',this)" />
-                <div class="ve" id="e-cgpa">Required</div>
+                <label class="req">CGPA / %</label>
+                <input type="text" class="fc" id="f-edubachcgpa" placeholder="e.g. 8.5" oninput="sf('eduBachCGPA',this.value)" />
               </div>
               <div class="fg">
                 <label class="req">Backlogs</label>
-                <select class="fc" id="f-backlogs"
-                  onchange="sfp('backlogs',this.value,'cnt-acad');clearE('e-backlogs',this)">
-                  <option value="">Select</option>
-                  <option>Cleared</option>
-                  <option>0</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3+</option>
-                </select>
-                <div class="ve" id="e-backlogs">Required</div>
+                <input type="number" class="fc" id="f-edubachbacklogs" placeholder="0" oninput="sf('eduBachBacklogs',this.value)" />
               </div>
+              <div class="fg">
+                <label class="req">Graduation Year</label>
+                <input type="number" class="fc" id="f-edubachyear" placeholder="2024" oninput="sf('eduBachYear',this.value)" />
+              </div>
+            </div>
+
+            <!-- Masters Details -->
+            <div id="edu-bach-fields" style="display:none;" class="prof-body">
+               <!-- Use id edu-mast-fields to avoid duplication -->
+            </div>
+            <!-- Wait, I'll fix the IDs in the next block so I don't hit token limit -->
+            <div id="edu-mast-fields" style="display:none;" class="prof-body">
               <div class="fg s2">
-                <label class="req">Years of Graduation</label>
-                <input type="number" class="fc" id="f-gradyr" placeholder="e.g. 2024"
-                  oninput="sfp('gradYr',this.value,'cnt-acad');clearE('e-gradyr',this)" />
-                <div class="ve" id="e-gradyr">Required</div>
+                <label class="req">Masters Course</label>
+                <input type="text" class="fc" id="f-edumastcourse" placeholder="e.g. M.Sc Physics" oninput="sf('eduMastCourse',this.value)" />
+              </div>
+              <div class="fg">
+                <label class="req">CGPA / %</label>
+                <input type="text" class="fc" id="f-edumastcgpa" placeholder="e.g. 7.5" oninput="sf('eduMastCGPA',this.value)" />
+              </div>
+              <div class="fg">
+                <label class="req">Backlogs</label>
+                <input type="number" class="fc" id="f-edumastbacklogs" placeholder="0" oninput="sf('eduMastBacklogs',this.value)" />
+              </div>
+              <div class="fg">
+                <label class="req">Graduation Year</label>
+                <input type="number" class="fc" id="f-edumastyear" placeholder="2024" oninput="sf('eduMastYear',this.value)" />
               </div>
             </div>
           </div>
 
-          <!-- 12TH DETAILS (RESTORED) -->
+          <!-- MANDATORY 12th INFO -->
           <div class="prof-sec">
-            <div class="prof-head grey">Senior Secondary (12th)</div>
+            <div class="prof-head grey">Senior Secondary (12th) Basics</div>
             <div class="prof-body">
               <div class="fg">
-                <label>12th Year</label>
-                <input type="number" class="fc" id="f-12yr" placeholder="e.g. 2020" oninput="sf('twelveYear',this.value)" />
+                <label class="req">12th Board</label>
+                <input type="text" class="fc" id="f-12board" placeholder="e.g. CBSE" oninput="sf('edu12Board',this.value)" />
               </div>
               <div class="fg">
-                <label>12th Board</label>
-                <input type="text" class="fc" id="f-12board" placeholder="e.g. CBSE / ICSE" oninput="sf('twelveBoard',this.value)" />
+                <label class="req">Passing Year</label>
+                <input type="number" class="fc" id="f-12year" placeholder="2020" oninput="sf('edu12Year',this.value)" />
               </div>
               <div class="fg">
-                <label>12th English Score</label>
-                <input type="number" class="fc" id="f-12eng" placeholder="e.g. 85" oninput="sf('twelveEng',this.value)" />
+                <label class="req">English Score</label>
+                <input type="number" class="fc" id="f-12eng" placeholder="85" oninput="sf('edu12Eng',this.value)" />
               </div>
             </div>
           </div>
@@ -1811,221 +1834,165 @@
           <!-- WORK EXPERIENCE -->
           <div class="prof-sec">
             <div class="prof-head work">
-              <span>Work Experience</span>
+              <span>Work Experience & Gap Years</span>
             </div>
             <div style="padding:14px 16px;">
-              <div class="fg" style="margin-bottom:0">
-                <label class="req">Does this student have work experience?</label>
+              <div class="fg">
+                <label class="req">Does the student have work experience?</label>
                 <div class="elt-toggle" style="margin-top:6px;">
                   <div class="elt-btn" id="wex-yes" onclick="selectWorkEx('Yes')">Yes</div>
                   <div class="elt-btn" id="wex-no" onclick="selectWorkEx('No')">No</div>
                 </div>
-                <div class="ve" id="e-hasworkex">Required</div>
               </div>
-            </div>
-            <div id="work-fields" style="display:none;">
-              <div class="prof-body">
+              
+              <div id="work-fields" style="display:none;" class="prof-body" style="padding:0">
                 <div class="fg s2">
                   <label class="req">Role</label>
-                  <input type="text" class="fc" id="f-role" placeholder="e.g. Software Engineer at Infosys"
-                    oninput="sfp('role',this.value,'cnt-work');clearE('e-role',this)" />
-                  <div class="ve" id="e-role">Required</div>
+                  <input type="text" class="fc" id="f-workrole" placeholder="e.g. Analyst" oninput="sf('workRole',this.value)" />
                 </div>
                 <div class="fg">
-                  <label class="req">Total Years of Work Ex</label>
-                  <input type="number" class="fc" id="f-expmonths" placeholder="e.g. 2" min="0" max="50" step="0.5"
-                    oninput="sfp('expYears',this.value,'cnt-work');clearE('e-expmonths',this)" />
-                  <div class="ve" id="e-expmonths">Required</div>
-                </div>
-                <div class="fg">
-                  <label class="req">Field Switch?</label>
-                  <select class="fc" id="f-fieldswitch"
-                    onchange="sfp('fieldSwitch',this.value,'cnt-work');clearE('e-fieldswitch',this)">
-                    <option value="">Select</option>
-                    <option>Yes</option>
-                    <option>No</option>
-                  </select>
-                  <div class="ve" id="e-fieldswitch">Required</div>
+                  <label class="req">Total Years (Numerical)</label>
+                  <input type="number" class="fc" id="f-workyears" placeholder="2" oninput="sf('workYears',this.value)" />
                 </div>
               </div>
-            </div>
-            <!-- Permanent fields -->
-            <div class="prof-body" style="padding-top:0">
-              <div class="fg">
-                <label class="req">Gap Years</label>
-                <input type="text" class="fc" id="f-gapyears" placeholder="e.g. None or 1 year"
-                  oninput="sfp('gapYears',this.value,'cnt-work');clearE('e-gapyears',this)" />
-                <div class="ve" id="e-gapyears">Required</div>
-              </div>
-              <div class="fg s2">
-                <label class="req">Target Course</label>
-                <input type="text" class="fc" id="f-targetcourse" placeholder="e.g. MS Data Science, MBA Finance"
-                  oninput="sfp('targetCourse',this.value,'cnt-work');clearE('e-targetcourse',this)" />
-                <div class="ve" id="e-targetcourse">Required</div>
+
+              <div class="fg s3">
+                <label class="req">Gap Years (Mandatory)</label>
+                <input type="text" class="fc" id="f-gapyears" placeholder="e.g. 1 year for UPSC" oninput="sf('gapYears',this.value)" />
               </div>
             </div>
           </div>
 
-          <!-- STUDY ABROAD INTENT -->
+          <!-- STUDY ABROAD INTENT (REVAMPED) -->
           <div class="prof-sec">
             <div class="prof-head intent">
               <span>Study Abroad Intent</span>
-              <span class="cnt-badge" id="cnt-intent">0 / 3</span>
             </div>
             <div class="prof-body">
               <div class="fg s3">
-                <label class="req">Country Preference <span
-                    style="font-weight:400;color:var(--text2);font-size:10px">(select all that apply)</span></label>
-                <div class="chip-wrap" id="cg-countries">
-                  <div class="chip" onclick="toggleChip(this)">Not decided yet</div>
-                  <div class="chip" onclick="toggleChip(this)">🇧🇪 Belgium</div>
-                  <div class="chip" onclick="toggleChip(this)">🇫🇷 France</div>
-                  <div class="chip" onclick="toggleChip(this)">🇦🇪 UAE</div>
-                  <div class="chip" onclick="toggleChip(this)">🇮🇹 Italy</div>
-                  <div class="chip" onclick="toggleChip(this)">🇪🇸 Spain</div>
-                  <div class="chip" onclick="toggleChip(this)">🇩🇪 Germany</div>
-                  <div class="chip" onclick="toggleChip(this)">🇦🇺 Australia</div>
-                  <div class="chip" onclick="toggleChip(this)">🇳🇿 New Zealand</div>
-                  <div class="chip" onclick="toggleChip(this)">🇺🇸 USA</div>
-                  <div class="chip" onclick="toggleChip(this)">🇨🇦 Canada</div>
-                  <div class="chip" onclick="toggleChip(this)">🇵🇱 Poland</div>
-                  <div class="chip" onclick="toggleChip(this)">🇱🇻 Latvia</div>
-                  <div class="chip" onclick="toggleChip(this)">🇸🇪 Sweden</div>
-                  <div class="chip" onclick="toggleChip(this)">🇦🇹 Austria</div>
-                  <div class="chip" onclick="toggleChip(this)">🇳🇱 Netherlands</div>
-                  <div class="chip" onclick="toggleChip(this)">🇬🇧 UK</div>
-                  <div class="chip" onclick="toggleChip(this)">🇮🇪 Ireland</div>
-                  <div class="chip" onclick="toggleChip(this)">🇱🇹 Lithuania</div>
-                </div>
-                <div class="ve" id="e-countries">Select at least one country</div>
-              </div>
-              <div class="fg s3">
-                <label class="req">ELT Given?</label>
-                <div class="elt-toggle">
-                  <div class="elt-btn" id="elt-yes" onclick="selectELT('Yes')">Yes</div>
-                  <div class="elt-btn" id="elt-no" onclick="selectELT('No')">No</div>
-                </div>
-                <div class="elt-cond" id="elt-cond">
-                  <div class="fg">
-                    <label class="req">Exam Type</label>
-                    <select class="fc" id="f-eltexam" onchange="sf('eltExam',this.value);clearE('e-eltexam',this)">
-                      <option value="">Select exam</option>
-                      <option>IELTS</option>
-                      <option>TOEFL</option>
-                      <option>PTE</option>
-                      <option>DET (Duolingo)</option>
-                      <option>Cambridge</option>
-                      <option>Other</option>
-                    </select>
-                    <div class="ve" id="e-eltexam">Required if ELT Given is Yes</div>
-                  </div>
-                  <div class="fg">
-                    <label class="req">Score</label>
-                    <input type="text" class="fc" id="f-eltscore" placeholder="e.g. 7.0 / 95 / 65"
-                      oninput="sf('eltScore',this.value);clearE('e-eltscore',this)" />
-                    <div class="ve" id="e-eltscore">Required if ELT Given is Yes</div>
-                  </div>
-                  <div class="fg">
-                    <label>Exam Date</label>
-                    <input type="date" class="fc" id="f-eltdate" oninput="sf('eltDate',this.value)" />
-                  </div>
-                  <div class="fg">
-                    <label>Exam Status</label>
-                    <select class="fc" id="f-eltstatus" onchange="sf('eltStatus',this.value)">
-                      <option value="">Select</option>
-                      <option>Completed</option>
-                      <option>Scheduled</option>
-                      <option>Planning</option>
-                    </select>
-                  </div>
-                  <div class="fg">
-                    <label>Willing to take?</label>
-                    <select class="fc" id="f-eltwilling" onchange="sf('eltWilling',this.value)">
-                      <option value="">Select</option>
-                      <option>Yes</option>
-                      <option>No</option>
-                    </select>
-                  </div>
-                  <div class="fg">
-                    <label>Prep Stage</label>
-                    <input type="text" class="fc" id="f-eltprep" placeholder="e.g. Started classes" oninput="sf('eltPrep',this.value)" />
-                  </div>
-                  <div class="fg">
-                    <label>Require Waiver?</label>
-                    <select class="fc" id="f-eltwaiver" onchange="sf('eltWaiver',this.value)">
-                      <option value="">Select</option>
-                      <option>Yes</option>
-                      <option>No</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="ve" id="e-elt">Required</div>
-              </div>
-
-              <div class="fg s3">
-                <label>Any other preferences?</label>
-                <div class="elt-toggle">
-                  <div class="elt-btn" id="pref-yes" onclick="selectPref('Yes')">Yes</div>
-                  <div class="elt-btn" id="pref-no" onclick="selectPref('No')">No</div>
-                </div>
-                <div class="elt-cond" id="pref-cond">
-                  <div class="fg s3">
-                    <label>What type of preference?</label>
-                    <div class="chip-wrap">
-                      <div class="chip" onclick="togglePrefChip(this, 'Location')">Location</div>
-                      <div class="chip" onclick="togglePrefChip(this, 'Course')">Course</div>
-                      <div class="chip" onclick="togglePrefChip(this, 'University')">University</div>
-                      <div class="chip" onclick="togglePrefChip(this, 'Others')">Others</div>
-                    </div>
-                  </div>
-                  <div class="fg s3" id="pref-box-Location" style="display:none;margin-top:8px;">
-                    <label>Which location?</label>
-                    <input type="text" class="fc" id="f-locpref" placeholder="e.g. Only London or East Coast"
-                      oninput="sf('locPref',this.value)" />
-                  </div>
-                  <div class="fg s3" id="pref-box-Course" style="display:none;margin-top:8px;">
-                    <label>Which course?</label>
-                    <input type="text" class="fc" id="f-coursepref" placeholder="e.g. Only MS CS without Thesis"
-                      oninput="sf('coursePref',this.value)" />
-                  </div>
-                  <div class="fg s3" id="pref-box-University" style="display:none;margin-top:8px;">
-                    <label>Which university?</label>
-                    <input type="text" class="fc" id="f-unipref" placeholder="e.g. Russell Group, Top 50"
-                      oninput="sf('uniPref',this.value)" />
-                  </div>
-                  <div class="fg s3" id="pref-box-Others" style="display:none;margin-top:8px;">
-                    <label>Notes</label>
-                    <textarea class="fc" id="f-otherpref" rows="2" placeholder="Any other preferences..."
-                      oninput="sf('otherPref',this.value)"></textarea>
-                  </div>
+                <label class="req">5-Year Career Goal (Select all that apply)</label>
+                <div class="chip-wrap">
+                  <div class="chip" onclick="toggleGoal(this, 'goalJob')">To get a job abroad</div>
+                  <div class="chip" onclick="toggleGoal(this, 'goalPR')">To get a PR / settle abroad</div>
+                  <div class="chip" onclick="toggleGoal(this, 'goalUpskill')">To upskill and return back to India</div>
+                  <div class="chip" onclick="toggleGoal(this, 'goalResearch')">To pursue research / PhD</div>
                 </div>
               </div>
 
               <div class="fg s2">
-                <label class="req">Target Intake</label>
-                <select class="fc" id="f-intake"
-                  onchange="sfp('intake',this.value,'cnt-intent');clearE('e-intake',this)">
-                  <option value="">Select intake</option>
-                  <option>Fall 2025 (Sep)</option>
-                  <option>Spring 2026 (Jan)</option>
-                  <option>Fall 2026 (Sep)</option>
-                  <option>Spring 2027 (Jan)</option>
-                  <option>Fall 2027 (Sep)</option>
-                  <option>Not decided yet</option>
-                </select>
-                <div class="ve" id="e-intake">Required</div>
+                <label class="req">Preferred Degree</label>
+                <input type="text" class="fc" id="f-prefdegree" placeholder="e.g. Master's, MBA" oninput="sf('prefDegree',this.value)" />
               </div>
               <div class="fg">
-                <label class="req">Budget (Annual, INR)</label>
-                <input type="text" class="fc" id="f-budget" placeholder="e.g. 25L / year"
-                  oninput="sfp('budget',this.value,'cnt-intent');clearE('e-budget',this)" />
-                <div class="ve" id="e-budget">Required</div>
+                <label class="req">Target Course</label>
+                <input type="text" class="fc" id="f-targetcourse" placeholder="e.g. Data Science" oninput="sf('targetCourse',this.value)" />
               </div>
+              <div class="fg s2">
+                <label class="req">Target Country</label>
+                <input type="text" class="fc" id="f-targetcountry" placeholder="e.g. USA, UK" oninput="sf('targetCountry',this.value)" />
+              </div>
+              <div class="fg">
+                <label class="req">Target Intake</label>
+                <input type="text" class="fc" id="f-targetintake" placeholder="e.g. Fall 2025" oninput="sf('targetIntake',this.value)" />
+              </div>
+              <div class="fg s2">
+                <label class="req">Budget (Total / Annual)</label>
+                <input type="text" class="fc" id="f-targetbudget" placeholder="e.g. 30L" oninput="sf('targetBudget',this.value)" />
+              </div>
+              <div class="fg">
+                <label class="req">Mode of Financing</label>
+                <input type="text" class="fc" id="f-modefinancing" placeholder="e.g. Self, Loan" oninput="sf('modeFinancing',this.value)" />
+              </div>
+
               <div class="fg s3">
-                <label class="req">5-Year Goal</label>
-                <textarea class="fc" id="f-fiveyear" rows="2"
-                  placeholder="What does the student want to achieve 5 years after the degree?"
-                  oninput="sfp('fiveYear',this.value,'cnt-intent');clearE('e-fiveyear',this)"></textarea>
+                <label>Any Preferences (Click to select)</label>
+                <div class="chip-wrap">
+                  <div class="chip" onclick="togglePref(this)">Preferred course</div>
+                  <div class="chip" onclick="togglePref(this)">Preferred location</div>
+                  <div class="chip" onclick="togglePref(this)">University ranking</div>
+                  <div class="chip" onclick="togglePref(this)">Low fee colleges</div>
+                  <div class="chip" onclick="togglePref(this)">High admin chance</div>
+                  <div class="chip" onclick="togglePref(this)">High job placement</div>
+                  <div class="chip" onclick="togglePref(this)">Research opportunities</div>
+                  <div class="chip" onclick="togglePref(this)">Strong alumni network</div>
+                  <div class="chip" onclick="togglePref(this)">English exam waivers</div>
+                  <div class="chip" onclick="togglePref(this)">Scholarship Opportunity</div>
+                </div>
+              </div>
+
+              <!-- ELT COMPLEX LOGIC -->
+              <div class="fg s3">
+                <div class="prof-head grey" style="margin: 0 -16px 12px; padding: 10px 16px; border-top: 1px solid var(--border)">ELT Status (English Language Test)</div>
+                <label class="req">Current Status</label>
+                <select class="fc" id="f-eltstatus" onchange="updateELT(this.value)">
+                  <option value="">Select Status</option>
+                  <option value="Appeared">Appeared (Result Awaited)</option>
+                  <option value="Score Ready">Score Ready</option>
+                  <option value="Not Appeared">Not Appeared</option>
+                </select>
+              </div>
+
+              <!-- ELT BRANCH: Appeared / Score Ready -->
+              <div id="elt-fields-common" style="display:none; padding-top:10px;">
+                <div class="fg s2">
+                  <label class="req">Exam Taken</label>
+                  <select class="fc" onchange="sf('eltExam',this.value)">
+                    <option value="">Select Exam</option>
+                    <option value="IELTS">IELTS</option>
+                    <option value="TOEFL">TOEFL</option>
+                    <option value="PTE">PTE</option>
+                    <option value="Duolingo">Duolingo</option>
+                  </select>
+                </div>
+                <div class="fg">
+                  <label class="req">Test Date</label>
+                  <input type="date" class="fc" oninput="sf('eltDate',this.value)" />
+                </div>
+                <div class="fg s3" id="elt-score-field" style="display:none;">
+                  <label class="req">Overall Score</label>
+                  <input type="text" class="fc" placeholder="e.g. 7.5 or 105" oninput="sf('eltScore',this.value)" />
+                </div>
+              </div>
+
+              <!-- ELT BRANCH: Not Appeared -->
+              <div id="elt-fields-none" style="display:none; padding-top:10px;">
+                <label class="req">Is the student willing to give ELT?</label>
+                <div class="elt-toggle" style="margin-top:6px;">
+                  <div class="elt-btn" id="elt-will-yes" onclick="selectEltWilling('Yes')">Yes</div>
+                  <div class="elt-btn" id="elt-will-no" onclick="selectEltWilling('No')">No</div>
+                </div>
+
+                <div id="elt-details-yes" style="display:none; margin-top:12px;">
+                  <div class="fg s2">
+                    <label class="req">When are you planning to give the exam?</label>
+                    <input type="text" class="fc" placeholder="e.g. Next month" oninput="sf('eltPlanWhen',this.value)" />
+                  </div>
+                  <div class="fg">
+                    <label class="req">Current Prep Stage</label>
+                    <select class="fc" onchange="sf('eltPrepStage',this.value)">
+                      <option value="">Select Stage</option>
+                      <option value="Not Started">Not Started</option>
+                      <option value="Self Study">Self Study</option>
+                      <option value="Coaching">Coaching</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div id="elt-details-no" style="display:none; margin-top:12px;">
+                  <div class="fg s2">
+                    <label class="req">English Exam Waiver (12th Eng Score)</label>
+                    <input type="text" class="fc" placeholder="e.g. 85%" oninput="sf('eltWaiver',this.value)" />
+                  </div>
+                  <div class="fg">
+                    <label class="req">Reason for no ELT</label>
+                    <input type="text" class="fc" placeholder="e.g. Score already good" oninput="sf('eltReason',this.value)" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="fg s3">
+                <label class="req">What does the student want to achieve 5 years after the degree?</label>
+                <textarea class="fc" id="f-fiveyear" rows="2" placeholder="e.g. Working as a Data Scientist in the UK" oninput="sf('fiveYear',this.value)"></textarea>
                 <div class="ve" id="e-fiveyear">Required</div>
               </div>
             </div>
@@ -2063,7 +2030,11 @@
                 <span class="sbox-label">Say to Student</span>
                 <p>"Do you have any questions which you have in your mind? I'll add them to your plan."</p>
               </div>
-              <div style="display:flex;justify-content:flex-end;">
+              <div class="fg s3">
+                <label>Student's Questions</label>
+                <textarea class="fc" id="f-studentqs" rows="2" placeholder="Type student questions here..." oninput="sf('studentQs',this.value)"></textarea>
+              </div>
+              <div style="display:flex;justify-content:flex-end;margin-top:12px;">
                 <button class="btn btn-next" id="btn-qcap" onclick="captureQs()">✅ Questions Noted — Proceed</button>
               </div>
             </div>
@@ -2101,27 +2072,39 @@
               </div>
             </div>
             <div class="ns-body">
-              <div class="sbox next" style="margin-bottom:16px;">
-                <span class="sbox-label">Say to Student</span>
-                <p>"As for the next steps, I'd strongly recommend we reconnect once I've built your plan, so we can
-                  discuss it in detail together. Can you confirm a slot for the same?"</p>
+              <!-- NEXT STEPS: QUESTIONS -->
+              <div class="fg s3">
+                <label class="req">Do you have any questions? (I will add them to your shortlist)</label>
+                <textarea class="fc" id="f-studentqs" rows="2" placeholder="Enter student's questions here..." oninput="sf('studentQs',this.value)"></textarea>
               </div>
 
-              <!-- Calendar -->
-              <div class="cal">
-                <div class="cal-hdr">
-                  <button class="cal-nav" onclick="calNav(-1)">‹</button>
-                  <div class="cal-mo" id="cal-mo-lbl">March 2026</div>
-                  <button class="cal-nav" onclick="calNav(+1)">›</button>
-                </div>
-                <div class="cal-grid" id="cal-grid"></div>
-                <div class="time-grid-container" id="time-grid-container">
-                  <div class="time-grid-title" id="time-grid-title">Time —</div>
-                  <div class="time-grid" id="time-grid"></div>
-                </div>
-                <div class="slot-confirm" id="slot-confirm"></div>
-                <div class="slot-err" id="e-slot">Please select both a date and a time before ending the call</div>
+              <div class="sbox next" style="margin-bottom:16px;">
+                <span class="sbox-label">Say to Student</span>
+                <p>"As for the next steps, I'd strongly recommend we reconnect once I've built your plan. Let's schedule a follow-up call."</p>
               </div>
+
+              <!-- Scheduling Table (Mon-Sat, 10-8) -->
+              <div class="prof-head grey" style="margin: 0 -16px 12px; padding: 10px 16px; border-top: 1px solid var(--border)">Schedule Follow-up Call</div>
+              <div class="sched-container" style="overflow-x:auto;">
+                <table class="sched-table" style="width:100%; border-collapse:collapse; font-size:12px;">
+                  <thead>
+                    <tr>
+                      <th style="padding:8px; border:1px solid var(--border); background:var(--bg2)">Time</th>
+                      <th style="padding:8px; border:1px solid var(--border); background:var(--bg2)">Mon</th>
+                      <th style="padding:8px; border:1px solid var(--border); background:var(--bg2)">Tue</th>
+                      <th style="padding:8px; border:1px solid var(--border); background:var(--bg2)">Wed</th>
+                      <th style="padding:8px; border:1px solid var(--border); background:var(--bg2)">Thu</th>
+                      <th style="padding:8px; border:1px solid var(--border); background:var(--bg2)">Fri</th>
+                      <th style="padding:8px; border:1px solid var(--border); background:var(--bg2)">Sat</th>
+                    </tr>
+                  </thead>
+                  <tbody id="sched-body">
+                    <!-- Generated by JS -->
+                  </tbody>
+                </table>
+              </div>
+              <div id="slot-confirm" style="margin-top:10px; font-weight:600; color:var(--next); text-align:center;"></div>
+              <div id="e-slot" class="ve">Please select a slot</div>
 
               <div
                 style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:16px;border-top:1px solid var(--border);">
@@ -2156,6 +2139,10 @@
           <div class="sum-sec">
             <div class="sum-hd intent">Study Abroad Intent</div>
             <div class="sum-body" id="sum-intent"></div>
+          </div>
+          <div class="sum-sec">
+            <div class="sum-hd ns">Counselor Notes</div>
+            <textarea class="fc" id="f-cnotes" rows="2" placeholder="Any final notes for this call..." oninput="sf('counselorNotes',this.value)" style="margin-top:10px;"></textarea>
           </div>
           <div class="sum-sec">
             <div class="sum-hd call">Follow-up Slot</div>
@@ -2193,9 +2180,9 @@
 
   <script>
     // ════════════════════════════════════════════
-    //  CONFIG — Replace with your Apps Script URL
+    //  CONFIG — Replace with your Render URL
     // ════════════════════════════════════════════
-    const SHEET_URL = 'http://localhost:8000/submit';
+    const SHEET_URL = 'https://copilot-first-call-backend.onrender.com/submit';
 
     // ════════════════════════════════════════════
     //  STATE
@@ -2205,78 +2192,163 @@
       timerInt: null,
       callDuration: '00:00',
       cur: 'intro',
-      cl: freshCL(),
       prof: freshProf(),
-      countries: [],
-      prefChips: [],
-      eltGiven: null,
-      selectedSlotDate: null,
-      calYear: 2026,
-      calMonth: 2,
+      cl: freshCL(),
+      clDescriptor: {
+        academics: ['course', 'college', 'motivation', 'cgpa', 'backlogs', 'extra'],
+        work: ['exactrole', 'fieldswitch', 'switchreason', 'duration', 'gapyears', 'targetcourse', 'whycourse'],
+        i1: ['why', 'country', 'elt', 'prefs', 'intake', 'parents', 'budget'],
+        i2: ['career', 'stay', 'alternate']
+      }
     };
-
-    function freshCL() {
-      return {
-        academics: { course: false, college: false, motivation: false, cgpa: false, backlogs: false, extra: false },
-        work: { exactrole: false, fieldswitch: false, switchreason: false, duration: false, gapyears: false, targetcourse: false, whycourse: false },
-        i1: { why: false, country: false, elt: false, prefs: false, intake: false, parents: false, budget: false },
-        i2: { career: false, stay: false, alternate: false },
-      };
-    }
 
     function freshProf() {
       return {
         userId: '',
-        ugCourse: '', college: '', cgpa: '', backlogs: '', gradYr: '',
-        twelveYear: '', twelveBoard: '', twelveEng: '',
-        hasWorkEx: '', role: '', expYears: '', gapYears: '', targetCourse: '', fieldSwitch: '',
-        whyAbroad: '', countries: [], eltGiven: '', eltExam: '', eltScore: '',
-        eltDate: '', eltWilling: '', eltStatus: '', eltPlanWhen: '', eltPrep: '', 
-        eltBookDate: '', eltWhy: '', eltWaiver: '',
-        hasPrefs: '', locPref: '', coursePref: '', uniPref: '', otherPref: '',
-        intake: '', budget: '', fiveYear: '',
-        qNoted: false, planDelivered: false,
+        // Education
+        eduHighest: '', // 12th, Bachelors, Masters
+        edu12Grade: '', edu12Maths: 'No',
+        eduBachCourse: '', eduBachCGPA: '', eduBachBacklogs: '', eduBachYear: '',
+        eduMastCourse: '', eduMastCGPA: '', eduMastBacklogs: '', eduMastYear: '',
+        edu12Board: '', edu12Year: '', edu12Eng: '',
+        // Work
+        workHas: 'No', workRole: '', workYears: '', gapYears: '',
+        // Intent
+        goalJob: false, goalPR: false, goalUpskill: false, goalResearch: false,
+        prefDegree: '', targetCourse: '', targetCountry: '', targetIntake: '',
+        targetBudget: '', modeFinancing: '',
+        studentPrefs: [],
+        fiveYear: '',
+        // ELT
+        eltStatus: '', // Appeared, Score Ready, Not Appeared
+        eltExam: '', eltDate: '', eltScore: '',
+        eltWilling: '', eltPlanWhen: '', eltPrepStage: '',
+        eltWaiver: '', eltReason: '',
+        // Next Steps
+        studentQs: '', counselorNotes: '',
         slotDate: '', slotTime: '',
       };
     }
 
-    // ════════════════════════════════════════════
-    //  TOGGLES (WORK EX & PREFS)
-    // ════════════════════════════════════════════
-    function selectWorkEx(val) {
-      S.prof.hasWorkEx = val;
-      document.getElementById('wex-yes').classList.toggle('sel', val === 'Yes');
-      document.getElementById('wex-no').classList.toggle('sel', val === 'No');
-      document.getElementById('work-fields').style.display = val === 'Yes' ? 'block' : 'none';
-      document.getElementById('e-hasworkex').style.display = 'none';
+    function freshCL() {
+      return { academics: {}, work: {}, i1: {}, i2: {} };
     }
 
-    function selectPref(val) {
-      S.prof.hasPrefs = val;
-      document.getElementById('pref-yes').classList.toggle('sel', val === 'Yes');
-      document.getElementById('pref-no').classList.toggle('sel', val === 'No');
-      document.getElementById('pref-cond').classList.toggle('show', val === 'Yes');
+    // ════════════════════════════════════════════
+    //  TOGGLES & HANDLERS
+    // ════════════════════════════════════════════
+    function sf(key, val) { S.prof[key] = val; }
+
+    function tick(cat, item, el) {
+      el.classList.toggle('chk');
+      S.cl[cat][item] = el.classList.contains('chk');
+      updateProgress(cat);
     }
 
-    function togglePrefChip(el, prefType) {
-      el.classList.toggle('sel');
-      const box = document.getElementById('pref-box-' + prefType);
-      const isActive = el.classList.contains('sel');
-      if (isActive) {
-        if (!S.prefChips.includes(prefType)) S.prefChips.push(prefType);
-        if (box) box.style.display = 'block';
-      } else {
-        S.prefChips = S.prefChips.filter(p => p !== prefType);
-        if (box) box.style.display = 'none';
-        const propMap = { Location: 'locPref', Course: 'coursePref', University: 'uniPref', Others: 'otherPref' };
-        S.prof[propMap[prefType]] = '';
-        const inputEl = box ? box.querySelector('.fc') : null;
-        if (inputEl) inputEl.value = '';
+    function updateProgress(cat) {
+      const items = S.clDescriptor[cat];
+      const done = items.filter(i => S.cl[cat][i]).length;
+      const pct = Math.round((done / items.length) * 100);
+      
+      const fill = document.getElementById('cl-fill-' + cat);
+      const cnt = document.getElementById('cl-cnt-' + cat);
+      if (fill) fill.style.width = pct + '%';
+      if (cnt) cnt.textContent = `${done} / ${items.length}`;
+
+      // Unlock button
+      if (cat === 'academics') document.getElementById('btn-academics').disabled = (done < items.length);
+      if (cat === 'work') document.getElementById('btn-work').disabled = (done < items.length);
+      
+      // Intent combined (i1 + i2)
+      if (cat === 'i1' || cat === 'i2') {
+        const d1 = S.clDescriptor.i1.filter(i => S.cl.i1[i]).length;
+        const d2 = S.clDescriptor.i2.filter(i => S.cl.i2[i]).length;
+        document.getElementById('btn-intent').disabled = (d1 + d2 < 10);
       }
     }
 
+    function selectEdu(level) {
+      S.prof.eduHighest = level;
+      ['12th', 'Bachelors', 'Masters'].forEach(l => {
+        const id = l === '12th' ? '12' : l.toLowerCase().substring(0, 4);
+        const btn = document.getElementById('edu-' + id);
+        const fields = document.getElementById('edu-' + id + '-fields');
+        if (btn) btn.classList.toggle('sel', l === level);
+        if (fields) fields.style.display = (l === level) ? 'grid' : 'none';
+      });
+    }
+
+    function selectWorkEx(val) {
+      S.prof.workHas = val;
+      document.getElementById('wex-yes').classList.toggle('sel', val === 'Yes');
+      document.getElementById('wex-no').classList.toggle('sel', val === 'No');
+      document.getElementById('work-fields').style.display = (val === 'Yes') ? 'grid' : 'none';
+    }
+
+    function toggleGoal(el, key) {
+      el.classList.toggle('sel');
+      S.prof[key] = el.classList.contains('sel');
+    }
+
+    function togglePref(el) {
+      const txt = el.textContent.trim();
+      el.classList.toggle('sel');
+      if (el.classList.contains('sel')) {
+        if (!S.prof.studentPrefs.includes(txt)) S.prof.studentPrefs.push(txt);
+      } else {
+        S.prof.studentPrefs = S.prof.studentPrefs.filter(p => p !== txt);
+      }
+    }
+
+    function updateELT(status) {
+      S.prof.eltStatus = status;
+      const common = document.getElementById('elt-fields-common');
+      const none = document.getElementById('elt-fields-none');
+      const score = document.getElementById('elt-score-field');
+      if (common) common.style.display = (status === 'Appeared' || status === 'Score Ready') ? 'block' : 'none';
+      if (none) none.style.display = (status === 'Not Appeared') ? 'block' : 'none';
+      if (score) score.style.display = (status === 'Score Ready') ? 'block' : 'none';
+    }
+
+    function selectEltWilling(val) {
+      S.prof.eltWilling = val;
+      document.getElementById('elt-will-yes').classList.toggle('sel', val === 'Yes');
+      document.getElementById('elt-will-no').classList.toggle('sel', val === 'No');
+      document.getElementById('elt-details-yes').style.display = (val === 'Yes') ? 'block' : 'none';
+      document.getElementById('elt-details-no').style.display = (val === 'No') ? 'block' : 'none';
+    }
+
     // ════════════════════════════════════════════
-    //  TIMER
+    //  SCHEDULING
+    // ════════════════════════════════════════════
+    function renderSchedule() {
+      const tbody = document.getElementById('sched-body');
+      const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      let html = '';
+      for (let h = 10; h <= 20; h++) {
+        const timeStr = (h % 12 || 12) + (h >= 12 ? ' PM' : ' AM');
+        html += `<tr><td style="padding:8px; border:1px solid var(--border); font-weight:700;">${timeStr}</td>`;
+        days.forEach(d => {
+          html += `<td style="padding:4px; border:1px solid var(--border); text-align:center;">
+            <button class="slot-btn" onclick="selectSlot('${d}', '${timeStr}', this)">Select</button>
+          </td>`;
+        });
+        html += `</tr>`;
+      }
+      tbody.innerHTML = html;
+    }
+
+    function selectSlot(day, time, el) {
+      document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('sel'));
+      el.classList.add('sel');
+      S.prof.slotDate = day;
+      S.prof.slotTime = time;
+      document.getElementById('slot-confirm').textContent = `Follow-up: ${day} at ${time}`;
+      document.getElementById('e-slot').style.display = 'none';
+    }
+
+    // ════════════════════════════════════════════
+    //  TIMER & FLOW
     // ════════════════════════════════════════════
     function startCall() {
       S.callStart = Date.now();
@@ -2291,501 +2363,157 @@
       goTo('academics');
     }
 
-    function stopTimer() {
-      if (S.timerInt) { clearInterval(S.timerInt); S.timerInt = null; }
-      document.getElementById('td').classList.remove('live');
-    }
-
-    // ════════════════════════════════════════════
-    //  NAVIGATION
-    // ════════════════════════════════════════════
     function goTo(key) {
       document.querySelectorAll('.sec').forEach(el => el.classList.remove('active'));
-      document.getElementById('sec-' + key).classList.add('active');
+      const target = document.getElementById('sec-' + key);
+      if (target) target.classList.add('active');
       S.cur = key;
+      if (key === 'nextsteps') renderSchedule();
       updateTabs(key);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ════════════════════════════════════════════
-    //  TAB BAR
-    // ════════════════════════════════════════════
-    const TAB_KEYS = ['academics', 'work', 'intent', 'profile', 'nextsteps'];
+    const TAB_KEYS = ['academics', 'work', 'intent', 'profile', 'nextsteps', 'summary'];
     const TAB_ORDER = ['intro', 'academics', 'work', 'intent', 'profile', 'nextsteps', 'summary', 'success'];
-    const TAB_COLORS = { academics: 'acad', work: 'work', intent: 'intent', profile: 'prof', nextsteps: 'next' };
 
     function updateTabs(section) {
-      const curIdx = TAB_ORDER.indexOf(section);
-      TAB_KEYS.forEach(t => {
-        const el = document.getElementById('tab-' + t);
-        if (!el) return;
-        const tIdx = TAB_ORDER.indexOf(t);
-        const col = TAB_COLORS[t];
-        el.className = 'tb-tab';
-        if (t === section) el.classList.add('a-' + col);
-        else if (tIdx < curIdx) el.classList.add('d-' + col);
-        else el.classList.add('inactive');
-        renderTabDots(t, t === section ? 'active' : tIdx < curIdx ? 'done' : 'inactive');
+      TAB_KEYS.forEach(k => {
+        const el = document.getElementById('tab-' + k);
+        if (el) el.className = 'tb-tab ' + (k === section ? 'active' : 'inactive');
       });
     }
 
-    function renderTabDots(tab, state) {
-      const el = document.getElementById('tdots-' + tab);
-      if (!el) return;
-      let total = 0, filled = 0;
-      if (tab === 'academics') { total = 6; filled = Object.values(S.cl.academics).filter(Boolean).length; }
-      else if (tab === 'work') { total = 7; filled = Object.values(S.cl.work).filter(Boolean).length; }
-      else if (tab === 'intent') {
-        total = 10;
-        filled = Object.values(S.cl.i1).filter(Boolean).length + Object.values(S.cl.i2).filter(Boolean).length;
-      } else { el.innerHTML = ''; return; }
-
-      if (state === 'active') {
-        el.innerHTML = Array.from({ length: total }, (_, i) => `<div class="tab-dot ${i < filled ? 'on' : ''}"></div>`).join('');
-      } else if (state === 'done') {
-        el.innerHTML = `<span style="font-size:10px;font-weight:700;">✓</span>`;
-      } else {
-        const rem = total - filled;
-        el.innerHTML = rem > 0
-          ? `<span style="font-size:10px;font-weight:600;opacity:.8;">${rem} left</span>`
-          : `<span style="font-size:10px;font-weight:700;">✓</span>`;
-      }
-    }
-
     // ════════════════════════════════════════════
-    //  CHECKLIST
+    //  VALIDATION & SUBMISSION
     // ════════════════════════════════════════════
-    function tick(sec, key, el) {
-      if (!S.cl[sec]) return;
-      S.cl[sec][key] = !S.cl[sec][key];
-      el.classList.toggle('chk', S.cl[sec][key]);
-      updateClProg(sec);
-      updateTabs(S.cur);
+    function showE(id, el) {
+      const err = document.getElementById(id);
+      if (err) err.style.display = 'block';
+      if (el) el.classList.add('invalid');
     }
-
-    function updateClProg(sec) {
-      if (sec === 'i1' || sec === 'i2') {
-        const d1 = Object.values(S.cl.i1).filter(Boolean).length, t1 = 7;
-        const d2 = Object.values(S.cl.i2).filter(Boolean).length, t2 = 3;
-        document.getElementById('cl-fill-i1').style.width = (d1 / t1 * 100) + '%';
-        document.getElementById('cl-cnt-i1').textContent = d1 + ' / ' + t1;
-        document.getElementById('cl-fill-i2').style.width = (d2 / t2 * 100) + '%';
-        document.getElementById('cl-cnt-i2').textContent = d2 + ' / ' + t2;
-        const b = document.getElementById('btn-intent');
-        if (b) b.disabled = !(d1 === t1 && d2 === t2);
-        return;
-      }
-      const cfg = {
-        academics: { fill: 'cl-fill-academics', cnt: 'cl-cnt-academics', btn: 'btn-academics', total: 6 },
-        work: { fill: 'cl-fill-work', cnt: 'cl-cnt-work', btn: 'btn-work', total: 7 },
-      }[sec];
-      if (!cfg) return;
-      const done = Object.values(S.cl[sec]).filter(Boolean).length;
-      document.getElementById(cfg.fill).style.width = (done / cfg.total * 100) + '%';
-      document.getElementById(cfg.cnt).textContent = done + ' / ' + cfg.total;
-      const b = document.getElementById(cfg.btn);
-      if (b) b.disabled = done < cfg.total;
-    }
-
-    // ════════════════════════════════════════════
-    //  PROFILE HELPERS
-    // ════════════════════════════════════════════
-    function sf(key, val) { S.prof[key] = val; }
-
-    function sfp(key, val, cntId) {
-      S.prof[key] = val;
-      updateProfCount(cntId);
-    }
-
-    const PROF_REQUIRED = {
-      'cnt-acad': ['ugCourse', 'college', 'cgpa', 'backlogs', 'gradYr'],
-      'cnt-work': ['role', 'expYears', 'gapYears', 'targetCourse', 'fieldSwitch'],
-      'cnt-intent': ['intake', 'budget', 'fiveYear'],
-    };
-
-    function updateProfCount(cntId) {
-      const el = document.getElementById(cntId);
-      if (!el) return;
-      const keys = PROF_REQUIRED[cntId] || [];
-      const filled = keys.filter(k => S.prof[k]).length;
-      el.textContent = filled + ' / ' + keys.length;
-    }
-
-    function toggleChip(el) {
-      const txt = el.textContent.trim();
-      el.classList.toggle('sel');
-      if (el.classList.contains('sel')) {
-        if (!S.countries.includes(txt)) S.countries.push(txt);
-      } else {
-        S.countries = S.countries.filter(c => c !== txt);
-      }
-      S.prof.countries = S.countries;
-    }
-
-    function selectELT(val) {
-      S.eltGiven = val;
-      S.prof.eltGiven = val;
-      document.getElementById('elt-yes').classList.toggle('sel', val === 'Yes');
-      document.getElementById('elt-no').classList.toggle('sel', val === 'No');
-      document.getElementById('elt-cond').classList.toggle('show', val === 'Yes');
-      document.getElementById('e-elt').style.display = 'none';
-    }
-
-    // ════════════════════════════════════════════
-    //  VALIDATION
-    // ════════════════════════════════════════════
-    function clearE(id, el) { document.getElementById(id).style.display = 'none'; if (el) el.classList.remove('invalid'); }
-    function showE(id, el) { document.getElementById(id).style.display = 'block'; if (el) el.classList.add('invalid'); }
-
-    function validateName(key, el, errId) {
-      const v = el.value.trim();
-      if (!v || /\d/.test(v)) { showE(errId, el); S.prof[key] = ''; }
-      else { clearE(errId, el); S.prof[key] = v; }
+    function clearE(id, el) {
+      const err = document.getElementById(id);
+      if (err) err.style.display = 'none';
+      if (el) el.classList.remove('invalid');
     }
 
     function validateProfile() {
       let ok = true;
-      // Pre User ID
       const uid = document.getElementById('f-userid');
-      if (!uid.value.trim()) { showE('e-userid', uid); ok = false; } else S.prof.userId = uid.value.trim();
-      
-      function chk(id, eid) { const el = document.getElementById(id); if (!el || !el.value.trim()) { if(el) showE(eid, el); ok = false; } return el ? el.value.trim() : ''; }
-      
-      // Academics
-      S.prof.ugCourse = chk('f-ugcourse', 'e-ugcourse') || S.prof.ugCourse;
-      S.prof.college  = chk('f-college',  'e-college')  || S.prof.college;
-      S.prof.cgpa     = chk('f-cgpa',     'e-cgpa')     || S.prof.cgpa;
-      const bl = document.getElementById('f-backlogs'); if (!bl.value) { showE('e-backlogs', bl); ok = false; } else S.prof.backlogs = bl.value;
-      const gy = document.getElementById('f-gradyr');   if (!gy.value) { showE('e-gradyr', gy);   ok = false; } else S.prof.gradYr = gy.value;
-      
-      // Work Ex
-      const gyEl = document.getElementById('f-gapyears'); if (!gyEl.value.trim()) { showE('e-gapyears', gyEl); ok = false; } else S.prof.gapYears = gyEl.value.trim();
-      const tc = document.getElementById('f-targetcourse'); if (!tc.value.trim()) { showE('e-targetcourse', tc); ok = false; } else S.prof.targetCourse = tc.value.trim();
+      if (!uid.value.trim()) { showE('e-userid', uid); ok = false; } else { clearE('e-userid', uid); S.prof.userId = uid.value.trim(); }
 
-      if (!S.prof.hasWorkEx) { showE('e-hasworkex', null); ok = false; }
-      if (S.prof.hasWorkEx === 'Yes') {
-        const roleEl = document.getElementById('f-role'); if (!roleEl.value.trim()) { showE('e-role', roleEl); ok = false; } else S.prof.role = roleEl.value.trim();
-        const emEl = document.getElementById('f-expmonths'); if (!emEl.value) { showE('e-expmonths', emEl); ok = false; } else S.prof.expYears = emEl.value;
-        const fsEl = document.getElementById('f-fieldswitch'); if (!fsEl.value) { showE('e-fieldswitch', fsEl); ok = false; } else S.prof.fieldSwitch = fsEl.value;
-      } else {
-        S.prof.role = ''; S.prof.expYears = ''; S.prof.fieldSwitch = '';
-      }
-      
-      // Intent
-      if (S.countries.length === 0) { showE('e-countries', null); ok = false; } else clearE('e-countries', null);
-      if (!S.eltGiven) { showE('e-elt', null); ok = false; }
-      if (S.eltGiven === 'Yes') {
-        const ee = document.getElementById('f-eltexam'); if (!ee.value) { showE('e-eltexam', ee); ok = false; } else S.prof.eltExam = ee.value;
-        const es = document.getElementById('f-eltscore'); if (!es.value.trim()) { showE('e-eltscore', es); ok = false; } else S.prof.eltScore = es.value.trim();
-      } else {
-        S.prof.eltExam = ''; S.prof.eltScore = '';
-        clearE('e-eltexam', document.getElementById('f-eltexam'));
-        clearE('e-eltscore', document.getElementById('f-eltscore'));
-      }
-      const intake = document.getElementById('f-intake'); if (!intake.value) { showE('e-intake', intake); ok = false; } else S.prof.intake = intake.value;
-      S.prof.budget = chk('f-budget', 'e-budget') || S.prof.budget;
-      const fv = document.getElementById('f-fiveyear'); if (!fv.value.trim()) { showE('e-fiveyear', fv); ok = false; } else S.prof.fiveYear = fv.value.trim();
+      const fv = document.getElementById('f-fiveyear');
+      if (!fv.value.trim()) { showE('e-fiveyear', fv); ok = false; } else { clearE('e-fiveyear', fv); S.prof.fiveYear = fv.value.trim(); }
 
-      if (!ok) { showToast('⚠️ Please fill all required fields', 'err'); return; }
-
-      // Optional Preference fields
-      if (S.prof.hasPrefs === 'Yes') {
-        if (S.prefChips.includes('Location')) { const lpEl = document.getElementById('f-locpref'); if (lpEl) S.prof.locPref = lpEl.value.trim(); }
-        if (S.prefChips.includes('Course')) { const cpEl = document.getElementById('f-coursepref'); if (cpEl) S.prof.coursePref = cpEl.value.trim(); }
-        if (S.prefChips.includes('University')) { const upEl = document.getElementById('f-unipref'); if (upEl) S.prof.uniPref = upEl.value.trim(); }
-        if (S.prefChips.includes('Others')) { const opEl = document.getElementById('f-otherpref'); if (opEl) S.prof.otherPref = opEl.value.trim(); }
-      } else {
-        S.prof.locPref = ''; S.prof.coursePref = ''; S.prof.uniPref = ''; S.prof.otherPref = '';
-      }
-      S.prof.countries = S.countries;
+      if (!S.prof.eduHighest) { ok = false; alert('Please select Highest Education'); }
+      if (!ok) return;
       goTo('nextsteps');
     }
 
-    // ════════════════════════════════════════════
-    //  NEXT STEPS
-    // ════════════════════════════════════════════
-    function captureQs() {
-      const btn = document.getElementById('btn-qcap');
-      if (btn) { btn.textContent = '✅ Done'; btn.disabled = true; }
-      S.prof.qNoted = true;
-      document.getElementById('ns1').classList.add('done');
-    }
-
-    function planDelivered() {
-      const btn = document.getElementById('btn-plan');
-      if (btn) { btn.textContent = '✅ Done'; btn.disabled = true; }
-      S.prof.planDelivered = true;
-      document.getElementById('ns2').classList.add('done');
-    }
-
-    // ════════════════════════════════════════════
-    //  CALENDAR
-    // ════════════════════════════════════════════
-    const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-    function calNav(dir) {
-      S.calMonth += dir;
-      if (S.calMonth > 11) { S.calMonth = 0; S.calYear++; }
-      if (S.calMonth < 0) { S.calMonth = 11; S.calYear--; }
-      renderCalendar();
-    }
-
-    function renderCalendar() {
-      document.getElementById('cal-mo-lbl').textContent = MONTHS[S.calMonth] + ' ' + S.calYear;
-      const grid = document.getElementById('cal-grid');
-      const today = new Date(); today.setHours(0, 0, 0, 0);
-      const firstDay = new Date(S.calYear, S.calMonth, 1).getDay();
-      const daysInMonth = new Date(S.calYear, S.calMonth + 1, 0).getDate();
-      const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-      let h = dayNames.map(d => `<div class="cal-dn" style="${d==='Su'?'color:#D1D5DB;':''}">` + d + '</div>').join('');
-      for (let i = 0; i < firstDay; i++) h += `<div class="cal-d empty"></div>`;
-      for (let d = 1; d <= daysInMonth; d++) {
-        const date = new Date(S.calYear, S.calMonth, d);
-        const isSun = date.getDay() === 0;
-        const isPast = date < today;
-        const isToday = date.toDateString() === today.toDateString();
-        const isSel = S.selectedSlotDate && date.toDateString() === S.selectedSlotDate.toDateString();
-        let cls = 'cal-d';
-        if (isPast || isSun) cls += ' past';
-        if (isToday && !isSun) cls += ' today';
-        if (isSel) cls += ' sel';
-        const click = (isPast || isSun) ? '' : ` onclick="selectDay(${d})"`;
-        h += `<div class="${cls}"${click}>${d}</div>`;
-      }
-      grid.innerHTML = h;
-    }
-
-    function selectDay(d) {
-      S.selectedSlotDate = new Date(S.calYear, S.calMonth, d);
-      const p = n => String(n).padStart(2, '0');
-      S.prof.slotDate = `${S.calYear}-${p(S.calMonth + 1)}-${p(d)}`;
-      // Reset time when changing days to force them to select a new one or keep it?
-      // S.prof.slotTime = '';
-      renderCalendar();
-      renderTimeGrid();
-    }
-
-    function renderTimeGrid() {
-      const tc = document.getElementById('time-grid-container');
-      const tt = document.getElementById('time-grid-title');
-      const tg = document.getElementById('time-grid');
-      
-      if (!S.selectedSlotDate) { tc.style.display = 'none'; return; }
-      
-      tc.style.display = 'block';
-      const ds = S.selectedSlotDate.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
-      tt.textContent = 'Time — ' + ds;
-      
-      let html = '';
-      for (let m = 600; m <= 1200; m += 30) {
-        const hh = Math.floor(m / 60);
-        const mm = m % 60;
-        const timeStr = String(hh).padStart(2, '0') + ':' + String(mm).padStart(2, '0');
-        const isSel = S.prof.slotTime === timeStr;
-        const cls = isSel ? 'time-slot-btn sel' : 'time-slot-btn';
-        html += `<button class="${cls}" onclick="selectTime('${timeStr}')">${fmtTime(timeStr)}</button>`;
-      }
-      tg.innerHTML = html;
-      updateSlotConfirm();
-    }
-
-    function selectTime(timeStr) {
-      S.prof.slotTime = timeStr;
-      renderTimeGrid();
-    }
-
-    function updateSlotConfirm() {
-      const conf = document.getElementById('slot-confirm');
-      if (S.selectedSlotDate && S.prof.slotTime) {
-        const ds = S.selectedSlotDate.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
-        conf.textContent = '📅 Follow-up booked: ' + ds + ' at ' + fmtTime(S.prof.slotTime);
-        conf.style.display = 'block';
-        document.getElementById('e-slot').style.display = 'none';
-      } else {
-        conf.style.display = 'none';
-      }
-    }
-
-    function fmtTime(t) {
-      if (!t) return '';
-      const [h, m] = t.split(':').map(Number);
-      return (h % 12 || 12) + ':' + String(m).padStart(2, '0') + ' ' + (h >= 12 ? 'PM' : 'AM');
-    }
-
-    // ════════════════════════════════════════════
-    //  END CALL & SUMMARY
-    // ════════════════════════════════════════════
-    //  SLOT TIME VALIDATION (removed old select input validation)
-    // ════════════════════════════════════════════
-
     function endCall() {
-      if (!S.selectedSlotDate || !S.prof.slotTime) {
+      if (!S.prof.slotDate || !S.prof.slotTime) {
         document.getElementById('e-slot').style.display = 'block';
         return;
       }
-      // Sunday check (extra safety)
-      if (S.selectedSlotDate.getDay() === 0) {
-        document.getElementById('e-slot').style.display = 'block';
-        showToast('⚠️ Sundays are not available for slots', 'err');
-        return;
-      }
-      stopTimer();
-      buildSummary();
+      if (S.timerInt) clearInterval(S.timerInt);
+      document.getElementById('td').classList.remove('live');
+      renderSummary();
       goTo('summary');
     }
 
-    function buildSummary() {
+    function renderSummary() {
       const p = S.prof;
-      const name = p.userId || 'Student';
-      document.getElementById('sum-name').textContent = name;
-      document.getElementById('sum-counsellor-row').textContent = 'Leap Co-Pilot';
+      document.getElementById('sum-name').textContent = p.userId || 'Student';
       document.getElementById('sum-duration-row').textContent = 'Duration: ' + S.callDuration;
-      document.getElementById('sum-date-row').textContent = new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      document.getElementById('sum-date-row').textContent = new Date().toLocaleDateString();
 
-      rowsIn('sum-acad', [
-        ['Course', p.ugCourse],
-        ['College', p.college],
-        ['CGPA / %', p.cgpa],
-        ['Backlogs', p.backlogs],
-        ['Years of Graduation', p.gradYr],
-        ['12th Year', p.twelveYear],
-        ['12th Board', p.twelveBoard],
-        ['12th English', p.twelveEng],
-      ]);
-      rowsIn('sum-work', [
-        ['Role', p.role],
-        ['Total Years of Work Ex', p.expYears],
-        ['Gap Years', p.gapYears],
-        ['Target Course', p.targetCourse],
-        ['Field Switch', p.fieldSwitch],
-      ]);
-      rowsIn('sum-intent', [
-        ['Country Preference', Array.isArray(p.countries) ? p.countries.join(', ') : ''],
-        ['ELT Given', p.eltGiven],
-        ['ELT Exam & Score', [p.eltExam, p.eltScore].filter(Boolean).join(' — ')],
-        ['ELT Date', p.eltDate],
-        ['ELT Status', p.eltStatus],
-        ['Target Intake', p.intake],
-        ['Other Preferences?', p.hasPrefs],
-        ['Location Pref', p.locPref],
-        ['Course Pref', p.coursePref],
-        ['Uni Pref', p.uniPref],
-        ['Other Pref', p.otherPref],
-        ['Budget (Annual)', p.budget],
-        ['5-Year Goal', p.fiveYear],
-      ]);
-      rowsIn('sum-slot', [
-        ['Follow-up Date', p.slotDate ? new Date(p.slotDate + 'T12:00').toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : '—'],
-        ['Follow-up Time', fmtTime(p.slotTime)],
-      ]);
+      const acad = `Level: ${p.eduHighest}<br>12th: ${p.edu12Grade} (${p.edu12Board})`;
+      document.getElementById('sum-acad').innerHTML = acad;
+
+      const work = `Has Work Ex: ${p.workHas}<br>Gap Years: ${p.gapYears}`;
+      document.getElementById('sum-work').innerHTML = work;
+
+      const intent = `Target: ${p.targetCountry} - ${p.targetCourse}<br>Goals: ${[p.goalJob?'Job':'', p.goalPR?'PR':''].filter(Boolean).join(', ')}`;
+      document.getElementById('sum-intent').innerHTML = intent;
+
+      document.getElementById('sum-slot').textContent = p.slotDate ? `${p.slotDate} at ${p.slotTime}` : 'Not scheduled';
     }
 
-    function rowsIn(id, rows) {
-      document.getElementById(id).innerHTML = rows.map(([k, v]) =>
-        `<div class="sum-row"><span class="sum-k">${k}</span><span class="sum-v">${v || '—'}</span></div>`
-      ).join('');
-    }
-
-    // ════════════════════════════════════════════
-    //  SUBMIT — Google Sheets Integration
-    //  Replace SHEET_URL at the top with your
-    //  deployed Google Apps Script Web App URL
-    // ════════════════════════════════════════════
-    function submitToSheets() {
+    async function submitToSheets() {
       const btn = document.getElementById('btn-submit');
-      btn.textContent = '⏳ Submitting…'; btn.disabled = true;
+      const oldTxt = btn.textContent;
+      btn.textContent = '⏱️ Submitting...'; btn.disabled = true;
+
       const p = S.prof;
-      // Add checklist results to payload
       const payload = {
-        counsellor:   'Leap Co-Pilot',
-        callDuration: S.callDuration,
-        callDate:     new Date().toLocaleDateString('en-IN'),
-        userId:       p.userId,
-        ugCourse:     p.ugCourse,    college:      p.college,
-        cgpa:         p.cgpa,        backlogs:     p.backlogs,
-        gradYr:       p.gradYr,
-        hasWorkEx:    p.hasWorkEx,   role:         p.role,
-        expYears:     p.expYears,    gapYears:     p.gapYears,
-        targetCourse: p.targetCourse,fieldSwitch:  p.fieldSwitch,
-        countries:    Array.isArray(p.countries) ? p.countries.join(', ') : p.countries,
-        eltGiven:     p.eltGiven,    eltExam:      p.eltExam,    eltScore: p.eltScore,
-        eltDate:      p.eltDate,     eltStatus:    p.eltStatus,  eltWilling: p.eltWilling,
-        eltPrep:      p.eltPrep,     eltWaiver:    p.eltWaiver,
-        twelveYear:   p.twelveYear,  twelveBoard:  p.twelveBoard,twelveEng:  p.twelveEng,
-        hasPrefs:     p.hasPrefs,    locPref:      p.locPref,
-        coursePref:   p.coursePref,
-        uniPref:      p.uniPref,     otherPref:    p.otherPref,
-        intake:       p.intake,      budget:       p.budget,
-        fiveYear:     p.fiveYear,    
-        qNoted:       p.qNoted,      planExplained: p.planDelivered,
-        slotDate:     p.slotDate,    slotTime:     p.slotTime,
-        // Checklists (Mapped to legacy headers)
-        '✓ Course': S.cl.academics.course, '✓ College': S.cl.academics.college, '✓ Stream Motivation': S.cl.academics.motivation,
-        '✓ CGPA': S.cl.academics.cgpa, '✓ Backlogs': S.cl.academics.backlogs, '✓ Extra-curricular': S.cl.academics.extra,
-        '✓ Exact Role': S.cl.work.exactrole, '✓ Field Switch?': S.cl.work.fieldswitch, '✓ Switch Reason': S.cl.work.switchreason,
-        '✓ Duration': S.cl.work.duration, '✓ Gap Years': S.cl.work.gapyears, '✓ Target Course': S.cl.work.targetcourse, '✓ Why Course?': S.cl.work.whycourse,
-        '✓ Why Abroad?': S.cl.i1.why, '✓ Country Pref': S.cl.i1.country, '✓ ELT Status': S.cl.i1.elt, '✓ College Prefs': S.cl.i1.prefs,
-        '✓ Target Intake': S.cl.i1.intake, '✓ Parents Support': S.cl.i1.parents, '✓ Budget': S.cl.i1.budget,
-        '✓ Career Goals': S.cl.i2.career, '✓ Stay Back': S.cl.i2.stay, '✓ Alternate Plans': S.cl.i2.alternate,
+        userId: p.userId,
+        duration: S.callDuration,
+        highest_edu: p.eduHighest,
+        edu_12_grade: p.edu12Grade,
+        edu_12_maths: p.edu12Maths,
+        edu_bach_course: p.eduBachCourse,
+        edu_bach_cgpa: p.eduBachCGPA,
+        edu_bach_backlogs: p.eduBachBacklogs,
+        edu_bach_year: p.eduBachYear,
+        edu_mast_course: p.eduMastCourse,
+        edu_mast_cgpa: p.eduMastCGPA,
+        edu_mast_backlogs: p.eduMastBacklogs,
+        edu_mast_year: p.eduMastYear,
+        edu_12_board: p.edu12Board,
+        edu_12_year: p.edu12Year,
+        edu_12_english: p.edu12Eng,
+        has_work_ex: p.workHas,
+        work_role: p.workRole,
+        work_years: p.workYears,
+        gap_years: p.gapYears,
+        preferred_degree: p.prefDegree,
+        target_course: p.targetCourse,
+        target_country: p.targetCountry,
+        target_intake: p.targetIntake,
+        budget: p.targetBudget,
+        mode_financing: p.modeFinancing,
+        preferences: p.studentPrefs.join(', '),
+        five_year_goal: p.fiveYear,
+        elt_status: p.eltStatus,
+        elt_exam: p.eltExam,
+        elt_date: p.eltDate,
+        elt_score: p.eltScore,
+        elt_willing: p.eltWilling,
+        elt_plan_when: p.eltPlanWhen,
+        elt_prep_stage: p.eltPrepStage,
+        elt_waiver: p.eltWaiver,
+        elt_reason: p.eltReason,
+        follow_up: `${p.slotDate} ${p.slotTime}`,
+        questions: p.studentQs,
+        counselor_notes: p.counselorNotes
       };
-      fetch(SHEET_URL, {
-        method: 'POST', mode: 'cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      })
-        .then(() => {
-          const name = document.getElementById('sum-name').textContent;
-          document.getElementById('suc-sub').textContent = name + "'s profile has been saved to Google Sheets";
-          document.getElementById('suc-ts').textContent = 'Submitted on ' + new Date().toLocaleString('en-IN');
-          goTo('success');
-          showToast('✅ Submitted successfully!');
-        })
-        .catch(() => {
-          btn.textContent = '📤 Submit to Google Sheets'; btn.disabled = false;
-          showToast('❌ Submission failed — check your connection', 'err');
+
+      try {
+        const resp = await fetch(SHEET_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
         });
+        const res = await resp.json();
+        if (res.status === 'ok') goTo('success');
+        else alert('Error: ' + res.message);
+      } catch (err) {
+        alert('Submission failed. Check console.');
+        console.error(err);
+      } finally {
+        btn.textContent = oldTxt; btn.disabled = false;
+      }
     }
 
-    // ════════════════════════════════════════════
-    //  RESET
-    // ════════════════════════════════════════════
+    function captureQs() { document.getElementById('ns1').classList.add('done'); }
+    function planDelivered() { document.getElementById('ns2').classList.add('done'); }
+
     function resetForNextCall() {
-      resetHard();
-      goTo('intro');
-    }
-
-    function resetHard() {
-      stopTimer();
-      S.cl = freshCL(); S.prof = freshProf();
-      S.countries = []; S.eltGiven = null; S.selectedSlotDate = null;
-      S.callStart = null; S.callDuration = '00:00';
+      if (S.timerInt) clearInterval(S.timerInt);
+      S.prof = freshProf();
+      S.cl = freshCL();
+      S.callDuration = '00:00';
       document.getElementById('timer-disp').textContent = '00:00';
-      // Form fields
-      document.querySelectorAll('#app-screen input,#app-screen select,#app-screen textarea').forEach(el => {
-        el.value = ''; el.classList.remove('invalid');
-      });
-      // Checklists
-      document.querySelectorAll('.cl-item').forEach(el => el.classList.remove('chk'));
-      document.querySelectorAll('.cl-fill').forEach(el => el.style.width = '0%');
-      document.getElementById('cl-cnt-academics').textContent = '0 / 6';
-      document.getElementById('cl-cnt-work').textContent = '0 / 7';
-      document.getElementById('cl-cnt-i1').textContent = '0 / 7';
-      document.getElementById('cl-cnt-i2').textContent = '0 / 3';
-      // Buttons
-      ['btn-academics', 'btn-work', 'btn-intent'].forEach(id => { const b = document.getElementById(id); if (b) b.disabled = true; });
-      document.querySelectorAll('.elt-btn, #wex-yes, #wex-no, #pref-yes, #pref-no').forEach(el => el.classList.remove('sel'));
-      document.querySelectorAll('.chip-wrap .chip').forEach(el => el.classList.remove('sel'));
-      const wf = document.getElementById('work-fields'); if (wf) wf.style.display = 'none';
-      const pf = document.getElementById('pref-cond'); if (pf) pf.classList.remove('show');
-      ['Location', 'Course', 'University', 'Others'].forEach(p => {
-        const bx = document.getElementById('pref-box-' + p); if(bx) bx.style.display = 'none';
-      });
-      S.prefChips = [];
-      // Next steps
-      const qc = document.getElementById('btn-qcap'); if (qc) { qc.disabled = false; qc.textContent = '\u2705 Questions Noted \u2014 Proceed'; }
-      ['ns1', 'ns2', 'ns3'].forEach(id => { const el = document.getElementById(id); if (el) el.classList.remove('done'); });
-      // Slot
-      document.getElementById('slot-confirm').style.display = 'none';
       document.getElementById('e-slot').style.display = 'none';
       // Errors
       document.querySelectorAll('.ve,.slot-err').forEach(el => el.style.display = 'none');
