@@ -6,6 +6,8 @@ from google.oauth2.service_account import Credentials
 from dotenv import load_dotenv
 
 import json
+import asyncio
+import httpx
 
 load_dotenv()
 
@@ -51,6 +53,28 @@ def get_sheet():
 @app.get("/")
 async def health_check():
     return {"status": "ok", "message": "Counsellor Co-Pilot Backend is running"}
+
+# Keep-Alive Background Task for Render Free Tier
+async def keep_alive():
+    """Pings itself every 10 minutes to stay awake on Render free tier."""
+    await asyncio.sleep(5)  # Initial delay
+    url = os.getenv("RENDER_EXTERNAL_URL") or "http://localhost:8000"
+    if not url.endswith("/"): url += "/"
+    
+    async with httpx.AsyncClient() as client:
+        while True:
+            try:
+                # We skip pinging localhost to save resources in dev
+                if "localhost" not in url:
+                    await client.get(url)
+                    print(f"Self-ping successful: {url}")
+            except Exception as e:
+                print(f"Self-ping failed: {e}")
+            await asyncio.sleep(600)  # 10 minutes
+
+@app.on_event("startup")
+async def startup_event():
+    asyncio.create_task(keep_alive())
 
 @app.post("/admin/add-field")
 async def add_field(request: Request):
