@@ -605,6 +605,12 @@
       transform: translateY(-1px);
     }
 
+    .ns-step.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+      filter: grayscale(0.5);
+    }
+
     .btn-prof {
       background: var(--prof);
       color: #fff;
@@ -2083,14 +2089,34 @@
             <div class="sec-ico">✅</div>
             <div>
               <div class="sec-title">Next Steps</div>
-              <div class="sec-sub">Complete all three steps below in sequence</div>
+              <div class="sec-sub">Complete these four steps in order</div>
+            </div>
+          </div>
+
+          <!-- Step 0: Profile Review -->
+          <div class="ns-step" id="ns0">
+            <div class="ns-head">
+              <div class="ns-num" id="ns-num-0">1</div>
+              <div>
+                <div class="ns-step-title">Review Student Profile</div>
+                <div class="ns-step-sub">Quickly verify the captured details</div>
+              </div>
+            </div>
+            <div class="ns-body">
+              <div id="ns-profile-preview" style="font-size:12.5px; color:var(--text2); background:var(--bg); padding:10px; border-radius:8px; border:1px solid var(--border); margin-bottom:12px;">
+                <!-- Filled dynamically via renderProfilePreview() -->
+                Loading profile details...
+              </div>
+              <div style="display:flex;justify-content:flex-end;">
+                <button class="btn btn-next" onclick="markProfileReviewed()">✅ Profile Verified — Proceed</button>
+              </div>
             </div>
           </div>
 
           <!-- Step 1 -->
-          <div class="ns-step" id="ns1">
+          <div class="ns-step disabled" id="ns1">
             <div class="ns-head">
-              <div class="ns-num" id="ns-num-1">1</div>
+              <div class="ns-num" id="ns-num-1">2</div>
               <div>
                 <div class="ns-step-title">Collect Student Questions</div>
                 <div class="ns-step-sub">Ask the student if they have any questions before wrapping up</div>
@@ -2113,9 +2139,9 @@
           </div>
 
           <!-- Step 2 -->
-          <div class="ns-step" id="ns2">
+          <div class="ns-step disabled" id="ns2">
             <div class="ns-head">
-              <div class="ns-num" id="ns-num-2">2</div>
+              <div class="ns-num" id="ns-num-2">3</div>
               <div>
                 <div class="ns-step-title">Plan Delivery</div>
                 <div class="ns-step-sub">Share next steps with the student</div>
@@ -2135,21 +2161,15 @@
           </div>
 
           <!-- Step 3 -->
-          <div class="ns-step" id="ns3">
+          <div class="ns-step disabled" id="ns3">
             <div class="ns-head">
-              <div class="ns-num" id="ns-num-3">3</div>
+              <div class="ns-num" id="ns-num-3">4</div>
               <div>
                 <div class="ns-step-title">Schedule Follow-up Call</div>
                 <div class="ns-step-sub">Confirm the second call slot with the student before ending</div>
               </div>
             </div>
             <div class="ns-body">
-              <!-- NEXT STEPS: QUESTIONS -->
-              <div class="fg s3">
-                <label class="req">Do you have any questions? (I will add them to your shortlist)</label>
-                <textarea class="fc" id="f-studentqs" rows="2" placeholder="Enter student's questions here..."
-                  oninput="sf('studentQs',this.value)"></textarea>
-              </div>
 
               <div class="sbox next" style="margin-bottom:16px;">
                 <span class="sbox-label">Say to Student</span>
@@ -2630,6 +2650,7 @@
 
       if (!S.prof.eduHighest) { ok = false; alert('Please select Highest Education'); }
       if (!ok) return;
+      renderProfilePreview();
       goTo('nextsteps');
     }
 
@@ -2767,8 +2788,28 @@
       }
     }
 
-    function captureQs() { document.getElementById('ns1').classList.add('done'); }
-    function planDelivered() { document.getElementById('ns2').classList.add('done'); }
+    function markProfileReviewed() {
+      document.getElementById('ns0').classList.add('done');
+      document.getElementById('ns1').classList.remove('disabled');
+    }
+    function captureQs() {
+      document.getElementById('ns1').classList.add('done');
+      document.getElementById('ns2').classList.remove('disabled');
+    }
+    function planDelivered() {
+      document.getElementById('ns2').classList.add('done');
+      document.getElementById('ns3').classList.remove('disabled');
+    }
+
+    function renderProfilePreview() {
+      const p = S.prof;
+      let h = `<strong>${p.userId || 'Student'}</strong> · `;
+      h += `${p.eduHighest || 'No Edu'} · `;
+      h += p.edu12Maths ? `Maths: ${p.edu12Maths} · ` : '';
+      h += `Financing: ${p.modeFinancing || 'Not set'}`;
+      const div = document.getElementById('ns-profile-preview');
+      if (div) div.innerHTML = h;
+    }
 
     function resetForNextCall() {
       if (S.timerInt) clearInterval(S.timerInt);
