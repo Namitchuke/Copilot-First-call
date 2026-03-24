@@ -650,17 +650,20 @@
       margin-top: 16px;
       display: none;
     }
+
     .time-grid-title {
       font-size: 13px;
       font-weight: 600;
       color: #927239;
       margin-bottom: 12px;
     }
+
     .time-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
     }
+
     .time-slot-btn {
       padding: 10px 0;
       border: 1px solid var(--border);
@@ -674,10 +677,12 @@
       text-align: center;
       transition: all 0.2s;
     }
+
     .time-slot-btn:hover {
       border-color: #8c5614;
       color: #8c5614;
     }
+
     .time-slot-btn.sel {
       background: #8c5614;
       border-color: #8c5614;
@@ -1735,7 +1740,8 @@
             <div class="prof-body">
               <div class="fg s3">
                 <label class="req">Pre-user ID</label>
-                <input type="text" class="fc" id="f-userid" placeholder="e.g. John Doe" oninput="sf('userId',this.value);clearE('e-userid',this)" />
+                <input type="text" class="fc" id="f-userid" placeholder="e.g. John Doe"
+                  oninput="sf('userId',this.value);clearE('e-userid',this)" />
                 <div class="ve" id="e-userid">Required</div>
               </div>
             </div>
@@ -1759,11 +1765,12 @@
             <div id="edu-12-fields" style="display:none;" class="prof-body">
               <div class="fg s2">
                 <label class="req">12th Overall Grade (%)</label>
-                <input type="text" class="fc" id="f-edu12grade" placeholder="e.g. 85%" oninput="sf('edu12Grade',this.value)" />
+                <input type="text" class="fc" id="f-edu12grade" placeholder="e.g. 85%"
+                  oninput="sf('edu12Grade',this.value)" />
               </div>
-              <div class="fg" style="display:flex;align-items:center;gap:8px;padding-top:25px;">
-                <input type="checkbox" id="f-edu12maths" onchange="sf('edu12Maths',this.checked?'Yes':'No')" />
-                <label for="f-edu12maths" style="margin:0">Level 12 Mathematics (Optional)</label>
+              <div class="fg">
+                <label>Class 12th Mathematics Marks (Optional)</label>
+                <input type="text" class="fc" id="f-edu12maths" placeholder="e.g. 90/100" oninput="sf('edu12Maths',this.value)" />
               </div>
             </div>
 
@@ -1771,19 +1778,23 @@
             <div id="edu-bach-fields" style="display:none;" class="prof-body">
               <div class="fg s2">
                 <label class="req">Bachelors Course</label>
-                <input type="text" class="fc" id="f-edubachcourse" placeholder="e.g. B.Tech CS" oninput="sf('eduBachCourse',this.value)" />
+                <input type="text" class="fc" id="f-edubachcourse" placeholder="e.g. B.Tech CS"
+                  oninput="sf('eduBachCourse',this.value)" />
               </div>
               <div class="fg">
                 <label class="req">CGPA / %</label>
-                <input type="text" class="fc" id="f-edubachcgpa" placeholder="e.g. 8.5" oninput="sf('eduBachCGPA',this.value)" />
+                <input type="text" class="fc" id="f-edubachcgpa" placeholder="e.g. 8.5"
+                  oninput="sf('eduBachCGPA',this.value)" />
               </div>
               <div class="fg">
                 <label class="req">Backlogs</label>
-                <input type="number" class="fc" id="f-edubachbacklogs" placeholder="0" oninput="sf('eduBachBacklogs',this.value)" />
+                <input type="number" class="fc" id="f-edubachbacklogs" placeholder="0"
+                  oninput="sf('eduBachBacklogs',this.value)" />
               </div>
               <div class="fg">
                 <label class="req">Graduation Year</label>
-                <input type="number" class="fc" id="f-edubachyear" placeholder="2024" oninput="sf('eduBachYear',this.value)" />
+                <input type="number" class="fc" id="f-edubachyear" placeholder="2024"
+                  oninput="sf('eduBachYear',this.value)" />
               </div>
             </div>
 
@@ -1791,38 +1802,23 @@
             <div id="edu-mast-fields" style="display:none;" class="prof-body">
               <div class="fg s2">
                 <label class="req">Masters Course</label>
-                <input type="text" class="fc" id="f-edumastcourse" placeholder="e.g. M.Sc Physics" oninput="sf('eduMastCourse',this.value)" />
+                <input type="text" class="fc" id="f-edumastcourse" placeholder="e.g. M.Sc Physics"
+                  oninput="sf('eduMastCourse',this.value)" />
               </div>
               <div class="fg">
                 <label class="req">CGPA / %</label>
-                <input type="text" class="fc" id="f-edumastcgpa" placeholder="e.g. 7.5" oninput="sf('eduMastCGPA',this.value)" />
+                <input type="text" class="fc" id="f-edumastcgpa" placeholder="e.g. 7.5"
+                  oninput="sf('eduMastCGPA',this.value)" />
               </div>
               <div class="fg">
                 <label class="req">Backlogs</label>
-                <input type="number" class="fc" id="f-edumastbacklogs" placeholder="0" oninput="sf('eduMastBacklogs',this.value)" />
+                <input type="number" class="fc" id="f-edumastbacklogs" placeholder="0"
+                  oninput="sf('eduMastBacklogs',this.value)" />
               </div>
               <div class="fg">
                 <label class="req">Graduation Year</label>
-                <input type="number" class="fc" id="f-edumastyear" placeholder="2024" oninput="sf('eduMastYear',this.value)" />
-              </div>
-            </div>
-          </div>
-
-          <!-- MANDATORY 12th INFO -->
-          <div class="prof-sec">
-            <div class="prof-head grey">Senior Secondary (12th) Basics</div>
-            <div class="prof-body">
-              <div class="fg">
-                <label class="req">12th Board</label>
-                <input type="text" class="fc" id="f-12board" placeholder="e.g. CBSE" oninput="sf('edu12Board',this.value)" />
-              </div>
-              <div class="fg">
-                <label class="req">Passing Year</label>
-                <input type="number" class="fc" id="f-12year" placeholder="2020" oninput="sf('edu12Year',this.value)" />
-              </div>
-              <div class="fg">
-                <label class="req">English Score</label>
-                <input type="number" class="fc" id="f-12eng" placeholder="85" oninput="sf('edu12Eng',this.value)" />
+                <input type="number" class="fc" id="f-edumastyear" placeholder="2024"
+                  oninput="sf('eduMastYear',this.value)" />
               </div>
             </div>
           </div>
@@ -1840,21 +1836,24 @@
                   <div class="elt-btn" id="wex-no" onclick="selectWorkEx('No')">No</div>
                 </div>
               </div>
-              
+
               <div id="work-fields" style="display:none;" class="prof-body" style="padding:0">
                 <div class="fg s2">
                   <label class="req">Role</label>
-                  <input type="text" class="fc" id="f-workrole" placeholder="e.g. Analyst" oninput="sf('workRole',this.value)" />
+                  <input type="text" class="fc" id="f-workrole" placeholder="e.g. Analyst"
+                    oninput="sf('workRole',this.value)" />
                 </div>
                 <div class="fg">
                   <label class="req">Total Years (Numerical)</label>
-                  <input type="number" class="fc" id="f-workyears" placeholder="2" oninput="sf('workYears',this.value)" />
+                  <input type="number" class="fc" id="f-workyears" placeholder="2"
+                    oninput="sf('workYears',this.value)" />
                 </div>
               </div>
 
               <div class="fg s3">
                 <label class="req">Gap Years (Mandatory)</label>
-                <input type="text" class="fc" id="f-gapyears" placeholder="e.g. 1 year for UPSC" oninput="sf('gapYears',this.value)" />
+                <input type="text" class="fc" id="f-gapyears" placeholder="e.g. 1 year for UPSC"
+                  oninput="sf('gapYears',this.value)" />
               </div>
             </div>
           </div>
@@ -1873,6 +1872,12 @@
                   <div class="chip" onclick="toggleGoal(this, 'goalUpskill')">To upskill and return back to India</div>
                   <div class="chip" onclick="toggleGoal(this, 'goalResearch')">To pursue research / PhD</div>
                 </div>
+              </div>
+
+              <div class="fg s3">
+                <label class="req">Career Outcome (Specifics)</label>
+                <textarea class="fc" id="f-fiveyear" rows="2" placeholder="e.g. Working as a Data Scientist in the UK" oninput="sf('fiveYear',this.value)"></textarea>
+                <div class="ve" id="e-fiveyear">Required</div>
               </div>
 
               <div class="fg s3">
@@ -1914,32 +1919,28 @@
                 </div>
               </div>
 
-              <div class="fg s3">
-                <label class="req">Career Outcome</label>
-                <textarea class="fc" id="f-fiveyear" rows="2" placeholder="e.g. Working as a Data Scientist in the UK" oninput="sf('fiveYear',this.value)"></textarea>
-                <div class="ve" id="e-fiveyear">Required</div>
-              </div>
               <div class="fg s2">
                 <label class="req">Preferred Degree</label>
-                <input type="text" class="fc" id="f-prefdegree" placeholder="e.g. Master's, MBA" oninput="sf('prefDegree',this.value)" />
+                <input type="text" class="fc" id="f-prefdegree" placeholder="e.g. Master's, MBA"
+                  oninput="sf('prefDegree',this.value)" />
               </div>
               <div class="fg">
                 <label class="req">Target Course</label>
-                <input type="text" class="fc" id="f-targetcourse" placeholder="e.g. Data Science" oninput="sf('targetCourse',this.value)" />
+                <input type="text" class="fc" id="f-targetcourse" placeholder="e.g. Data Science"
+                  oninput="sf('targetCourse',this.value)" />
               </div>
               <div class="fg s2">
                 <label class="req">Budget (Total / Annual)</label>
-                <input type="text" class="fc" id="f-targetbudget" placeholder="e.g. 30L" oninput="sf('targetBudget',this.value)" />
+                <input type="text" class="fc" id="f-targetbudget" placeholder="e.g. 30L"
+                  oninput="sf('targetBudget',this.value)" />
               </div>
               <div class="fg">
                 <label class="req">Mode of Financing</label>
                 <select class="fc" id="f-modefinancing" onchange="sf('modeFinancing',this.value)">
                   <option value="">Select Mode</option>
-                  <option value="Self-fund">Self-fund</option>
-                  <option value="Education Loan">Education Loan</option>
-                  <option value="Scholarship">Scholarship</option>
-                  <option value="Family Support">Family Support</option>
-                  <option value="Other">Other</option>
+                  <option value="Loan">Loan</option>
+                  <option value="Self">Self</option>
+                  <option value="Parents">Parents</option>
                 </select>
               </div>
 
@@ -1957,25 +1958,45 @@
                   <div class="chip" onclick="togglePref(this, 'prefWaiver')">English exam waivers</div>
                   <div class="chip" onclick="togglePref(this, 'prefScholar')">Scholarship Opportunity</div>
                 </div>
-                
+
                 <!-- Dynamic Preference Inputs -->
-                <div id="pref-inputs-wrap" style="display:none; margin-top:15px; background:var(--bg2); padding:12px; border-radius:10px; border:1px solid var(--border); grid-template-columns:1fr 1fr; gap:10px;">
-                  <div class="fg" id="pi-prefCourse" style="display:none;"><label>Course Details</label><input type="text" class="fc" placeholder="e.g. Data Science" oninput="sf('prefCourseDetail',this.value)"></div>
-                  <div class="fg" id="pi-prefLoc" style="display:none;"><label>Location Details</label><input type="text" class="fc" placeholder="e.g. London, Berlin" oninput="sf('prefLocDetail',this.value)"></div>
-                  <div class="fg" id="pi-prefRank" style="display:none;"><label>Ranking Pref</label><input type="text" class="fc" placeholder="e.g. Top 100 QS" oninput="sf('prefRankDetail',this.value)"></div>
-                  <div class="fg" id="pi-prefFee" style="display:none;"><label>Budget/Fee Notes</label><input type="text" class="fc" placeholder="e.g. Under €10k/year" oninput="sf('prefFeeDetail',this.value)"></div>
-                  <div class="fg" id="pi-prefAdmin" style="display:none;"><label>Admin Chance Notes</label><input type="text" class="fc" placeholder="e.g. High acceptance" oninput="sf('prefAdminDetail',this.value)"></div>
-                  <div class="fg" id="pi-prefJob" style="display:none;"><label>Placement Notes</label><input type="text" class="fc" placeholder="e.g. In-built internships" oninput="sf('prefJobDetail',this.value)"></div>
-                  <div class="fg" id="pi-prefRes" style="display:none;"><label>Research Notes</label><input type="text" class="fc" placeholder="e.g. AI Labs" oninput="sf('prefResDetail',this.value)"></div>
-                  <div class="fg" id="pi-prefAlum" style="display:none;"><label>Alumni Notes</label><input type="text" class="fc" placeholder="e.g. Strong LinkedIn network" oninput="sf('prefAlumDetail',this.value)"></div>
-                  <div class="fg" id="pi-prefWaiver" style="display:none;"><label>Waiver Notes</label><input type="text" class="fc" placeholder="e.g. Based on 12th score" oninput="sf('prefWaiverDetail',this.value)"></div>
-                  <div class="fg" id="pi-prefScholar" style="display:none;"><label>Scholarship Notes</label><input type="text" class="fc" placeholder="e.g. Merit based" oninput="sf('prefScholarDetail',this.value)"></div>
+                <div id="pref-inputs-wrap"
+                  style="display:none; margin-top:15px; background:var(--bg2); padding:12px; border-radius:10px; border:1px solid var(--border); grid-template-columns:1fr 1fr; gap:10px;">
+                  <div class="fg" id="pi-prefCourse" style="display:none;"><label>Course Details</label><input
+                      type="text" class="fc" placeholder="e.g. Data Science"
+                      oninput="sf('prefCourseDetail',this.value)"></div>
+                  <div class="fg" id="pi-prefLoc" style="display:none;"><label>Location Details</label><input
+                      type="text" class="fc" placeholder="e.g. London, Berlin" oninput="sf('prefLocDetail',this.value)">
+                  </div>
+                  <div class="fg" id="pi-prefRank" style="display:none;"><label>Ranking Pref</label><input type="text"
+                      class="fc" placeholder="e.g. Top 100 QS" oninput="sf('prefRankDetail',this.value)"></div>
+                  <div class="fg" id="pi-prefFee" style="display:none;"><label>Budget/Fee Notes</label><input
+                      type="text" class="fc" placeholder="e.g. Under €10k/year"
+                      oninput="sf('prefFeeDetail',this.value)"></div>
+                  <div class="fg" id="pi-prefAdmin" style="display:none;"><label>Admin Chance Notes</label><input
+                      type="text" class="fc" placeholder="e.g. High acceptance"
+                      oninput="sf('prefAdminDetail',this.value)"></div>
+                  <div class="fg" id="pi-prefJob" style="display:none;"><label>Placement Notes</label><input type="text"
+                      class="fc" placeholder="e.g. In-built internships" oninput="sf('prefJobDetail',this.value)"></div>
+                  <div class="fg" id="pi-prefRes" style="display:none;"><label>Research Notes</label><input type="text"
+                      class="fc" placeholder="e.g. AI Labs" oninput="sf('prefResDetail',this.value)"></div>
+                  <div class="fg" id="pi-prefAlum" style="display:none;"><label>Alumni Notes</label><input type="text"
+                      class="fc" placeholder="e.g. Strong LinkedIn network" oninput="sf('prefAlumDetail',this.value)">
+                  </div>
+                  <div class="fg" id="pi-prefWaiver" style="display:none;"><label>Waiver Notes</label><input type="text"
+                      class="fc" placeholder="e.g. Based on 12th score" oninput="sf('prefWaiverDetail',this.value)">
+                  </div>
+                  <div class="fg" id="pi-prefScholar" style="display:none;"><label>Scholarship Notes</label><input
+                      type="text" class="fc" placeholder="e.g. Merit based"
+                      oninput="sf('prefScholarDetail',this.value)"></div>
                 </div>
               </div>
 
               <!-- ELT COMPLEX LOGIC -->
               <div class="fg s3">
-                <div class="prof-head grey" style="margin: 0 -16px 12px; padding: 10px 16px; border-top: 1px solid var(--border)">ELT Status (English Language Test)</div>
+                <div class="prof-head grey"
+                  style="margin: 0 -16px 12px; padding: 10px 16px; border-top: 1px solid var(--border)">ELT Status
+                  (English Language Test)</div>
                 <label class="req">Current Status</label>
                 <select class="fc" id="f-eltstatus" onchange="updateELT(this.value)">
                   <option value="">Select Status</option>
@@ -2018,7 +2039,8 @@
                 <div id="elt-details-yes" style="display:none; margin-top:12px;">
                   <div class="fg s2">
                     <label class="req">When are you planning to give the exam?</label>
-                    <input type="text" class="fc" placeholder="e.g. Next month" oninput="sf('eltPlanWhen',this.value)" />
+                    <input type="text" class="fc" placeholder="e.g. Next month"
+                      oninput="sf('eltPlanWhen',this.value)" />
                   </div>
                   <div class="fg">
                     <label class="req">Current Prep Stage</label>
@@ -2033,12 +2055,13 @@
 
                 <div id="elt-details-no" style="display:none; margin-top:12px;">
                   <div class="fg s2">
-                    <label class="req">English Exam Waiver (12th Eng Score)</label>
+                    <label class="req">12th Eng Score</label>
                     <input type="text" class="fc" placeholder="e.g. 85%" oninput="sf('eltWaiver',this.value)" />
                   </div>
                   <div class="fg">
                     <label class="req">Reason for no ELT</label>
-                    <input type="text" class="fc" placeholder="e.g. Score already good" oninput="sf('eltReason',this.value)" />
+                    <input type="text" class="fc" placeholder="e.g. Score already good"
+                      oninput="sf('eltReason',this.value)" />
                   </div>
                 </div>
               </div>
@@ -2080,7 +2103,8 @@
               </div>
               <div class="fg s3">
                 <label>Student's Questions</label>
-                <textarea class="fc" id="f-studentqs" rows="2" placeholder="Type student questions here..." oninput="sf('studentQs',this.value)"></textarea>
+                <textarea class="fc" id="f-studentqs" rows="2" placeholder="Type student questions here..."
+                  oninput="sf('studentQs',this.value)"></textarea>
               </div>
               <div style="display:flex;justify-content:flex-end;margin-top:12px;">
                 <button class="btn btn-next" id="btn-qcap" onclick="captureQs()">✅ Questions Noted — Proceed</button>
@@ -2123,12 +2147,14 @@
               <!-- NEXT STEPS: QUESTIONS -->
               <div class="fg s3">
                 <label class="req">Do you have any questions? (I will add them to your shortlist)</label>
-                <textarea class="fc" id="f-studentqs" rows="2" placeholder="Enter student's questions here..." oninput="sf('studentQs',this.value)"></textarea>
+                <textarea class="fc" id="f-studentqs" rows="2" placeholder="Enter student's questions here..."
+                  oninput="sf('studentQs',this.value)"></textarea>
               </div>
 
               <div class="sbox next" style="margin-bottom:16px;">
                 <span class="sbox-label">Say to Student</span>
-                <p>"As for the next steps, I'd strongly recommend we reconnect once I've built your plan. Let's schedule a follow-up call."</p>
+                <p>"As for the next steps, I'd strongly recommend we reconnect once I've built your plan. Let's schedule
+                  a follow-up call."</p>
               </div>
 
               <!-- Dynamic Calendar -->
@@ -2144,11 +2170,14 @@
               </div>
 
               <!-- Time Grid -->
-              <div id="time-grid-container" style="display:none; margin-top:15px; border-top:1px solid var(--border); padding-top:15px;">
-                <div id="time-grid-title" style="font-size:13px; font-weight:700; margin-bottom:12px; color:var(--next)">Select Time</div>
+              <div id="time-grid-container"
+                style="display:none; margin-top:15px; border-top:1px solid var(--border); padding-top:15px;">
+                <div id="time-grid-title"
+                  style="font-size:13px; font-weight:700; margin-bottom:12px; color:var(--next)">Select Time</div>
                 <div class="time-grid" id="time-grid"></div>
               </div>
-              <div id="slot-confirm" style="margin-top:10px; font-weight:600; color:var(--next); text-align:center;"></div>
+              <div id="slot-confirm" style="margin-top:10px; font-weight:600; color:var(--next); text-align:center;">
+              </div>
               <div id="e-slot" class="ve">Please select a slot</div>
 
               <div
@@ -2187,7 +2216,8 @@
           </div>
           <div class="sum-sec">
             <div class="sum-hd ns">Counselor Notes</div>
-            <textarea class="fc" id="f-cnotes" rows="2" placeholder="Any final notes for this call..." oninput="sf('counselorNotes',this.value)" style="margin-top:10px;"></textarea>
+            <textarea class="fc" id="f-cnotes" rows="2" placeholder="Any final notes for this call..."
+              oninput="sf('counselorNotes',this.value)" style="margin-top:10px;"></textarea>
           </div>
           <div class="sum-sec">
             <div class="sum-hd call">Follow-up Slot</div>
@@ -2304,7 +2334,7 @@
       const items = S.clDescriptor[cat];
       const done = items.filter(i => S.cl[cat][i]).length;
       const pct = Math.round((done / items.length) * 100);
-      
+
       const fill = document.getElementById('cl-fill-' + cat);
       const cnt = document.getElementById('cl-cnt-' + cat);
       if (fill) fill.style.width = pct + '%';
@@ -2313,7 +2343,7 @@
       // Unlock button
       if (cat === 'academics') document.getElementById('btn-academics').disabled = (done < items.length);
       if (cat === 'work') document.getElementById('btn-work').disabled = (done < items.length);
-      
+
       // Intent combined (i1 + i2)
       if (cat === 'i1' || cat === 'i2') {
         const d1 = S.clDescriptor.i1.filter(i => S.cl.i1[i]).length;
@@ -2348,18 +2378,18 @@
     function togglePref(el, prefKey) {
       const txt = el.textContent.trim();
       el.classList.toggle('sel');
-      
+
       const isSel = el.classList.contains('sel');
       if (isSel) {
         if (!S.prof.studentPrefs.includes(txt)) S.prof.studentPrefs.push(txt);
       } else {
         S.prof.studentPrefs = S.prof.studentPrefs.filter(p => p !== txt);
       }
-      
+
       // Toggle Detail Input
       const pi = document.getElementById('pi-' + prefKey);
       if (pi) pi.style.display = isSel ? 'block' : 'none';
-      
+
       // Toggle Wrap
       const wrap = document.getElementById('pref-inputs-wrap');
       const anySel = document.querySelectorAll('.chip.sel').length > 0;
@@ -2422,7 +2452,7 @@
       const firstDay = new Date(S.calYear, S.calMonth, 1).getDay();
       const daysInMonth = new Date(S.calYear, S.calMonth + 1, 0).getDate();
       const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-      let h = dayNames.map(d => `<div class="cal-dn" style="${d==='Su'?'color:#D1D5DB;':''}">` + d + '</div>').join('');
+      let h = dayNames.map(d => `<div class="cal-dn" style="${d === 'Su' ? 'color:#D1D5DB;' : ''}">` + d + '</div>').join('');
       for (let i = 0; i < firstDay; i++) h += `<div class="cal-d empty"></div>`;
       for (let d = 1; d <= daysInMonth; d++) {
         const date = new Date(S.calYear, S.calMonth, d);
@@ -2554,21 +2584,26 @@
       S.prof.eduMastCGPA = document.getElementById('f-edumastcgpa').value;
       S.prof.eduMastBacklogs = document.getElementById('f-edumastbacklogs').value;
       S.prof.eduMastYear = document.getElementById('f-edumastyear').value;
-      
-      S.prof.edu12Board = document.getElementById('f-12board').value;
-      S.prof.edu12Year = document.getElementById('f-12year').value;
-      S.prof.edu12Eng = document.getElementById('f-12eng').value;
-      
-      S.prof.workRole = document.getElementById('f-workrole').value;
-      S.prof.workYears = document.getElementById('f-workyears').value;
-      S.prof.gapYears = document.getElementById('f-gapyears').value;
-      
-      S.prof.fiveYear = document.getElementById('f-fiveyear').value.trim();
-      S.prof.prefDegree = document.getElementById('f-prefdegree').value;
-      S.prof.targetCourse = document.getElementById('f-targetcourse').value;
-      S.prof.targetBudget = document.getElementById('f-targetbudget').value;
-      S.prof.modeFinancing = document.getElementById('f-modefinancing').value;
-      
+
+      const getV = id => {
+        const el = document.getElementById(id);
+        return el ? el.value : '';
+      };
+
+      S.prof.edu12Board = getV('f-12board');
+      S.prof.edu12Year = getV('f-12year');
+      S.prof.edu12Eng = getV('f-12eng');
+
+      S.prof.workRole = getV('f-workrole');
+      S.prof.workYears = getV('f-workyears');
+      S.prof.gapYears = getV('f-gapyears');
+
+      S.prof.fiveYear = getV('f-fiveyear').trim();
+      S.prof.prefDegree = getV('f-prefdegree');
+      S.prof.targetCourse = getV('f-targetcourse');
+      S.prof.targetBudget = getV('f-targetbudget');
+      S.prof.modeFinancing = getV('f-modefinancing');
+
       // Preference Details
       const p = S.prof;
       const getP = id => {
@@ -2589,7 +2624,7 @@
       let ok = true;
       const uid = document.getElementById('f-userid');
       if (!S.prof.userId) { showE('e-userid', uid); ok = false; } else { clearE('e-userid', uid); }
-      
+
       const fv = document.getElementById('f-fiveyear');
       if (!S.prof.fiveYear) { showE('e-fiveyear', fv); ok = false; } else { clearE('e-fiveyear', fv); }
 
@@ -2631,7 +2666,7 @@
       document.getElementById('sum-work').innerHTML = work;
 
       // INTENT
-      let goals = [p.goalJob?'Job':0, p.goalPR?'PR':0, p.goalUpskill?'Upskill':0, p.goalResearch?'Research':0].filter(Boolean).join(', ');
+      let goals = [p.goalJob ? 'Job' : 0, p.goalPR ? 'PR' : 0, p.goalUpskill ? 'Upskill' : 0, p.goalResearch ? 'Research' : 0].filter(Boolean).join(', ');
       let intent = b('Career Outcome', p.fiveYear);
       intent += b('Goals', goals);
       intent += b('Target Countries', p.targetCountry);
@@ -2640,7 +2675,7 @@
       intent += b('Target Course', p.targetCourse);
       intent += b('Budget', p.targetBudget);
       intent += b('Financing', p.modeFinancing);
-      
+
       // Preferences
       if (p.studentPrefs.length > 0) {
         intent += `<div style="margin-top:10px; font-weight:700; color:var(--intent); font-size:12px;">Notes on Preferences</div>`;
@@ -2655,7 +2690,7 @@
       intent += b('Status', p.eltStatus);
       if (p.eltStatus === 'Appeared' || p.eltStatus === 'Score Ready') intent += b('Exam', p.eltExam) + b('Date', p.eltDate) + b('Score', p.eltScore);
       else if (p.eltStatus === 'Not Appeared') intent += b('Willing?', p.eltWilling) + b('Plan', p.eltPlanWhen) + b('Waiver Prep', p.eltWaiver || p.eltPrepStage);
-      
+
       document.getElementById('sum-intent').innerHTML = intent;
       document.getElementById('sum-slot').innerHTML = p.slotDate ? `<strong>${p.slotDate}</strong> at ${fmtTime(p.slotTime)}` : 'Not scheduled';
     }
@@ -2743,15 +2778,15 @@
       document.getElementById('timer-disp').textContent = '00:00';
       document.getElementById('e-slot').style.display = 'none';
       document.querySelectorAll('.ve,.slot-err').forEach(el => el.style.display = 'none');
-      
+
       // Chips visual reset
       document.querySelectorAll('.chip').forEach(c => c.classList.remove('sel'));
-      
+
       // Scheduling reset
       S.selectedSlotDate = null;
-      const tgc = document.getElementById('time-grid-container'); if(tgc) tgc.style.display = 'none';
-      const conf = document.getElementById('slot-confirm'); if(conf) conf.style.display = 'none';
-      
+      const tgc = document.getElementById('time-grid-container'); if (tgc) tgc.style.display = 'none';
+      const conf = document.getElementById('slot-confirm'); if (conf) conf.style.display = 'none';
+
       // Preference details reset
       const pwrap = document.getElementById('pref-inputs-wrap');
       if (pwrap) {
@@ -2761,7 +2796,7 @@
       }
 
       const sb = document.getElementById('btn-submit'); if (sb) { sb.textContent = '📤 Submit to Google Sheets'; sb.disabled = false; }
-      
+
       const now = new Date(); S.calYear = now.getFullYear(); S.calMonth = now.getMonth();
       renderCalendar();
       updateTabs('intro');
