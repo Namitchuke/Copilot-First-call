@@ -2350,13 +2350,18 @@
 
     function selectEdu(level) {
       S.prof.eduHighest = level;
-      ['12th', 'Bachelors', 'Masters'].forEach(l => {
-        const id = l === '12th' ? '12' : l.toLowerCase().substring(0, 4);
-        const btn = document.getElementById('edu-' + id);
-        const fields = document.getElementById('edu-' + id + '-fields');
-        if (btn) btn.classList.toggle('sel', l === level);
-        if (fields) fields.style.display = (l === level) ? 'grid' : 'none';
-      });
+      // Cascade: Masters shows all 3, Bachelors shows 12th+Bach, 12th shows only 12th
+      const show12  = (level === '12th' || level === 'Bachelors' || level === 'Masters');
+      const showBach = (level === 'Bachelors' || level === 'Masters');
+      const showMast = (level === 'Masters');
+
+      document.getElementById('edu-12').classList.toggle('sel', level === '12th');
+      document.getElementById('edu-bach').classList.toggle('sel', level === 'Bachelors');
+      document.getElementById('edu-mast').classList.toggle('sel', level === 'Masters');
+
+      document.getElementById('edu-12-fields').style.display   = show12  ? 'grid' : 'none';
+      document.getElementById('edu-bach-fields').style.display  = showBach ? 'grid' : 'none';
+      document.getElementById('edu-mast-fields').style.display  = showMast ? 'grid' : 'none';
     }
 
     function selectWorkEx(val) {
@@ -2652,11 +2657,14 @@
 
       const b = (l, v) => v ? `<div class="sum-row"><strong>${l}:</strong> <span>${v}</span></div>` : '';
 
-      // ACADEMICS
+      // ACADEMICS — Cascading summary
       let acad = b('Education Level', p.eduHighest);
-      if (p.eduHighest === '12th') acad += b('Grade', p.edu12Grade) + b('Maths', p.edu12Maths) + b('Board', p.edu12Board);
-      else if (p.eduHighest === 'Bachelors') acad += b('Course', p.eduBachCourse) + b('CGPA', p.eduBachCGPA) + b('Backlogs', p.eduBachBacklogs);
-      else if (p.eduHighest === 'Masters') acad += b('Course', p.eduMastCourse) + b('CGPA', p.eduMastCGPA) + b('Backlogs', p.eduMastBacklogs);
+      // Always show 12th details when any level is selected
+      if (p.eduHighest) acad += b('12th Grade', p.edu12Grade) + b('12th Maths', p.edu12Maths) + b('12th Board', p.edu12Board);
+      // Show Bachelors details for Bachelors or Masters
+      if (p.eduHighest === 'Bachelors' || p.eduHighest === 'Masters') acad += b('Bach Course', p.eduBachCourse) + b('Bach CGPA', p.eduBachCGPA) + b('Bach Backlogs', p.eduBachBacklogs) + b('Bach Year', p.eduBachYear);
+      // Show Masters details only for Masters
+      if (p.eduHighest === 'Masters') acad += b('Mast Course', p.eduMastCourse) + b('Mast CGPA', p.eduMastCGPA) + b('Mast Backlogs', p.eduMastBacklogs) + b('Mast Year', p.eduMastYear);
       document.getElementById('sum-acad').innerHTML = acad;
 
       // WORK
