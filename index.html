@@ -2609,7 +2609,9 @@
       S.prof.workYears = getV('f-workyears');
       S.prof.gapYears = getV('f-gapyears');
 
-      S.prof.fiveYear = getV('f-fiveyear').trim();
+      const goalsArr = [S.prof.goalJob ? 'Job' : '', S.prof.goalPR ? 'PR' : '', S.prof.goalUpskill ? 'Upskill' : '', S.prof.goalResearch ? 'Research' : ''].filter(Boolean);
+      S.prof.fiveYear = goalsArr.join(', ');
+      
       S.prof.prefDegree = getV('f-prefdegree');
       S.prof.targetCourse = getV('f-targetcourse');
       S.prof.targetBudget = getV('f-targetbudget');
@@ -2636,8 +2638,10 @@
       const uid = document.getElementById('f-userid');
       if (!S.prof.userId) { showE('e-userid', uid); ok = false; } else { clearE('e-userid', uid); }
 
-      const fv = document.getElementById('f-fiveyear');
-      if (!S.prof.fiveYear) { showE('e-fiveyear', fv); ok = false; } else { clearE('e-fiveyear', fv); }
+      if (goalsArr.length === 0) {
+        ok = false;
+        alert('Please select at least one Career Outcome');
+      }
 
       if (!S.prof.eduHighest) { ok = false; alert('Please select Highest Education'); }
       if (!ok) return;
@@ -2678,9 +2682,7 @@
       document.getElementById('sum-work').innerHTML = work;
 
       // INTENT
-      let goals = [p.goalJob ? 'Job' : 0, p.goalPR ? 'PR' : 0, p.goalUpskill ? 'Upskill' : 0, p.goalResearch ? 'Research' : 0].filter(Boolean).join(', ');
       let intent = b('Career Outcome', p.fiveYear);
-      intent += b('Goals', goals);
       intent += b('Target Countries', p.targetCountry);
       intent += b('Target Intake', p.targetIntake);
       intent += b('Degree Pref', p.prefDegree);
