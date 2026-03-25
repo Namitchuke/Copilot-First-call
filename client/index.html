@@ -2094,22 +2094,17 @@
             <div class="ns-head">
               <div class="ns-num" id="ns-num-1">1</div>
               <div>
-                <div class="ns-step-title">Collect Student Questions</div>
+                <div class="ns-step-title">Collect Student Data</div>
                 <div class="ns-step-sub">Ask the student if they have any questions before wrapping up</div>
               </div>
             </div>
             <div class="ns-body">
               <div class="sbox next" style="margin-bottom:14px;">
                 <span class="sbox-label">Say to Student</span>
-                <p>"Do you have any questions which you have in your mind? I'll add them to your plan."</p>
-              </div>
-              <div class="fg s3">
-                <label>Student's Questions</label>
-                <textarea class="fc" id="f-studentqs" rows="2" placeholder="Type student questions here..."
-                  oninput="sf('studentQs',this.value)"></textarea>
+                <p>"Do you have any questions which you have in your mind? I'll add them to your personalized shortlist."</p>
               </div>
               <div style="display:flex;justify-content:flex-end;margin-top:12px;">
-                <button class="btn btn-next" id="btn-qcap" onclick="captureQs()">✅ Questions Noted — Proceed</button>
+                <button class="btn btn-next" id="btn-qcap" onclick="captureQs()">✅ Data Noted — Proceed</button>
               </div>
             </div>
           </div>
@@ -2119,19 +2114,18 @@
             <div class="ns-head">
               <div class="ns-num" id="ns-num-2">2</div>
               <div>
-                <div class="ns-step-title">Plan Delivery</div>
+                <div class="ns-step-title">Shortlist Delivery</div>
                 <div class="ns-step-sub">Share next steps with the student</div>
               </div>
             </div>
             <div class="ns-body">
               <div class="sbox next" style="margin-bottom:14px;">
                 <span class="sbox-label">Say to Student</span>
-                <p>"You can expect to view your <strong>university shortlist</strong>, along with <strong>answers to
-                    your questions</strong>, on our <strong>LS-App in next 24hrs</strong>.</p>
-                <p>Please ensure to download the same, as your plan would only be visible on the App."</p>
+                <p>"You can expect to view your <strong>university shortlist</strong> on our <strong>LS-App in next 24hrs</strong>.</p>
+                <p>Please ensure to download the same, as your personalized shortlist would only be visible on the App."</p>
               </div>
               <div style="display:flex;justify-content:flex-end;">
-                <button class="btn btn-next" id="btn-plan" onclick="planDelivered()">✅ Plan Explained — Proceed</button>
+                <button class="btn btn-next" id="btn-plan" onclick="planDelivered()">✅ Shortlist Explained — Proceed</button>
               </div>
             </div>
           </div>
