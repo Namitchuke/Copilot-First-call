@@ -1325,7 +1325,8 @@
 
           <div class="sbox grey">
             <span class="sbox-label">Self Introduction — Read aloud</span>
-            <p>"Hi [Student Name], this is <strong>[Your Name]</strong> here. <strong>How are you? How has your day been?</strong></p>
+            <p>"Hi [Student Name], this is <strong>[Your Name]</strong> here. <strong>How are you? How has your day
+                been?</strong></p>
             <p>I am a <strong>Senior Expert at Leap</strong>. I'm here to guide you through your <strong>entire study
                 abroad journey</strong> — end-to-end, from choosing the right course and country to completing your visa
               process.</p>
@@ -1402,29 +1403,20 @@
                   <polyline points="20 6 9 17 4 12" />
                 </svg></div>
               <div>
-                <div class="cl-label">Stream Motivation <span style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
+                <div class="cl-label">Stream Motivation <span style="color:#9CA3AF;font-size:11px;">(optional)</span>
+                </div>
                 <div class="cl-q">"Also, you missed telling me — why exactly did you choose this course? What was that
                   reason which drove you to choose this course specifically?"</div>
               </div>
             </div>
-            <div class="cl-item" onclick="tick('academics','cgpa',this)">
+            <div class="cl-item" onclick="tick('academics','acad_details',this)">
               <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
                   stroke-width="3">
                   <polyline points="20 6 9 17 4 12" />
                 </svg></div>
               <div>
-                <div class="cl-label">CGPA / Grade <span style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
-                <div class="cl-q">"Can you tell me what was your undergrad CGPA or percentage?"</div>
-              </div>
-            </div>
-            <div class="cl-item" onclick="tick('academics','backlogs',this)">
-              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
-                  stroke-width="3">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg></div>
-              <div>
-                <div class="cl-label">Backlogs <span style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
-                <div class="cl-q">"And did you happen to have any backlogs during your degree?"</div>
+                <div class="cl-label">Academic Details <span style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
+                <div class="cl-q">"Can you tell me what was your undergrad CGPA, your year of passing, and did you happen to have any backlogs?"</div>
               </div>
             </div>
             <div class="cl-item" onclick="tick('academics','extra',this)">
@@ -1433,7 +1425,8 @@
                   <polyline points="20 6 9 17 4 12" />
                 </svg></div>
               <div>
-                <div class="cl-label">Extracurricular Activities <span style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
+                <div class="cl-label">Extracurricular Activities <span
+                    style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
                 <div class="cl-q">"Apart from your academics, were you part of any clubs or fest, any extra-curricular
                   activities you did in your college which I should know of?"</div>
               </div>
@@ -1441,7 +1434,7 @@
           </div>
 
           <div class="sec-foot">
-            <span class="sec-hint">Tick all 4 mandatory items to unlock the next section</span>
+            <span class="sec-hint">Tick all 3 mandatory items to unlock the next section</span>
             <button class="btn btn-acad" id="btn-academics" disabled onclick="goTo('work')">Done → Work
               Experience</button>
           </div>
@@ -1489,7 +1482,8 @@
                   <polyline points="20 6 9 17 4 12" />
                 </svg></div>
               <div>
-                <div class="cl-label">Field / Role Switch <span style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
+                <div class="cl-label">Field / Role Switch <span style="color:#9CA3AF;font-size:11px;">(optional)</span>
+                </div>
                 <div class="cl-q">"Was your work in a different field from your undergrad specialisation?"</div>
               </div>
             </div>
@@ -1531,7 +1525,8 @@
                   <polyline points="20 6 9 17 4 12" />
                 </svg></div>
               <div>
-                <div class="cl-label">Target Course Abroad <span style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
+                <div class="cl-label">Target Course Abroad <span
+                    style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
                 <div class="cl-q">"Do you have a sense of which course
                   you'd want to pursue when you go abroad?"</div>
               </div>
@@ -1542,7 +1537,8 @@
                   <polyline points="20 6 9 17 4 12" />
                 </svg></div>
               <div>
-                <div class="cl-label">WHY Behind the Choice of Course <span style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
+                <div class="cl-label">WHY Behind the Choice of Course <span
+                    style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
                 <div class="cl-q">"And may I know the reason behind your interest in this particular course?"</div>
               </div>
             </div>
@@ -1601,7 +1597,8 @@
                   <polyline points="20 6 9 17 4 12" />
                 </svg></div>
               <div>
-                <div class="cl-label">Country Preference <span style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
+                <div class="cl-label">Country Preference <span style="color:#EF4444;font-size:11px;">(mandatory)</span>
+                </div>
                 <div class="cl-q">"And I can see you have filled &lt;country name&gt; as your preferred country. Are you
                   only looking for that or are you still open to exploring?"</div>
               </div>
@@ -1612,7 +1609,8 @@
                   <polyline points="20 6 9 17 4 12" />
                 </svg></div>
               <div>
-                <div class="cl-label">English Language Test (ELT) <span style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
+                <div class="cl-label">English Language Test (ELT) <span
+                    style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
                 <div class="cl-q">"Do you know anything about English Language Tests? Have you appeared in any?"</div>
               </div>
             </div>
@@ -1622,7 +1620,8 @@
                   <polyline points="20 6 9 17 4 12" />
                 </svg></div>
               <div>
-                <div class="cl-label">Any Particular Preference <span style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
+                <div class="cl-label">Any Particular Preference <span
+                    style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
                 <div class="cl-q">"Also wanted to understand if there are any particular preferences when it comes to
                   your universities / courses / countries you are expecting to include in your shortlist?"</div>
               </div>
@@ -1633,7 +1632,8 @@
                   <polyline points="20 6 9 17 4 12" />
                 </svg></div>
               <div>
-                <div class="cl-label">Intake / Timeline <span style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
+                <div class="cl-label">Intake / Timeline <span style="color:#EF4444;font-size:11px;">(mandatory)</span>
+                </div>
                 <div class="cl-q">"And in terms of timing — do you have a particular intake in mind, like a specific
                   year or semester you're targeting to start?"</div>
               </div>
@@ -1688,7 +1688,8 @@
                   <polyline points="20 6 9 17 4 12" />
                 </svg></div>
               <div>
-                <div class="cl-label">Specific Role / Career Outcome <span style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
+                <div class="cl-label">Specific Role / Career Outcome <span
+                    style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
                 <div class="cl-q">"What kind of role or work do you see yourself doing post this degree?"</div>
               </div>
             </div>
@@ -1698,7 +1699,8 @@
                   <polyline points="20 6 9 17 4 12" />
                 </svg></div>
               <div>
-                <div class="cl-label">Stay Abroad or Return to India <span style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
+                <div class="cl-label">Stay Abroad or Return to India <span
+                    style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
                 <div class="cl-q">"And post your degree, do you plan to settle abroad or would you be eventually coming
                   back to India?"</div>
               </div>
@@ -1709,7 +1711,8 @@
                   <polyline points="20 6 9 17 4 12" />
                 </svg></div>
               <div>
-                <div class="cl-label">Alternate Plans / Commitment Check <span style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
+                <div class="cl-label">Alternate Plans / Commitment Check <span
+                    style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
                 <div class="cl-q">"Are there any other career paths you're exploring right now that might change or
                   delay this plan?"</div>
               </div>
@@ -1859,7 +1862,7 @@
 
               <div class="fg s3">
                 <label class="req">Gap Years (Mandatory)</label>
-                <input type="text" class="fc" id="f-gapyears" placeholder="e.g. 1 year for UPSC"
+                <input type="number" class="fc" id="f-gapyears" placeholder="e.g. 0"
                   oninput="sf('gapYears',this.value)" />
               </div>
             </div>
@@ -2071,7 +2074,8 @@
             <div class="ns-body">
               <div class="sbox next" style="margin-bottom:14px;">
                 <span class="sbox-label">Say to Student</span>
-                <p>"Do you have any questions which you have in your mind? I'll add them to your personalized shortlist."</p>
+                <p>"Do you have any questions which you have in your mind? I'll add them to your personalized
+                  shortlist."</p>
               </div>
               <div style="display:flex;justify-content:flex-end;margin-top:12px;">
                 <button class="btn btn-next" id="btn-qcap" onclick="captureQs()">✅ Data Noted — Proceed</button>
@@ -2091,11 +2095,14 @@
             <div class="ns-body">
               <div class="sbox next" style="margin-bottom:14px;">
                 <span class="sbox-label">Say to Student</span>
-                <p>"You can expect to view your <strong>university shortlist</strong> on our <strong>LS-App in next 24hrs</strong>.</p>
-                <p>Please ensure to download the same, as your personalized shortlist would only be visible on the App."</p>
+                <p>"You can expect to view your <strong>university shortlist</strong> on our <strong>LS-App in next
+                    24hrs</strong>.</p>
+                <p>Please ensure to download the same, as your personalized shortlist would only be visible on the App."
+                </p>
               </div>
               <div style="display:flex;justify-content:flex-end;">
-                <button class="btn btn-next" id="btn-plan" onclick="planDelivered()">✅ Shortlist Explained — Proceed</button>
+                <button class="btn btn-next" id="btn-plan" onclick="planDelivered()">✅ Shortlist Explained —
+                  Proceed</button>
               </div>
             </div>
           </div>
@@ -2232,14 +2239,14 @@
       prof: freshProf(),
       cl: freshCL(),
       clDescriptor: {
-        academics: ['course', 'college', 'motivation', 'cgpa', 'backlogs', 'extra'],
+        academics: ['course', 'college', 'motivation', 'acad_details', 'extra'],
         work: ['exactrole', 'fieldswitch', 'switchreason', 'duration', 'gapyears', 'targetcourse', 'whycourse'],
         i1: ['why', 'country', 'elt', 'prefs', 'intake', 'parents', 'budget'],
         i2: ['career', 'stay', 'alternate']
       },
       // Only these must be checked to unlock the next section
       clMandatory: {
-        academics: ['course', 'college', 'cgpa', 'backlogs'],
+        academics: ['course', 'college', 'acad_details'],
         work: ['exactrole', 'duration', 'gapyears', 'targetcourse'],
         i1: ['country', 'elt', 'intake', 'budget'],
         i2: ['career']
@@ -2326,7 +2333,7 @@
     function selectEdu(level) {
       S.prof.eduHighest = level;
       // Cascade: Masters shows all 3, Bachelors shows 12th+Bach, 12th shows only 12th
-      const show12  = (level === '12th' || level === 'Bachelors' || level === 'Masters');
+      const show12 = (level === '12th' || level === 'Bachelors' || level === 'Masters');
       const showBach = (level === 'Bachelors' || level === 'Masters');
       const showMast = (level === 'Masters');
 
@@ -2334,9 +2341,9 @@
       document.getElementById('edu-bach').classList.toggle('sel', level === 'Bachelors');
       document.getElementById('edu-mast').classList.toggle('sel', level === 'Masters');
 
-      document.getElementById('edu-12-fields').style.display   = show12  ? 'grid' : 'none';
-      document.getElementById('edu-bach-fields').style.display  = showBach ? 'grid' : 'none';
-      document.getElementById('edu-mast-fields').style.display  = showMast ? 'grid' : 'none';
+      document.getElementById('edu-12-fields').style.display = show12 ? 'grid' : 'none';
+      document.getElementById('edu-bach-fields').style.display = showBach ? 'grid' : 'none';
+      document.getElementById('edu-mast-fields').style.display = showMast ? 'grid' : 'none';
     }
 
     function selectWorkEx(val) {
@@ -2566,7 +2573,7 @@
 
       const goalsArr = [S.prof.goalJob ? 'Job' : '', S.prof.goalPR ? 'PR' : '', S.prof.goalUpskill ? 'Upskill' : '', S.prof.goalResearch ? 'Research' : ''].filter(Boolean);
       S.prof.fiveYear = goalsArr.join(', ');
-      
+
       S.prof.prefDegree = getV('f-prefdegree');
       S.prof.targetCourse = getV('f-targetcourse');
       S.prof.targetBudget = getV('f-targetbudget');
