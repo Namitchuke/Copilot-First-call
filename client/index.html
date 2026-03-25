@@ -2085,27 +2085,12 @@
             <div class="sec-ico">✅</div>
             <div>
               <div class="sec-title">Next Steps</div>
-              <div class="sec-sub">Complete these four steps in order</div>
-            </div>
-          </div>
-          <!-- Step 0 -->
-          <div class="ns-step" id="ns0">
-            <div class="ns-head">
-              <div class="ns-num">0</div>
-              <div>
-                <div class="ns-step-title">Student's Profile</div>
-                <div class="ns-step-sub" id="ns-profile-preview">Review profile before proceeding</div>
-              </div>
-            </div>
-            <div class="ns-body">
-              <div style="display:flex;justify-content:flex-end;margin-top:12px;">
-                <button class="btn btn-prof" onclick="markProfileReviewed()">✅ Profile Reviewed — Proceed</button>
-              </div>
+              <div class="sec-sub">Complete these three steps in order</div>
             </div>
           </div>
 
           <!-- Step 1 -->
-          <div class="ns-step disabled" id="ns1">
+          <div class="ns-step" id="ns1">
             <div class="ns-head">
               <div class="ns-num" id="ns-num-1">1</div>
               <div>
@@ -2645,7 +2630,6 @@
 
       if (!S.prof.eduHighest) { ok = false; alert('Please select Highest Education'); }
       if (!ok) return;
-      renderProfilePreview();
       goTo('nextsteps');
     }
 
@@ -2784,11 +2768,6 @@
         btn.textContent = oldTxt; btn.disabled = false;
       }
     }
-
-    function markProfileReviewed() {
-      document.getElementById('ns0').classList.add('done');
-      document.getElementById('ns1').classList.remove('disabled');
-    }
     function captureQs() {
       document.getElementById('ns1').classList.add('done');
       document.getElementById('ns2').classList.remove('disabled');
@@ -2796,16 +2775,6 @@
     function planDelivered() {
       document.getElementById('ns2').classList.add('done');
       document.getElementById('ns3').classList.remove('disabled');
-    }
-
-    function renderProfilePreview() {
-      const p = S.prof;
-      let h = `<strong>${p.userId || 'Student'}</strong> · `;
-      h += `${p.eduHighest || 'No Edu'} · `;
-      h += p.edu12Maths ? `Maths: ${p.edu12Maths} · ` : '';
-      h += `Financing: ${p.modeFinancing || 'Not set'}`;
-      const div = document.getElementById('ns-profile-preview');
-      if (div) div.innerHTML = h;
     }
 
     function resetForNextCall() {
