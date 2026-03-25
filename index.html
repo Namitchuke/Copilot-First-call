@@ -1624,7 +1624,7 @@
               <div>
                 <div class="cl-label">Any Particular Preference <span style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
                 <div class="cl-q">"Also wanted to understand if there are any particular preferences when it comes to
-                  your universities / courses / countries you are expecting to include in your plan?"</div>
+                  your universities / courses / countries you are expecting to include in your shortlist?"</div>
               </div>
             </div>
             <div class="cl-item" onclick="tick('i1','intake',this)">
@@ -1961,37 +1961,7 @@
                   <div class="chip" onclick="togglePref(this, 'prefScholar')">Scholarship Opportunity</div>
                 </div>
 
-                <!-- Dynamic Preference Inputs -->
-                <div id="pref-inputs-wrap"
-                  style="display:none; margin-top:15px; background:var(--bg2); padding:12px; border-radius:10px; border:1px solid var(--border); grid-template-columns:1fr 1fr; gap:10px;">
-                  <div class="fg" id="pi-prefCourse" style="display:none;"><label>Course Details</label><input
-                      type="text" class="fc" placeholder="e.g. Data Science"
-                      oninput="sf('prefCourseDetail',this.value)"></div>
-                  <div class="fg" id="pi-prefLoc" style="display:none;"><label>Location Details</label><input
-                      type="text" class="fc" placeholder="e.g. London, Berlin" oninput="sf('prefLocDetail',this.value)">
-                  </div>
-                  <div class="fg" id="pi-prefRank" style="display:none;"><label>Ranking Pref</label><input type="text"
-                      class="fc" placeholder="e.g. Top 100 QS" oninput="sf('prefRankDetail',this.value)"></div>
-                  <div class="fg" id="pi-prefFee" style="display:none;"><label>Budget/Fee Notes</label><input
-                      type="text" class="fc" placeholder="e.g. Under €10k/year"
-                      oninput="sf('prefFeeDetail',this.value)"></div>
-                  <div class="fg" id="pi-prefAdmin" style="display:none;"><label>Admin Chance Notes</label><input
-                      type="text" class="fc" placeholder="e.g. High acceptance"
-                      oninput="sf('prefAdminDetail',this.value)"></div>
-                  <div class="fg" id="pi-prefJob" style="display:none;"><label>Placement Notes</label><input type="text"
-                      class="fc" placeholder="e.g. In-built internships" oninput="sf('prefJobDetail',this.value)"></div>
-                  <div class="fg" id="pi-prefRes" style="display:none;"><label>Research Notes</label><input type="text"
-                      class="fc" placeholder="e.g. AI Labs" oninput="sf('prefResDetail',this.value)"></div>
-                  <div class="fg" id="pi-prefAlum" style="display:none;"><label>Alumni Notes</label><input type="text"
-                      class="fc" placeholder="e.g. Strong LinkedIn network" oninput="sf('prefAlumDetail',this.value)">
-                  </div>
-                  <div class="fg" id="pi-prefWaiver" style="display:none;"><label>Waiver Notes</label><input type="text"
-                      class="fc" placeholder="e.g. Based on 12th score" oninput="sf('prefWaiverDetail',this.value)">
-                  </div>
-                  <div class="fg" id="pi-prefScholar" style="display:none;"><label>Scholarship Notes</label><input
-                      type="text" class="fc" placeholder="e.g. Merit based"
-                      oninput="sf('prefScholarDetail',this.value)"></div>
-                </div>
+                <!-- Dynamic Preference Inputs removed -->
               </div>
 
               <!-- ELT COMPLEX LOGIC -->
@@ -2384,22 +2354,12 @@
     function togglePref(el, prefKey) {
       const txt = el.textContent.trim();
       el.classList.toggle('sel');
-
       const isSel = el.classList.contains('sel');
       if (isSel) {
         if (!S.prof.studentPrefs.includes(txt)) S.prof.studentPrefs.push(txt);
       } else {
         S.prof.studentPrefs = S.prof.studentPrefs.filter(p => p !== txt);
       }
-
-      // Toggle Detail Input
-      const pi = document.getElementById('pi-' + prefKey);
-      if (pi) pi.style.display = isSel ? 'block' : 'none';
-
-      // Toggle Wrap
-      const wrap = document.getElementById('pref-inputs-wrap');
-      const anySel = document.querySelectorAll('.chip.sel').length > 0;
-      if (wrap) wrap.style.display = anySel ? 'grid' : 'none';
     }
 
     function tagC(el, val) {
@@ -2827,13 +2787,7 @@
       const tgc = document.getElementById('time-grid-container'); if (tgc) tgc.style.display = 'none';
       const conf = document.getElementById('slot-confirm'); if (conf) conf.style.display = 'none';
 
-      // Preference details reset
-      const pwrap = document.getElementById('pref-inputs-wrap');
-      if (pwrap) {
-        pwrap.style.display = 'none';
-        pwrap.querySelectorAll('input').forEach(i => i.value = '');
-        pwrap.querySelectorAll('.fg').forEach(div => div.style.display = 'none');
-      }
+      // Preference details reset removed
 
       const sb = document.getElementById('btn-submit'); if (sb) { sb.textContent = '📤 Submit to Google Sheets'; sb.disabled = false; }
 
