@@ -2786,6 +2786,16 @@
       document.getElementById('e-slot').style.display = 'none';
       document.querySelectorAll('.ve,.slot-err').forEach(el => el.style.display = 'none');
 
+      // Clear all inputs and resets
+      document.querySelectorAll('input, select, textarea').forEach(el => el.value = '');
+      document.querySelectorAll('.cl-item').forEach(el => el.classList.remove('chk'));
+      ['academics', 'work', 'i1', 'i2'].forEach(cat => updateProgress(cat));
+      document.querySelectorAll('.elt-btn').forEach(el => el.classList.remove('sel'));
+      ['edu-12-fields', 'edu-bach-fields', 'edu-mast-fields', 'work-fields', 'elt-fields-common', 'elt-fields-none', 'elt-score-field', 'elt-details-yes', 'elt-details-no'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+
       // Chips visual reset
       document.querySelectorAll('.chip').forEach(c => c.classList.remove('sel'));
 
@@ -2816,7 +2826,7 @@
 
       const now = new Date(); S.calYear = now.getFullYear(); S.calMonth = now.getMonth();
       renderCalendar();
-      updateTabs('intro');
+      goTo('intro');
     }
 
     // ════════════════════════════════════════════
