@@ -1882,13 +1882,6 @@
               </div>
 
               <div class="fg s3">
-                <label class="req">Career Outcome (Specifics)</label>
-                <textarea class="fc" id="f-fiveyear" rows="2" placeholder="e.g. Working as a Data Scientist in the UK"
-                  oninput="sf('fiveYear',this.value)"></textarea>
-                <div class="ve" id="e-fiveyear">Required</div>
-              </div>
-
-              <div class="fg s3">
                 <label class="req">Target Country (Multi-select)</label>
                 <div class="chip-wrap" id="cw-country">
                   <div class="chip" onclick="tagC(this,'Not decided yet')">🏳️ Not decided yet</div>
@@ -2859,8 +2852,11 @@
       S.calMonth = now.getMonth();
       renderCalendar();
       updateTabs('intro');
-      // Wake up Render backend early to avoid cold starts
-      fetch('https://copilot-first-call-backend.onrender.com/ping').catch(() => {});
+      // -- STAY AWAKE LOGIC (Keep Render Active) --
+      const PING_URL = 'https://copilot-first-call-backend.onrender.com/ping';
+      const wakeUp = () => fetch(PING_URL).catch(() => { });
+      wakeUp(); // Wake up immediately
+      setInterval(wakeUp, 600000); // Ping every 10 minutes
     })();
   </script>
 </body>
