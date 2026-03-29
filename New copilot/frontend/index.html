@@ -1,0 +1,2860 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Counsellor Co-Pilot | Leap Finance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --acad: #2563EB;
+      --acad-bg: #EFF6FF;
+      --acad-mid: #DBEAFE;
+      --work: #059669;
+      --work-bg: #ECFDF5;
+      --work-mid: #D1FAE5;
+      --intent: #7C3AED;
+      --intent-bg: #F5F3FF;
+      --intent-mid: #EDE9FE;
+      --prof: #0EA5E9;
+      --prof-bg: #F0F9FF;
+      --prof-mid: #E0F2FE;
+      --next: #16A34A;
+      --next-bg: #F0FDF4;
+      --next-mid: #DCFCE7;
+      --text: #111827;
+      --text2: #6B7280;
+      --border: #E5E7EB;
+      --surface: #FFFFFF;
+      --bg: #F9FAFB;
+      --danger: #EF4444;
+      --r: 12px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .3
+      }
+    }
+
+    /* ══════════════ APP SHELL ══════════════ */
+    #app-screen {
+      display: block;
+      min-height: 100vh;
+    }
+
+    /* ── TOP BAR ── */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tb-timer {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      min-width: 76px;
+      flex-shrink: 0;
+    }
+
+    .tb-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #D1D5DB;
+      transition: background .3s;
+      flex-shrink: 0;
+    }
+
+    .tb-dot.live {
+      background: #EF4444;
+      animation: blink 1.2s ease-in-out infinite;
+    }
+
+    .tb-logo {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--acad);
+      flex-shrink: 0;
+    }
+
+    .tb-tabs {
+      display: flex;
+      gap: 5px;
+      flex: 1;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .tb-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 13px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1.5px solid transparent;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+
+    .tb-tab.inactive {
+      background: var(--bg);
+      border-color: var(--border);
+      color: var(--text2);
+    }
+
+    .tb-tab.a-acad {
+      background: var(--acad);
+      color: #fff;
+      border-color: var(--acad);
+    }
+
+    .tb-tab.a-work {
+      background: var(--work);
+      color: #fff;
+      border-color: var(--work);
+    }
+
+    .tb-tab.a-intent {
+      background: var(--intent);
+      color: #fff;
+      border-color: var(--intent);
+    }
+
+    .tb-tab.a-prof {
+      background: var(--prof);
+      color: #fff;
+      border-color: var(--prof);
+    }
+
+    .tb-tab.a-next {
+      background: var(--next);
+      color: #fff;
+      border-color: var(--next);
+    }
+
+    .tb-tab.d-acad {
+      background: var(--acad-bg);
+      color: var(--acad);
+      border-color: var(--acad);
+    }
+
+    .tb-tab.d-work {
+      background: var(--work-bg);
+      color: var(--work);
+      border-color: var(--work);
+    }
+
+    .tb-tab.d-intent {
+      background: var(--intent-bg);
+      color: var(--intent);
+      border-color: var(--intent);
+    }
+
+    .tb-tab.d-prof {
+      background: var(--prof-bg);
+      color: var(--prof);
+      border-color: var(--prof);
+    }
+
+    .tab-dots {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+    }
+
+    .tab-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .35);
+      flex-shrink: 0;
+    }
+
+    .tab-dot.on {
+      background: rgba(255, 255, 255, .9);
+    }
+
+    .tb-user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+
+    .tb-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--acad);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tb-uname {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .tb-logout {
+      font-size: 11px;
+      color: var(--text2);
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    .tb-logout:hover {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* ── MAIN ── */
+    .app-main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 28px 16px 60px;
+    }
+
+    /* ── SECTIONS ── */
+    .sec {
+      display: none;
+      animation: fadeUp .3s ease-out;
+    }
+
+    .sec.active {
+      display: block;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: #fff;
+      border-radius: var(--r);
+      border: 1px solid var(--border);
+      padding: 24px;
+      margin-bottom: 14px;
+    }
+
+    /* ── SECTION HEADER ── */
+    .sec-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .sec-ico {
+      font-size: 22px;
+      margin-top: 2px;
+    }
+
+    .sec-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .sec-sub {
+      font-size: 13px;
+      color: var(--text2);
+      margin-top: 2px;
+    }
+
+    /* ── SCRIPT BOX ── */
+    .sbox {
+      border-left: 3px solid;
+      border-radius: 0 10px 10px 0;
+      padding: 15px 17px;
+      margin-bottom: 18px;
+      font-size: 13.5px;
+      line-height: 1.65;
+    }
+
+    .sbox p+p {
+      margin-top: 8px;
+    }
+
+    .sbox-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 9px;
+      display: block;
+    }
+
+    .sbox.acad {
+      border-color: var(--acad);
+      background: var(--acad-bg);
+    }
+
+    .sbox.acad .sbox-label {
+      color: var(--acad);
+    }
+
+    .sbox.work {
+      border-color: var(--work);
+      background: var(--work-bg);
+    }
+
+    .sbox.work .sbox-label {
+      color: var(--work);
+    }
+
+    .sbox.intent {
+      border-color: var(--intent);
+      background: var(--intent-bg);
+    }
+
+    .sbox.intent .sbox-label {
+      color: var(--intent);
+    }
+
+    .sbox.prof {
+      border-color: var(--prof);
+      background: var(--prof-bg);
+    }
+
+    .sbox.prof .sbox-label {
+      color: var(--prof);
+    }
+
+    .sbox.next {
+      border-color: var(--next);
+      background: var(--next-bg);
+    }
+
+    .sbox.next .sbox-label {
+      color: var(--next);
+    }
+
+    .sbox.grey {
+      border-color: #9CA3AF;
+      background: #F9FAFB;
+    }
+
+    .sbox.grey .sbox-label {
+      color: #6B7280;
+    }
+
+    /* ── CHECKLIST ── */
+    .cl-prog {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .cl-bar {
+      flex: 1;
+      height: 4px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .cl-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width .3s;
+    }
+
+    .cl-cnt {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text2);
+      white-space: nowrap;
+    }
+
+    .cl {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 20px;
+    }
+
+    .cl-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 13px 15px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all .15s;
+      background: #fff;
+      user-select: none;
+    }
+
+    .cl-item:hover {
+      border-color: #9CA3AF;
+      background: var(--bg);
+    }
+
+    .cl-item.chk {
+      border-color: #10B981;
+      background: #F0FDF4;
+    }
+
+    .cl-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .15s;
+      margin-top: 1px;
+    }
+
+    .cl-item.chk .cl-box {
+      background: #10B981;
+      border-color: #10B981;
+    }
+
+    .cl-box svg {
+      opacity: 0;
+    }
+
+    .cl-item.chk .cl-box svg {
+      opacity: 1;
+    }
+
+    .cl-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .cl-q {
+      font-size: 12.5px;
+      color: var(--text2);
+      font-style: italic;
+      margin-top: 3px;
+    }
+
+    .cl-item.chk .cl-label {
+      color: #065F46;
+    }
+
+    .cl-item.chk .cl-q {
+      color: #065F46;
+      opacity: .7;
+    }
+
+    /* ── PART DIVIDER ── */
+    .part-div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 22px 0 16px;
+    }
+
+    .part-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .part-badge {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--intent);
+      background: var(--intent-bg);
+      border: 1px solid var(--intent-mid);
+      padding: 4px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    /* ── SECTION FOOTER ── */
+    .sec-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      margin-top: 4px;
+    }
+
+    .sec-hint {
+      font-size: 12px;
+      color: var(--text2);
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      border: none;
+      transition: all .15s;
+    }
+
+    .btn:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .btn-lg {
+      padding: 11px 26px;
+      font-size: 14.5px;
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    .btn-acad {
+      background: var(--acad);
+      color: #fff;
+    }
+
+    .btn-acad:not(:disabled):hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    .btn-work {
+      background: var(--work);
+      color: #fff;
+    }
+
+    .btn-work:not(:disabled):hover {
+      background: #047857;
+      transform: translateY(-1px);
+    }
+
+    .btn-intent {
+      background: var(--intent);
+      color: #fff;
+    }
+
+    .btn-intent:not(:disabled):hover {
+      background: #6D28D9;
+      transform: translateY(-1px);
+    }
+
+    .ns-step.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+      filter: grayscale(0.5);
+    }
+
+    .btn-prof {
+      background: var(--prof);
+      color: #fff;
+    }
+
+    .btn-prof:not(:disabled):hover {
+      background: #0284C7;
+      transform: translateY(-1px);
+    }
+
+    .btn-next {
+      background: var(--next);
+      color: #fff;
+    }
+
+    .btn-next:not(:disabled):hover {
+      background: #15803D;
+      transform: translateY(-1px);
+    }
+
+    .btn-red {
+      background: #EF4444;
+      color: #fff;
+    }
+
+    .btn-red:not(:disabled):hover {
+      background: #DC2626;
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: var(--bg);
+      color: var(--text2);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      background: var(--border);
+    }
+
+    /* ── TIME GRID ── */
+    .time-grid-container {
+      margin-top: 16px;
+      display: none;
+    }
+
+    .time-grid-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #927239;
+      margin-bottom: 12px;
+    }
+
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .time-slot-btn {
+      padding: 10px 0;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--text);
+      font-size: 13px;
+      font-family: inherit;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .time-slot-btn:hover {
+      border-color: #8c5614;
+      color: #8c5614;
+    }
+
+    .time-slot-btn.sel {
+      background: #8c5614;
+      border-color: #8c5614;
+      color: #fff;
+    }
+
+    /* ══════════════ PROFILE FORM ══════════════ */
+    .prof-sec {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .prof-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 15px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .prof-head.grey {
+      background: #F3F4F6;
+      color: #374151;
+    }
+
+    .prof-head.acad {
+      background: var(--acad-mid);
+      color: var(--acad);
+    }
+
+    .prof-head.work {
+      background: var(--work-mid);
+      color: var(--work);
+    }
+
+    .prof-head.intent {
+      background: var(--intent-mid);
+      color: var(--intent);
+    }
+
+    .cnt-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .65);
+    }
+
+    .prof-body {
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 13px;
+    }
+
+    .prof-body.two {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .s2 {
+      grid-column: span 2;
+    }
+
+    .s3 {
+      grid-column: 1 / -1;
+    }
+
+    .fg {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .fg label {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .fg label.req::after {
+      content: ' *';
+      color: var(--danger);
+    }
+
+    .fc {
+      width: 100%;
+      padding: 8px 11px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      outline: none;
+      transition: border-color .2s;
+      background: #fff;
+    }
+
+    .fc:focus {
+      border-color: var(--acad);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, .08);
+    }
+
+    .fc.invalid {
+      border-color: var(--danger);
+    }
+
+    select.fc {
+      cursor: pointer;
+      appearance: none;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center, #fff;
+      padding-right: 30px;
+    }
+
+    textarea.fc {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .ve {
+      font-size: 11px;
+      color: var(--danger);
+      display: none;
+      margin-top: 2px;
+    }
+
+    /* Country chips */
+    .chip-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 9px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      min-height: 48px;
+    }
+
+    .chip-wrap:focus-within {
+      border-color: var(--intent);
+    }
+
+    .chip {
+      padding: 4px 10px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .12s;
+      user-select: none;
+      background: #fff;
+    }
+
+    .chip:hover {
+      border-color: var(--intent);
+    }
+
+    .chip.sel {
+      background: var(--intent);
+      color: #fff;
+      border-color: var(--intent);
+    }
+
+    /* ELT toggle */
+    .elt-toggle {
+      display: flex;
+      gap: 8px;
+    }
+
+    .elt-btn {
+      padding: 6px 16px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all .15s;
+    }
+
+    .elt-btn.sel {
+      background: var(--intent);
+      color: #fff;
+      border-color: var(--intent);
+    }
+
+    .elt-cond {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .elt-cond.show {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      background: var(--intent-bg);
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--intent-mid);
+    }
+
+    /* ══════════════ NEXT STEPS ══════════════ */
+    .ns-step {
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      transition: opacity .25s;
+    }
+
+    .ns-step.locked {
+      opacity: .35;
+      pointer-events: none;
+    }
+
+    .ns-step.done {
+      border-color: #10B981;
+    }
+
+    .ns-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 17px;
+      background: var(--bg);
+    }
+
+    .ns-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all .2s;
+    }
+
+    .ns-step.done .ns-num {
+      background: #10B981;
+      border-color: #10B981;
+      color: #fff;
+    }
+
+    .ns-step-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .ns-step-sub {
+      font-size: 12px;
+      color: var(--text2);
+      margin-top: 2px;
+    }
+
+    .ns-body {
+      padding: 15px 17px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── CALENDAR ── */
+    .cal {
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 14px;
+    }
+
+    .cal-hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 11px;
+    }
+
+    .cal-mo {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .cal-nav {
+      background: none;
+      border: 1px solid #FDE68A;
+      border-radius: 6px;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--text2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cal-nav:hover {
+      background: #FDE68A;
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+    }
+
+    .cal-dn {
+      text-align: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: #92400E;
+      padding: 4px 0;
+    }
+
+    .cal-d {
+      text-align: center;
+      padding: 6px 2px;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--text);
+      transition: background .12s;
+    }
+
+    .cal-d:hover:not(.empty):not(.past) {
+      background: #FDE68A;
+    }
+
+    .cal-d.empty {
+      cursor: default;
+    }
+
+    .cal-d.past {
+      color: #D1D5DB;
+      cursor: default;
+    }
+
+    .cal-d.today {
+      font-weight: 800;
+      text-decoration: underline;
+    }
+
+    .cal-d.sel {
+      background: #F59E0B;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .time-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .time-lbl {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text2);
+    }
+
+    .time-inp {
+      padding: 8px 12px;
+      border: 1.5px solid #FDE68A;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+      width: 130px;
+    }
+
+    .time-inp:focus {
+      border-color: #F59E0B;
+    }
+
+    .slot-confirm {
+      font-size: 12px;
+      font-weight: 600;
+      color: #92400E;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .slot-err {
+      font-size: 12px;
+      color: var(--danger);
+      margin-top: 6px;
+      display: none;
+    }
+
+    /* ══════════════ SUMMARY ══════════════ */
+    .sum-name {
+      font-size: 27px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .sum-meta {
+      font-size: 13px;
+      color: var(--text2);
+      margin-bottom: 22px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .sum-sec {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 11px;
+    }
+
+    .sum-hd {
+      padding: 9px 15px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .sum-hd.acad {
+      background: var(--acad-mid);
+      color: var(--acad);
+    }
+
+    .sum-hd.work {
+      background: var(--work-mid);
+      color: var(--work);
+    }
+
+    .sum-hd.intent {
+      background: var(--intent-mid);
+      color: var(--intent);
+    }
+
+    .sum-hd.call {
+      background: #F3F4F6;
+      color: #374151;
+    }
+
+    .sum-body {
+      padding: 12px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .sum-row {
+      display: flex;
+      gap: 8px;
+      padding: 5px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sum-row:last-child {
+      border-bottom: none;
+    }
+
+    .sum-k {
+      font-size: 12px;
+      color: var(--text2);
+      min-width: 150px;
+      flex-shrink: 0;
+    }
+
+    .sum-v {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      word-break: break-word;
+    }
+
+    /* ══════════════ SUCCESS ══════════════ */
+    .success-card {
+      text-align: center;
+      padding: 56px 36px;
+    }
+
+    .suc-ico {
+      font-size: 52px;
+      margin-bottom: 16px;
+    }
+
+    .suc-title {
+      font-size: 23px;
+      font-weight: 800;
+      color: #065F46;
+      margin-bottom: 8px;
+    }
+
+    .suc-sub {
+      font-size: 14px;
+      color: var(--text2);
+    }
+
+    .suc-ts {
+      font-size: 12px;
+      color: var(--text2);
+      margin-bottom: 28px;
+    }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      background: #111827;
+      color: #fff;
+      padding: 11px 18px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 9999;
+      transform: translateY(60px);
+      opacity: 0;
+      transition: all .3s;
+      pointer-events: none;
+    }
+
+    #toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    #toast.err {
+      background: #DC2626;
+    }
+
+    /* ── MISC ── */
+    .start-wrap {
+      text-align: center;
+      padding: 22px 0 4px;
+    }
+
+    .start-hint {
+      font-size: 12px;
+      color: var(--text2);
+      margin-top: 8px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 20px 0;
+    }
+
+    @media (max-width:640px) {
+      .prof-body {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .prof-body.two {
+        grid-template-columns: 1fr;
+      }
+
+      .s2,
+      .s3 {
+        grid-column: 1 / -1;
+      }
+
+      .tb-tabs {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══════════ APP ══════════ -->
+  <div id="app-screen">
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+      <div class="tb-timer">
+        <div class="tb-dot" id="td"></div>
+        <span id="timer-disp">00:00</span>
+      </div>
+      <div class="tb-logo">Leap Co-Pilot</div>
+      <div class="tb-tabs">
+        <div class="tb-tab inactive" id="tab-academics">
+          <span>Academics</span>
+        </div>
+        <div class="tb-tab inactive" id="tab-work">
+          <span>Work Ex</span>
+        </div>
+        <div class="tb-tab inactive" id="tab-intent">
+          <span>Intent</span>
+        </div>
+        <div class="tb-tab inactive" id="tab-profile">
+          <span>Profile</span>
+        </div>
+        <div class="tb-tab inactive" id="tab-nextsteps">
+          <span>Next Steps</span>
+        </div>
+        <div class="tb-tab inactive" id="tab-summary">
+          <span>Summary</span>
+        </div>
+      </div>
+      <div class="tb-user">
+        <span class="tb-logout" onclick="resetForNextCall()" title="Start a new call">New Call</span>
+      </div>
+    </div>
+
+    <main class="app-main">
+
+      <!-- ═══ INTRO ═══ -->
+      <section class="sec active" id="sec-intro">
+        <div class="card">
+          <div class="sec-head">
+            <div class="sec-ico">👋</div>
+            <div>
+              <div class="sec-title">First Call Guide</div>
+              <div class="sec-sub">Read both scripts below before starting the call timer</div>
+            </div>
+          </div>
+
+          <div class="sbox grey">
+            <span class="sbox-label">Self Introduction </span>
+            <p>"[Student Name] I'm <strong>[Counsellor Name]</strong> your <strong>Senior Expert at Leap</strong></p>
+            <p>I'll be <strong>guiding you throughout your entire study abroad journey</strong>, from choosing the right
+              course and country to completing your visa process.</p>
+            <p>I've <strong>guided multiple students</strong> throughout my years of experience as you can see."</p>
+          </div>
+
+          <div class="sbox acad">
+            <span class="sbox-label">Expectation Setting</span>
+            <p>"Now to set context in this call our focus is entirely on <strong>understanding you.</strong></p>
+            <p>We'll cover <strong>three major sections</strong><br>
+              1. Your academics<br>
+              2. Your Professional experience<br>
+              3. Your Study abroad plans</p>
+            <p>Also please <strong>ask all your questions</strong> you have in your mind.</p>
+            <p>After this call you will get a <strong>detailed personalised shortlist of colleges</strong> and <strong>answers to all the questions you have</strong> - with this in your hand you'll have all clarity you're looking for.</p>
+            <p><strong>Sounds good?</strong>"</p>
+          </div>
+
+          <div class="start-wrap">
+            <button class="btn btn-acad btn-lg" onclick="startCall()">🚀 Start Call</button>
+            <div class="start-hint">Call timer begins when you click this button</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ ACADEMICS ═══ -->
+      <section class="sec" id="sec-academics">
+        <div class="card">
+          <div class="sec-head">
+            <div class="sec-ico">🎓</div>
+            <div>
+              <div class="sec-title">Academics</div>
+              <div class="sec-sub">Tick each item once covered with the student</div>
+            </div>
+          </div>
+
+          <div class="sbox acad">
+            <span class="sbox-label">Open With This</span>
+            <p>"Let's start — can you walk me through your academics, from school to college, and tell me about your
+              overall journey?"</p>
+          </div>
+
+          <div class="cl-prog">
+            <div class="cl-bar">
+              <div class="cl-fill" id="cl-fill-academics" style="width:0%;background:var(--acad)"></div>
+            </div>
+            <span class="cl-cnt" id="cl-cnt-academics">0 / 6</span>
+          </div>
+
+          <div class="cl" id="cl-academics">
+            <div class="cl-item" onclick="tick('academics','course',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Course <span style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
+                <div class="cl-q">"Which course did you take up in your undergrad?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('academics','college',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">College <span style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
+                <div class="cl-q">"And which college did you go to for your undergrad?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('academics','motivation',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Stream Motivation <span style="color:#9CA3AF;font-size:11px;">(optional)</span>
+                </div>
+                <div class="cl-q">"Also, you missed telling me — why exactly did you choose this course? What was that
+                  reason which drove you to choose this course specifically?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('academics','acad_details',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Academic Details <span style="color:#EF4444;font-size:11px;">(mandatory)</span>
+                </div>
+                <div class="cl-q">"Can you tell me what was your undergrad CGPA, your year of passing, and did you
+                  happen to have any backlogs?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('academics','extra',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Extracurricular Activities <span
+                    style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
+                <div class="cl-q">"Apart from your academics, were you part of any clubs or fest, any extra-curricular
+                  activities you did in your college which I should know of?"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sec-foot">
+            <span class="sec-hint">Tick all 3 mandatory items to unlock the next section</span>
+            <button class="btn btn-acad" id="btn-academics" disabled onclick="goTo('work')">Done → Work
+              Experience</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ WORK EXPERIENCE ═══ -->
+      <section class="sec" id="sec-work">
+        <div class="card">
+          <div class="sec-head">
+            <div class="sec-ico">💼</div>
+            <div>
+              <div class="sec-title">Work Experience</div>
+              <div class="sec-sub">Tick each item once covered with the student</div>
+            </div>
+          </div>
+
+          <div class="sbox work">
+            <span class="sbox-label">Open With This</span>
+            <p>"Can you share your professional experience so far and what you've been doing up to now? This will help
+              me understand your profile better."</p>
+          </div>
+
+          <div class="cl-prog">
+            <div class="cl-bar">
+              <div class="cl-fill" id="cl-fill-work" style="width:0%;background:var(--work)"></div>
+            </div>
+            <span class="cl-cnt" id="cl-cnt-work">0 / 7</span>
+          </div>
+
+          <div class="cl" id="cl-work">
+            <div class="cl-item" onclick="tick('work','exactrole',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Exact Role <span style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
+                <div class="cl-q">"Can you tell me what was the role you were working in at your company?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('work','fieldswitch',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Field / Role Switch <span style="color:#9CA3AF;font-size:11px;">(optional)</span>
+                </div>
+                <div class="cl-q">"Was your work in a different field from your undergrad specialisation?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('work','switchreason',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Switch Reason <span style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
+                <div class="cl-q">"What was your reason behind choosing your internship / working specialisation, since
+                  it is different from your undergraduate course?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('work','duration',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Total Work Ex <span style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
+                <div class="cl-q">"What's your total work experience till now?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('work','gapyears',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Gap Years <span style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
+                <div class="cl-q">"Were there any gap years between your education and work? If yes, can you help me
+                  with the reason?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('work','targetcourse',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Target Course Abroad <span
+                    style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
+                <div class="cl-q">"Do you have a sense of which course
+                  you'd want to pursue when you go abroad?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('work','whycourse',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">WHY Behind the Choice of Course <span
+                    style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
+                <div class="cl-q">"And may I know the reason behind your interest in this particular course?"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sec-foot">
+            <span class="sec-hint">Tick all 4 mandatory items to unlock the next section</span>
+            <button class="btn btn-work" id="btn-work" disabled onclick="goTo('intent')">Done → Study Intent</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ STUDY ABROAD INTENT ═══ -->
+      <section class="sec" id="sec-intent">
+        <div class="card">
+          <div class="sec-head">
+            <div class="sec-ico">🌍</div>
+            <div>
+              <div class="sec-title">Study Abroad Intent</div>
+              <div class="sec-sub">Two-part discussion — cover all 10 items</div>
+            </div>
+          </div>
+
+          <!-- Part 1 -->
+          <div
+            style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--intent);margin-bottom:10px;">
+            Part 1 of 2 · Intent Discovery</div>
+
+          <div class="sbox intent">
+            <span class="sbox-label">Open With This</span>
+            <p>"What made you start thinking about studying abroad as an option? And what have you explored so far about
+              studying abroad?"</p>
+          </div>
+
+          <div class="cl-prog">
+            <div class="cl-bar">
+              <div class="cl-fill" id="cl-fill-i1" style="width:0%;background:var(--intent)"></div>
+            </div>
+            <span class="cl-cnt" id="cl-cnt-i1">0 / 7</span>
+          </div>
+
+          <div class="cl" id="cl-i1">
+            <div class="cl-item" onclick="tick('i1','why',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">The 'Why' <span style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
+                <div class="cl-q">"Why is studying abroad meaningful to you now?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('i1','country',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Country Preference <span style="color:#EF4444;font-size:11px;">(mandatory)</span>
+                </div>
+                <div class="cl-q">"And I can see you have filled &lt;country name&gt; as your preferred country. Are you
+                  only looking for that or are you still open to exploring?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('i1','elt',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">English Language Test (ELT) <span
+                    style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
+                <div class="cl-q">"Do you know anything about English Language Tests? Have you appeared in any?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('i1','prefs',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Any Particular Preference <span
+                    style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
+                <div class="cl-q">"Also wanted to understand if there are any particular preferences when it comes to
+                  your universities / courses / countries you are expecting to include in your shortlist?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('i1','intake',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Intake / Timeline <span style="color:#EF4444;font-size:11px;">(mandatory)</span>
+                </div>
+                <div class="cl-q">"And in terms of timing — do you have a particular intake in mind, like a specific
+                  year or semester you're targeting to start?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('i1','parents',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Parents' Role <span style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
+                <div class="cl-q">"And your parents — are they involved in this decision? Have you spoken to them about
+                  it?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('i1','budget',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Budget <span style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
+                <div class="cl-q">"By the way, do you have a rough budget in mind? Have you and your parents thought
+                  about how you would be financing this?"</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Part 2 -->
+          <div class="part-div">
+            <div class="part-line"></div>
+            <div class="part-badge">Part 2 of 2 · Deep Profiling</div>
+            <div class="part-line"></div>
+          </div>
+
+          <div class="sbox intent">
+            <span class="sbox-label">Then Ask This</span>
+            <p>"Where do you see yourself five years after completing the course?"</p>
+          </div>
+
+          <div class="cl-prog">
+            <div class="cl-bar">
+              <div class="cl-fill" id="cl-fill-i2" style="width:0%;background:var(--intent)"></div>
+            </div>
+            <span class="cl-cnt" id="cl-cnt-i2">0 / 3</span>
+          </div>
+
+          <div class="cl" id="cl-i2">
+            <div class="cl-item" onclick="tick('i2','career',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Specific Role / Career Outcome <span
+                    style="color:#EF4444;font-size:11px;">(mandatory)</span></div>
+                <div class="cl-q">"What kind of role or work do you see yourself doing post this degree?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('i2','stay',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Stay Abroad or Return to India <span
+                    style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
+                <div class="cl-q">"And post your degree, do you plan to settle abroad or would you be eventually coming
+                  back to India?"</div>
+              </div>
+            </div>
+            <div class="cl-item" onclick="tick('i2','alternate',this)">
+              <div class="cl-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                  stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg></div>
+              <div>
+                <div class="cl-label">Alternate Plans / Commitment Check <span
+                    style="color:#9CA3AF;font-size:11px;">(optional)</span></div>
+                <div class="cl-q">"Are there any other career paths you're exploring right now that might change or
+                  delay this plan?"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sec-foot">
+            <span class="sec-hint">Tick all 5 mandatory items to unlock the next section</span>
+            <button class="btn btn-intent" id="btn-intent" disabled onclick="goTo('profile')">Done → Profile
+              Capture</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ PROFILE CAPTURE ═══ -->
+      <section class="sec" id="sec-profile">
+        <div class="card">
+          <div class="sec-head">
+            <div class="sec-ico">📋</div>
+            <div>
+              <div class="sec-title">Profile Capture</div>
+              <div class="sec-sub">Fill all required (*) fields accurately before proceeding</div>
+            </div>
+          </div>
+
+          <div class="sbox prof" style="margin-bottom:20px;">
+            <span class="sbox-label">Say to Student</span>
+            <p>"Thank you for your time, please give me 60 seconds to update your profile in my system."</p>
+          </div>
+
+          <!-- PERSONAL DETAILS -->
+          <div class="prof-sec">
+            <div class="prof-head grey">Personal Details</div>
+            <div class="prof-body">
+              <div class="fg s3">
+                <label class="req">Pre-user ID</label>
+                <input type="text" class="fc" id="f-userid" placeholder="e.g. 00000"
+                  oninput="sf('userId',this.value);clearE('e-userid',this)" />
+                <div class="ve" id="e-userid">Required</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- HIGHEST EDUCATION (EXCLUSIVE) -->
+          <div class="prof-sec">
+            <div class="prof-head acad">
+              <span>Highest Education</span>
+            </div>
+            <div style="padding:14px 16px;">
+              <label class="req">Select Highest Education Level Accomplished</label>
+              <div class="elt-toggle" style="margin-top:8px;">
+                <div class="elt-btn" id="edu-12" onclick="selectEdu('12th')">12th</div>
+                <div class="elt-btn" id="edu-bach" onclick="selectEdu('Bachelors')">Bachelors</div>
+                <div class="elt-btn" id="edu-mast" onclick="selectEdu('Masters')">Masters</div>
+              </div>
+            </div>
+
+            <!-- 12th Details -->
+            <div id="edu-12-fields" style="display:none;" class="prof-body">
+              <div class="fg s2">
+                <label class="req">12th Overall Grade (%)</label>
+                <input type="text" class="fc" id="f-edu12grade" placeholder="e.g. 85%"
+                  oninput="sf('edu12Grade',this.value)" />
+              </div>
+              <div class="fg">
+                <label>Class 12th Mathematics Marks (Optional)</label>
+                <input type="text" class="fc" id="f-edu12maths" placeholder="e.g. 90/100"
+                  oninput="sf('edu12Maths',this.value)" />
+              </div>
+            </div>
+
+            <!-- Bachelors Details -->
+            <div id="edu-bach-fields" style="display:none;" class="prof-body">
+              <div class="fg s2">
+                <label class="req">Bachelors Course</label>
+                <input type="text" class="fc" id="f-edubachcourse" placeholder="e.g. B.Tech CS"
+                  oninput="sf('eduBachCourse',this.value)" />
+              </div>
+              <div class="fg">
+                <label class="req">CGPA / %</label>
+                <input type="text" class="fc" id="f-edubachcgpa" placeholder="e.g. 8.5"
+                  oninput="sf('eduBachCGPA',this.value)" />
+              </div>
+              <div class="fg">
+                <label class="req">Backlogs</label>
+                <input type="number" class="fc" id="f-edubachbacklogs" placeholder="0"
+                  oninput="sf('eduBachBacklogs',this.value)" />
+              </div>
+              <div class="fg">
+                <label class="req">Graduation Year</label>
+                <input type="number" class="fc" id="f-edubachyear" placeholder="2024"
+                  oninput="sf('eduBachYear',this.value)" />
+              </div>
+            </div>
+
+            <!-- Masters Details -->
+            <div id="edu-mast-fields" style="display:none;" class="prof-body">
+              <div class="fg s2">
+                <label class="req">Masters Course</label>
+                <input type="text" class="fc" id="f-edumastcourse" placeholder="e.g. M.Sc Physics"
+                  oninput="sf('eduMastCourse',this.value)" />
+              </div>
+              <div class="fg">
+                <label class="req">CGPA / %</label>
+                <input type="text" class="fc" id="f-edumastcgpa" placeholder="e.g. 7.5"
+                  oninput="sf('eduMastCGPA',this.value)" />
+              </div>
+              <div class="fg">
+                <label class="req">Backlogs</label>
+                <input type="number" class="fc" id="f-edumastbacklogs" placeholder="0"
+                  oninput="sf('eduMastBacklogs',this.value)" />
+              </div>
+              <div class="fg">
+                <label class="req">Graduation Year</label>
+                <input type="number" class="fc" id="f-edumastyear" placeholder="2024"
+                  oninput="sf('eduMastYear',this.value)" />
+              </div>
+            </div>
+          </div>
+
+          <!-- WORK EXPERIENCE -->
+          <div class="prof-sec">
+            <div class="prof-head work">
+              <span>Work Experience & Gap Years</span>
+            </div>
+            <div style="padding:14px 16px;">
+              <div class="fg">
+                <label class="req">Does the student have work experience?</label>
+                <div class="elt-toggle" style="margin-top:6px;">
+                  <div class="elt-btn" id="wex-yes" onclick="selectWorkEx('Yes')">Yes</div>
+                  <div class="elt-btn" id="wex-no" onclick="selectWorkEx('No')">No</div>
+                </div>
+              </div>
+
+              <div id="work-fields" style="display:none;" class="prof-body" style="padding:0">
+                <div class="fg s2">
+                  <label class="req">Role</label>
+                  <input type="text" class="fc" id="f-workrole" placeholder="e.g. Analyst"
+                    oninput="sf('workRole',this.value)" />
+                </div>
+                <div class="fg">
+                  <label class="req">Total Years (Numerical)</label>
+                  <input type="number" class="fc" id="f-workyears" placeholder="2"
+                    oninput="sf('workYears',this.value)" />
+                </div>
+              </div>
+
+              <div class="fg s3">
+                <label class="req">Gap Years (Mandatory)</label>
+                <input type="number" class="fc" id="f-gapyears" placeholder="e.g. 0"
+                  oninput="sf('gapYears',this.value)" />
+              </div>
+            </div>
+          </div>
+
+          <!-- STUDY ABROAD INTENT (REVAMPED) -->
+          <div class="prof-sec">
+            <div class="prof-head intent">
+              <span>Study Abroad Intent</span>
+            </div>
+            <div class="prof-body">
+              <div class="fg s3">
+                <label class="req">Career Outcome (Select all that apply)</label>
+                <div class="chip-wrap">
+                  <div class="chip" onclick="toggleGoal(this, 'goalJob')">To get a job abroad</div>
+                  <div class="chip" onclick="toggleGoal(this, 'goalPR')">To get a PR / settle abroad</div>
+                  <div class="chip" onclick="toggleGoal(this, 'goalUpskill')">To upskill and return back to India</div>
+                  <div class="chip" onclick="toggleGoal(this, 'goalResearch')">To pursue research / PhD</div>
+                </div>
+              </div>
+
+              <div class="fg s3">
+                <label class="req">Target Country (Multi-select)</label>
+                <div class="chip-wrap" id="cw-country">
+                  <div class="chip" onclick="tagC(this,'Not decided yet')">🏳️ Not decided yet</div>
+                  <div class="chip" onclick="tagC(this,'Belgium')">🇧🇪 Belgium</div>
+                  <div class="chip" onclick="tagC(this,'France')">🇫🇷 France</div>
+                  <div class="chip" onclick="tagC(this,'U.A.E')">🇦🇪 U.A.E</div>
+                  <div class="chip" onclick="tagC(this,'Italy')">🇮🇹 Italy</div>
+                  <div class="chip" onclick="tagC(this,'Spain')">🇪🇸 Spain</div>
+                  <div class="chip" onclick="tagC(this,'Germany')">🇩🇪 Germany</div>
+                  <div class="chip" onclick="tagC(this,'Australia')">🇦🇺 Australia</div>
+                  <div class="chip" onclick="tagC(this,'New Zealand')">🇳🇿 New Zealand</div>
+                  <div class="chip" onclick="tagC(this,'USA')">🇺🇸 USA</div>
+                  <div class="chip" onclick="tagC(this,'Canada')">🇨🇦 Canada</div>
+                  <div class="chip" onclick="tagC(this,'Poland')">🇵🇱 Poland</div>
+                  <div class="chip" onclick="tagC(this,'Latvia')">🇱🇻 Latvia</div>
+                  <div class="chip" onclick="tagC(this,'Sweden')">🇸🇪 Sweden</div>
+                  <div class="chip" onclick="tagC(this,'Austria')">🇦🇹 Austria</div>
+                  <div class="chip" onclick="tagC(this,'Netherlands')">🇳🇱 Netherlands</div>
+                  <div class="chip" onclick="tagC(this,'UK')">🇬🇧 UK</div>
+                  <div class="chip" onclick="tagC(this,'Ireland')">🇮🇪 Ireland</div>
+                  <div class="chip" onclick="tagC(this,'Lithuania')">🇱🇹 Lithuania</div>
+                </div>
+              </div>
+              <div class="fg s3">
+                <label class="req">Target Intake</label>
+                <div class="chip-wrap" id="cw-intake">
+                  <div class="chip" onclick="tagI(this,'Not decided yet')">Not decided yet</div>
+                  <div class="chip" onclick="tagI(this,'May 2026')">May 2026</div>
+                  <div class="chip" onclick="tagI(this,'July 2026')">July 2026</div>
+                  <div class="chip" onclick="tagI(this,'September 2026')">September 2026</div>
+                  <div class="chip" onclick="tagI(this,'January 2027')">January 2027</div>
+                  <div class="chip" onclick="tagI(this,'February 2027')">February 2027</div>
+                  <div class="chip" onclick="tagI(this,'May 2027')">May 2027</div>
+                  <div class="chip" onclick="tagI(this,'July 2027')">July 2027</div>
+                  <div class="chip" onclick="tagI(this,'September 2027')">September 2027</div>
+                </div>
+              </div>
+
+              <div class="fg s2">
+                <label class="req">Preferred Degree</label>
+                <input type="text" class="fc" id="f-prefdegree" placeholder="e.g. Master's, MBA"
+                  oninput="sf('prefDegree',this.value)" />
+              </div>
+              <div class="fg">
+                <label class="req">Target Course</label>
+                <input type="text" class="fc" id="f-targetcourse" placeholder="e.g. Data Science"
+                  oninput="sf('targetCourse',this.value)" />
+              </div>
+              <div class="fg s2">
+                <label class="req">Budget (Total / Annual)</label>
+                <input type="text" class="fc" id="f-targetbudget" placeholder="e.g. 30L"
+                  oninput="sf('targetBudget',this.value)" />
+              </div>
+              <div class="fg">
+                <label class="req">Mode of Financing</label>
+                <select class="fc" id="f-modefinancing" onchange="sf('modeFinancing',this.value)">
+                  <option value="">Select Mode</option>
+                  <option value="Loan">Loan</option>
+                  <option value="Self">Self</option>
+                  <option value="Saving+Loan">Saving+Loan</option>
+                  <option value="Parents">Parents</option>
+                </select>
+              </div>
+
+              <div class="fg s3">
+                <label>Any Preferences (Select to add details)</label>
+                <div class="chip-wrap">
+                  <div class="chip" onclick="togglePref(this, 'prefCourse')">Preferred course</div>
+                  <div class="chip" onclick="togglePref(this, 'prefLoc')">Preferred location</div>
+                  <div class="chip" onclick="togglePref(this, 'prefRank')">University ranking</div>
+                  <div class="chip" onclick="togglePref(this, 'prefFee')">Low fee colleges</div>
+                  <div class="chip" onclick="togglePref(this, 'prefAdmin')">High admin chance</div>
+                  <div class="chip" onclick="togglePref(this, 'prefJob')">High job placement</div>
+                  <div class="chip" onclick="togglePref(this, 'prefRes')">Research opportunities</div>
+                  <div class="chip" onclick="togglePref(this, 'prefAlum')">Strong alumni network</div>
+                  <div class="chip" onclick="togglePref(this, 'prefWaiver')">English exam waivers</div>
+                  <div class="chip" onclick="togglePref(this, 'prefScholar')">Scholarship Opportunity</div>
+                </div>
+
+                <!-- Dynamic Preference Inputs removed -->
+              </div>
+
+              <!-- ELT COMPLEX LOGIC -->
+              <div class="fg s3">
+                <div class="prof-head grey"
+                  style="margin: 0 -16px 12px; padding: 10px 16px; border-top: 1px solid var(--border)">ELT Status
+                  (English Language Test)</div>
+                <label class="req">Current Status</label>
+                <select class="fc" id="f-eltstatus" onchange="updateELT(this.value)">
+                  <option value="">Select Status</option>
+                  <option value="Appeared">Appeared (Result Awaited)</option>
+                  <option value="Score Ready">Score Ready</option>
+                  <option value="Not Appeared">Not Appeared</option>
+                </select>
+              </div>
+
+              <!-- ELT BRANCH: Appeared / Score Ready -->
+              <div id="elt-fields-common" style="display:none; padding-top:10px;">
+                <div class="fg s2">
+                  <label class="req">Exam Taken</label>
+                  <select class="fc" onchange="sf('eltExam',this.value)">
+                    <option value="">Select Exam</option>
+                    <option value="IELTS">IELTS</option>
+                    <option value="TOEFL">TOEFL</option>
+                    <option value="PTE">PTE</option>
+                    <option value="Duolingo">Duolingo</option>
+                  </select>
+                </div>
+                <div class="fg">
+                  <label class="req">Test Date</label>
+                  <input type="date" class="fc" oninput="sf('eltDate',this.value)" />
+                </div>
+                <div class="fg s3" id="elt-score-field" style="display:none;">
+                  <label class="req">Overall Score</label>
+                  <input type="text" class="fc" placeholder="e.g. 7.5 or 105" oninput="sf('eltScore',this.value)" />
+                </div>
+              </div>
+
+              <!-- ELT BRANCH: Not Appeared -->
+              <div id="elt-fields-none" style="display:none; padding-top:10px;">
+                <label class="req">Is the student willing to give ELT?</label>
+                <div class="elt-toggle" style="margin-top:6px;">
+                  <div class="elt-btn" id="elt-will-yes" onclick="selectEltWilling('Yes')">Yes</div>
+                  <div class="elt-btn" id="elt-will-no" onclick="selectEltWilling('No')">No</div>
+                </div>
+
+                <div id="elt-details-yes" style="display:none; margin-top:12px;">
+                  <div class="fg s2">
+                    <label class="req">When are you planning to give the exam?</label>
+                    <input type="text" class="fc" placeholder="e.g. Next month"
+                      oninput="sf('eltPlanWhen',this.value)" />
+                  </div>
+                  <div class="fg">
+                    <label class="req">Current Prep Stage</label>
+                    <select class="fc" onchange="sf('eltPrepStage',this.value)">
+                      <option value="">Select Stage</option>
+                      <option value="Not Started">Not Started</option>
+                      <option value="Self Study">Self Study</option>
+                      <option value="Coaching">Coaching</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div id="elt-details-no" style="display:none; margin-top:12px;">
+                  <div class="fg s2">
+                    <label class="req">12th Eng Score</label>
+                    <input type="text" class="fc" placeholder="e.g. 85%" oninput="sf('eltWaiver',this.value)" />
+                  </div>
+                  <div class="fg">
+                    <label class="req">Reason for no ELT</label>
+                    <input type="text" class="fc" placeholder="e.g. Score already good"
+                      oninput="sf('eltReason',this.value)" />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="sec-foot">
+            <span class="sec-hint">All required (*) fields must be filled</span>
+            <button class="btn btn-prof btn-lg" onclick="validateProfile()">Done → Next Steps</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ NEXT STEPS ═══ -->
+      <section class="sec" id="sec-nextsteps">
+        <div class="card">
+          <div class="sec-head">
+            <div class="sec-ico">✅</div>
+            <div>
+              <div class="sec-title">Next Steps</div>
+              <div class="sec-sub">Complete these three steps in order</div>
+            </div>
+          </div>
+
+          <!-- Step 1 -->
+          <div class="ns-step" id="ns1">
+            <div class="ns-head">
+              <div class="ns-num" id="ns-num-1">1</div>
+              <div>
+                <div class="ns-step-title">Collect Student Data</div>
+                <div class="ns-step-sub">Ask the student if they have any questions before wrapping up</div>
+              </div>
+            </div>
+            <div class="ns-body">
+              <div class="sbox next" style="margin-bottom:14px;">
+                <span class="sbox-label">Say to Student</span>
+                <p>"Do you have any questions which you have in your mind? I'll add them to your personalized
+                  shortlist."</p>
+              </div>
+              <div style="display:flex;justify-content:flex-end;margin-top:12px;">
+                <button class="btn btn-next" id="btn-qcap" onclick="captureQs()">✅ Data Noted — Proceed</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="ns-step disabled" id="ns2">
+            <div class="ns-head">
+              <div class="ns-num" id="ns-num-2">2</div>
+              <div>
+                <div class="ns-step-title">Shortlist Delivery</div>
+                <div class="ns-step-sub">Share next steps with the student</div>
+              </div>
+            </div>
+            <div class="ns-body">
+              <div class="sbox next" style="margin-bottom:14px;">
+                <span class="sbox-label">Say to Student</span>
+                <p>"You can expect to view your university shortlist along with the answers to your questions on our LS
+                  app in the next 24 hours"</p>
+              </div>
+              <div style="display:flex;justify-content:flex-end;">
+                <button class="btn btn-next" id="btn-plan" onclick="planDelivered()">✅ Shortlist Explained —
+                  Proceed</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="ns-step disabled" id="ns3">
+            <div class="ns-head">
+              <div class="ns-num" id="ns-num-3">3</div>
+              <div>
+                <div class="ns-step-title">Schedule Follow-up Call</div>
+                <div class="ns-step-sub">Confirm the second call slot with the student before ending</div>
+              </div>
+            </div>
+            <div class="ns-body">
+
+              <div class="sbox next" style="margin-bottom:16px;">
+                <span class="sbox-label">Say to Student</span>
+                <p>"As for the next steps, I'd strongly recommend we reconnect once I've built your plan. Let's schedule
+                  a follow-up call."</p>
+              </div>
+
+              <!-- Dynamic Calendar -->
+              <div class="cal">
+                <div class="cal-hdr">
+                  <div class="cal-mo" id="cal-mo-lbl">Month Year</div>
+                  <div style="display:flex;gap:8px;">
+                    <button class="cal-nav" onclick="calNav(-1)">←</button>
+                    <button class="cal-nav" onclick="calNav(1)">→</button>
+                  </div>
+                </div>
+                <div class="cal-grid" id="cal-grid"></div>
+              </div>
+
+              <!-- Time Grid -->
+              <div id="time-grid-container"
+                style="display:none; margin-top:15px; border-top:1px solid var(--border); padding-top:15px;">
+                <div id="time-grid-title"
+                  style="font-size:13px; font-weight:700; margin-bottom:12px; color:var(--next)">Select Time</div>
+                <div class="time-grid" id="time-grid"></div>
+              </div>
+              <div id="slot-confirm" style="margin-top:10px; font-weight:600; color:var(--next); text-align:center;">
+              </div>
+              <div id="e-slot" class="ve">Please select a slot</div>
+
+              <div
+                style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:16px;border-top:1px solid var(--border);">
+                <span style="font-size:13px;color:var(--text2);">Ready to wrap up?</span>
+                <button class="btn btn-red btn-lg" onclick="endCall()">📞 End Call &amp; Review Summary</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ SUMMARY ═══ -->
+      <section class="sec" id="sec-summary">
+        <div class="card">
+          <div class="sum-name" id="sum-name">Student Name</div>
+          <div class="sum-meta">
+            <span id="sum-counsellor-row">Counsellor: —</span>
+            <span>·</span>
+            <span id="sum-duration-row">Duration: —</span>
+            <span>·</span>
+            <span id="sum-date-row">—</span>
+          </div>
+
+          <div class="sum-sec">
+            <div class="sum-hd acad">Academics</div>
+            <div class="sum-body" id="sum-acad"></div>
+          </div>
+          <div class="sum-sec">
+            <div class="sum-hd work">Work Experience</div>
+            <div class="sum-body" id="sum-work"></div>
+          </div>
+          <div class="sum-sec">
+            <div class="sum-hd intent">Study Abroad Intent</div>
+            <div class="sum-body" id="sum-intent"></div>
+          </div>
+          <div class="sum-sec">
+            <div class="sum-hd ns">Counselor Notes</div>
+            <textarea class="fc" id="f-cnotes" rows="2" placeholder="Any final notes for this call..."
+              oninput="sf('counselorNotes',this.value)" style="margin-top:10px;"></textarea>
+          </div>
+          <div class="sum-sec">
+            <div class="sum-hd call">Follow-up Slot</div>
+            <div class="sum-body" id="sum-slot"></div>
+          </div>
+
+          <div
+            style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:20px;">
+            <button class="btn btn-ghost" onclick="goTo('nextsteps')">← Back</button>
+            <button class="btn btn-next btn-lg" id="btn-submit" onclick="submitToSheets()">📤 Submit to Google
+              Sheets</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ SUCCESS ═══ -->
+      <section class="sec" id="sec-success">
+        <div class="card">
+          <div class="success-card">
+            <div class="suc-ico">🎉</div>
+            <div class="suc-title">Submitted Successfully!</div>
+            <div class="suc-sub" id="suc-sub">Profile saved to Google Sheets</div>
+            <div class="suc-ts" id="suc-ts"></div>
+            <button class="btn btn-acad btn-lg" style="margin-top:24px;" onclick="resetForNextCall()">Start Next
+              Call</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast"></div>
+
+  <script>
+    // ════════════════════════════════════════════
+    //  CONFIG — Replace with your Render URL
+    // ════════════════════════════════════════════
+    const SHEET_URL = 'https://copilot-counsellor-backend.onrender.com/submit';
+
+    // ════════════════════════════════════════════
+    //  STATE
+    // ════════════════════════════════════════════
+    const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    const S = {
+      callStart: null,
+      timerInt: null,
+      callDuration: '00:00',
+      cur: 'intro',
+      prof: freshProf(),
+      cl: freshCL(),
+      clDescriptor: {
+        academics: ['course', 'college', 'motivation', 'acad_details', 'extra'],
+        work: ['exactrole', 'fieldswitch', 'switchreason', 'duration', 'gapyears', 'targetcourse', 'whycourse'],
+        i1: ['why', 'country', 'elt', 'prefs', 'intake', 'parents', 'budget'],
+        i2: ['career', 'stay', 'alternate']
+      },
+      // Only these must be checked to unlock the next section
+      clMandatory: {
+        academics: ['course', 'college', 'acad_details'],
+        work: ['exactrole', 'duration', 'gapyears', 'targetcourse'],
+        i1: ['country', 'elt', 'intake', 'budget'],
+        i2: ['career']
+      },
+      // Calendar State
+      calMonth: new Date().getMonth(),
+      calYear: new Date().getFullYear(),
+      selectedSlotDate: null
+    };
+
+    function freshProf() {
+      return {
+        userId: '',
+        // Education
+        eduHighest: '', // 12th, Bachelors, Masters
+        edu12Grade: '', edu12Maths: 'No',
+        eduBachCourse: '', eduBachCGPA: '', eduBachBacklogs: '', eduBachYear: '',
+        eduMastCourse: '', eduMastCGPA: '', eduMastBacklogs: '', eduMastYear: '',
+        edu12Board: '', edu12Year: '', edu12Eng: '',
+        // Work
+        workHas: 'No', workRole: '', workYears: '', gapYears: '',
+        // Intent
+        goalJob: false, goalPR: false, goalUpskill: false, goalResearch: false,
+        prefDegree: '', targetCourse: '', targetCountry: '', targetIntake: '',
+        targetBudget: '', modeFinancing: '',
+        studentPrefs: [],
+        fiveYear: '',
+        // Preference Details
+        prefCourseDetail: '', prefLocDetail: '', prefRankDetail: '', prefFeeDetail: '',
+        prefAdminDetail: '', prefJobDetail: '', prefResDetail: '', prefAlumDetail: '',
+        prefWaiverDetail: '', prefScholarDetail: '',
+        // ELT
+        eltStatus: '', // Appeared, Score Ready, Not Appeared
+        eltExam: '', eltDate: '', eltScore: '',
+        eltWilling: '', eltPlanWhen: '', eltPrepStage: '',
+        eltWaiver: '', eltReason: '',
+        // Next Steps
+        studentQs: '', counselorNotes: '',
+        slotDate: '', slotTime: '',
+      };
+    }
+
+    function freshCL() {
+      return { academics: {}, work: {}, i1: {}, i2: {} };
+    }
+
+    // ════════════════════════════════════════════
+    //  TOGGLES & HANDLERS
+    // ════════════════════════════════════════════
+    function sf(key, val) { S.prof[key] = val; }
+
+    function tick(cat, item, el) {
+      el.classList.toggle('chk');
+      S.cl[cat][item] = el.classList.contains('chk');
+      updateProgress(cat);
+    }
+
+    function updateProgress(cat) {
+      const items = S.clDescriptor[cat];
+      const done = items.filter(i => S.cl[cat][i]).length;
+      const pct = Math.round((done / items.length) * 100);
+
+      const fill = document.getElementById('cl-fill-' + cat);
+      const cnt = document.getElementById('cl-cnt-' + cat);
+      if (fill) fill.style.width = pct + '%';
+      if (cnt) cnt.textContent = `${done} / ${items.length}`;
+
+      // Unlock button based on MANDATORY items only
+      const mandatory = S.clMandatory[cat];
+      const mandatoryDone = mandatory.filter(i => S.cl[cat][i]).length;
+
+      if (cat === 'academics') document.getElementById('btn-academics').disabled = (mandatoryDone < mandatory.length);
+      if (cat === 'work') document.getElementById('btn-work').disabled = (mandatoryDone < mandatory.length);
+
+      // Intent combined (i1 + i2) — only mandatory items
+      if (cat === 'i1' || cat === 'i2') {
+        const m1 = S.clMandatory.i1.filter(i => S.cl.i1[i]).length;
+        const m2 = S.clMandatory.i2.filter(i => S.cl.i2[i]).length;
+        const totalMandatory = S.clMandatory.i1.length + S.clMandatory.i2.length; // 4 + 1 = 5
+        document.getElementById('btn-intent').disabled = (m1 + m2 < totalMandatory);
+      }
+    }
+
+    function selectEdu(level) {
+      S.prof.eduHighest = level;
+      // Cascade: Masters shows all 3, Bachelors shows 12th+Bach, 12th shows only 12th
+      const show12 = (level === '12th' || level === 'Bachelors' || level === 'Masters');
+      const showBach = (level === 'Bachelors' || level === 'Masters');
+      const showMast = (level === 'Masters');
+
+      document.getElementById('edu-12').classList.toggle('sel', level === '12th');
+      document.getElementById('edu-bach').classList.toggle('sel', level === 'Bachelors');
+      document.getElementById('edu-mast').classList.toggle('sel', level === 'Masters');
+
+      document.getElementById('edu-12-fields').style.display = show12 ? 'grid' : 'none';
+      document.getElementById('edu-bach-fields').style.display = showBach ? 'grid' : 'none';
+      document.getElementById('edu-mast-fields').style.display = showMast ? 'grid' : 'none';
+    }
+
+    function selectWorkEx(val) {
+      S.prof.workHas = val;
+      document.getElementById('wex-yes').classList.toggle('sel', val === 'Yes');
+      document.getElementById('wex-no').classList.toggle('sel', val === 'No');
+      document.getElementById('work-fields').style.display = (val === 'Yes') ? 'grid' : 'none';
+    }
+
+    function toggleGoal(el, key) {
+      el.classList.toggle('sel');
+      S.prof[key] = el.classList.contains('sel');
+    }
+
+    function togglePref(el, prefKey) {
+      const txt = el.textContent.trim();
+      el.classList.toggle('sel');
+      const isSel = el.classList.contains('sel');
+      if (isSel) {
+        if (!S.prof.studentPrefs.includes(txt)) S.prof.studentPrefs.push(txt);
+      } else {
+        S.prof.studentPrefs = S.prof.studentPrefs.filter(p => p !== txt);
+      }
+    }
+
+    function tagC(el, val) {
+      const chips = document.querySelectorAll('#cw-country .chip');
+      if (val === 'Not decided yet') {
+        // Toggle "Not decided yet" - if turning on, clear others
+        el.classList.toggle('sel');
+        if (el.classList.contains('sel')) {
+          chips.forEach(c => { if (c !== el) c.classList.remove('sel'); });
+          S.prof.targetCountry = 'Not decided yet';
+        } else {
+          S.prof.targetCountry = '';
+        }
+      } else {
+        // Multi-select other countries
+        el.classList.toggle('sel');
+        // If selecting a country, ensure "Not decided yet" is deselected
+        chips.forEach(c => { if (c.textContent.includes('Not decided')) c.classList.remove('sel'); });
+        
+        const sel = Array.from(chips)
+          .filter(c => c.classList.contains('sel'))
+          .map(c => c.textContent.replace(/^[^\s]+\s/, '').trim());
+        
+        S.prof.targetCountry = sel.join(', ');
+      }
+    }
+
+    function tagI(el, val) {
+      document.querySelectorAll('#cw-intake .chip').forEach(c => c.classList.remove('sel'));
+      el.classList.add('sel');
+      S.prof.targetIntake = val;
+    }
+
+    function updateELT(status) {
+      S.prof.eltStatus = status;
+      const common = document.getElementById('elt-fields-common');
+      const none = document.getElementById('elt-fields-none');
+      const score = document.getElementById('elt-score-field');
+      if (common) common.style.display = (status === 'Appeared' || status === 'Score Ready') ? 'block' : 'none';
+      if (none) none.style.display = (status === 'Not Appeared') ? 'block' : 'none';
+      if (score) score.style.display = (status === 'Score Ready') ? 'block' : 'none';
+    }
+
+    function selectEltWilling(val) {
+      S.prof.eltWilling = val;
+      document.getElementById('elt-will-yes').classList.toggle('sel', val === 'Yes');
+      document.getElementById('elt-will-no').classList.toggle('sel', val === 'No');
+      document.getElementById('elt-details-yes').style.display = (val === 'Yes') ? 'block' : 'none';
+      document.getElementById('elt-details-no').style.display = (val === 'No') ? 'block' : 'none';
+    }
+
+    // ════════════════════════════════════════════
+    //  SCHEDULING
+    // ════════════════════════════════════════════
+    function calNav(dir) {
+      S.calMonth += dir;
+      if (S.calMonth > 11) { S.calMonth = 0; S.calYear++; }
+      if (S.calMonth < 0) { S.calMonth = 11; S.calYear--; }
+      renderCalendar();
+    }
+
+    function renderCalendar() {
+      document.getElementById('cal-mo-lbl').textContent = MONTHS[S.calMonth] + ' ' + S.calYear;
+      const grid = document.getElementById('cal-grid');
+      const today = new Date(); today.setHours(0, 0, 0, 0);
+      const firstDay = new Date(S.calYear, S.calMonth, 1).getDay();
+      const daysInMonth = new Date(S.calYear, S.calMonth + 1, 0).getDate();
+      const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+      let h = dayNames.map(d => `<div class="cal-dn" style="${d === 'Su' ? 'color:#D1D5DB;' : ''}">` + d + '</div>').join('');
+      for (let i = 0; i < firstDay; i++) h += `<div class="cal-d empty"></div>`;
+      for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(S.calYear, S.calMonth, d);
+        const isSun = date.getDay() === 0;
+        const isPast = date < today;
+        const isToday = date.toDateString() === today.toDateString();
+        const isSel = S.selectedSlotDate && date.toDateString() === S.selectedSlotDate.toDateString();
+        let cls = 'cal-d';
+        if (isPast || isSun) cls += ' past';
+        if (isToday && !isSun) cls += ' today';
+        if (isSel) cls += ' sel';
+        const click = (isPast || isSun) ? '' : ` onclick="selectDay(${d})"`;
+        h += `<div class="${cls}"${click}>${d}</div>`;
+      }
+      grid.innerHTML = h;
+    }
+
+    function selectDay(d) {
+      S.selectedSlotDate = new Date(S.calYear, S.calMonth, d);
+      const p = n => String(n).padStart(2, '0');
+      S.prof.slotDate = `${S.calYear}-${p(S.calMonth + 1)}-${p(d)}`;
+      renderCalendar();
+      renderTimeGrid();
+    }
+
+    function renderTimeGrid() {
+      const tc = document.getElementById('time-grid-container');
+      const tt = document.getElementById('time-grid-title');
+      const tg = document.getElementById('time-grid');
+      if (!S.selectedSlotDate) { tc.style.display = 'none'; return; }
+      tc.style.display = 'block';
+      const ds = S.selectedSlotDate.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+      tt.textContent = 'Available Slots — ' + ds;
+      let html = '';
+      for (let m = 600; m <= 1200; m += 30) {
+        const hh = Math.floor(m / 60);
+        const mm = m % 60;
+        const timeStr = String(hh).padStart(2, '0') + ':' + String(mm).padStart(2, '0');
+        const isSel = S.prof.slotTime === timeStr;
+        const cls = isSel ? 'time-slot-btn sel' : 'time-slot-btn';
+        html += `<button class="${cls}" onclick="selectTime('${timeStr}')">${fmtTime(timeStr)}</button>`;
+      }
+      tg.innerHTML = html;
+      updateSlotConfirm();
+    }
+
+    function selectTime(timeStr) {
+      S.prof.slotTime = timeStr;
+      renderTimeGrid();
+    }
+
+    function updateSlotConfirm() {
+      const conf = document.getElementById('slot-confirm');
+      if (S.selectedSlotDate && S.prof.slotTime) {
+        const ds = S.selectedSlotDate.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+        conf.textContent = '📅 Follow-up booked: ' + ds + ' at ' + fmtTime(S.prof.slotTime);
+        conf.style.display = 'block';
+        document.getElementById('e-slot').style.display = 'none';
+      } else {
+        conf.style.display = 'none';
+      }
+    }
+
+    function fmtTime(t) {
+      if (!t) return '';
+      const [h, m] = t.split(':').map(Number);
+      return (h % 12 || 12) + ':' + String(m).padStart(2, '0') + ' ' + (h >= 12 ? 'PM' : 'AM');
+    }
+
+    // ════════════════════════════════════════════
+    //  TIMER & FLOW
+    // ════════════════════════════════════════════
+    function startCall() {
+      S.callStart = Date.now();
+      S.timerInt = setInterval(() => {
+        const e = Math.floor((Date.now() - S.callStart) / 1000);
+        const m = String(Math.floor(e / 60)).padStart(2, '0');
+        const s = String(e % 60).padStart(2, '0');
+        S.callDuration = m + ':' + s;
+        document.getElementById('timer-disp').textContent = S.callDuration;
+      }, 1000);
+      document.getElementById('td').classList.add('live');
+      goTo('academics');
+    }
+
+    function goTo(key) {
+      document.querySelectorAll('.sec').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById('sec-' + key);
+      if (target) target.classList.add('active');
+      S.cur = key;
+      if (key === 'nextsteps') renderCalendar();
+      updateTabs(key);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const TAB_KEYS = ['academics', 'work', 'intent', 'profile', 'nextsteps', 'summary'];
+    const TAB_ORDER = ['intro', 'academics', 'work', 'intent', 'profile', 'nextsteps', 'summary', 'success'];
+
+    function updateTabs(section) {
+      TAB_KEYS.forEach(k => {
+        const el = document.getElementById('tab-' + k);
+        if (el) el.className = 'tb-tab ' + (k === section ? 'active' : 'inactive');
+      });
+    }
+
+    // ════════════════════════════════════════════
+    //  VALIDATION & SUBMISSION
+    // ════════════════════════════════════════════
+    function showE(id, el) {
+      const err = document.getElementById(id);
+      if (err) err.style.display = 'block';
+      if (el) el.classList.add('invalid');
+    }
+    function clearE(id, el) {
+      const err = document.getElementById(id);
+      if (err) err.style.display = 'none';
+      if (el) el.classList.remove('invalid');
+    }
+
+    function validateProfile() {
+      // Sweep all current input values into S.prof to ensure they're captured
+      S.prof.userId = document.getElementById('f-userid').value.trim();
+      S.prof.edu12Grade = document.getElementById('f-edu12grade').value;
+      S.prof.eduBachCourse = document.getElementById('f-edubachcourse').value;
+      S.prof.eduBachCGPA = document.getElementById('f-edubachcgpa').value;
+      S.prof.eduBachBacklogs = document.getElementById('f-edubachbacklogs').value;
+      S.prof.eduBachYear = document.getElementById('f-edubachyear').value;
+      S.prof.eduMastCourse = document.getElementById('f-edumastcourse').value;
+      S.prof.eduMastCGPA = document.getElementById('f-edumastcgpa').value;
+      S.prof.eduMastBacklogs = document.getElementById('f-edumastbacklogs').value;
+      S.prof.eduMastYear = document.getElementById('f-edumastyear').value;
+
+      const getV = id => {
+        const el = document.getElementById(id);
+        return el ? el.value : '';
+      };
+
+      S.prof.edu12Board = getV('f-12board');
+      S.prof.edu12Year = getV('f-12year');
+      S.prof.edu12Eng = getV('f-12eng');
+
+      S.prof.workRole = getV('f-workrole');
+      S.prof.workYears = getV('f-workyears');
+      S.prof.gapYears = getV('f-gapyears');
+
+      const goalsArr = [S.prof.goalJob ? 'Job' : '', S.prof.goalPR ? 'PR' : '', S.prof.goalUpskill ? 'Upskill' : '', S.prof.goalResearch ? 'Research' : ''].filter(Boolean);
+      S.prof.fiveYear = goalsArr.join(', ');
+
+      S.prof.prefDegree = getV('f-prefdegree');
+      S.prof.targetCourse = getV('f-targetcourse');
+      S.prof.targetBudget = getV('f-targetbudget');
+      S.prof.modeFinancing = getV('f-modefinancing');
+
+      // Preference Details
+      const p = S.prof;
+      const getP = id => {
+        const input = document.querySelector(`#pi-${id} input`);
+        return input ? input.value : '';
+      };
+      p.prefCourseDetail = getP('prefCourse');
+      p.prefLocDetail = getP('prefLoc');
+      p.prefRankDetail = getP('prefRank');
+      p.prefFeeDetail = getP('prefFee');
+      p.prefAdminDetail = getP('prefAdmin');
+      p.prefJobDetail = getP('prefJob');
+      p.prefResDetail = getP('prefRes');
+      p.prefAlumDetail = getP('prefAlum');
+      p.prefWaiverDetail = getP('prefWaiver');
+      p.prefScholarDetail = getP('prefScholar');
+
+      let ok = true;
+      const uid = document.getElementById('f-userid');
+      if (!S.prof.userId) { showE('e-userid', uid); ok = false; } else { clearE('e-userid', uid); }
+
+      if (goalsArr.length === 0) {
+        ok = false;
+        alert('Please select at least one Career Outcome');
+      }
+
+      if (!S.prof.eduHighest) { ok = false; alert('Please select Highest Education'); }
+      if (!ok) return;
+      goTo('nextsteps');
+    }
+
+    function endCall() {
+      if (!S.prof.slotDate || !S.prof.slotTime) {
+        document.getElementById('e-slot').style.display = 'block';
+        return;
+      }
+      if (S.timerInt) clearInterval(S.timerInt);
+      document.getElementById('td').classList.remove('live');
+      renderSummary();
+      goTo('summary');
+    }
+
+    function renderSummary() {
+      const p = S.prof;
+      document.getElementById('sum-name').textContent = p.userId || 'Student';
+      document.getElementById('sum-duration-row').textContent = 'Duration: ' + S.callDuration;
+      document.getElementById('sum-date-row').textContent = new Date().toLocaleDateString();
+
+      const b = (l, v) => v ? `<div class="sum-row"><strong>${l}:</strong> <span>${v}</span></div>` : '';
+
+      // ACADEMICS — Cascading summary
+      let acad = b('Education Level', p.eduHighest);
+      // Always show 12th details when any level is selected
+      if (p.eduHighest) acad += b('12th Grade', p.edu12Grade) + b('12th Maths', p.edu12Maths) + b('12th Board', p.edu12Board);
+      // Show Bachelors details for Bachelors or Masters
+      if (p.eduHighest === 'Bachelors' || p.eduHighest === 'Masters') acad += b('Bach Course', p.eduBachCourse) + b('Bach CGPA', p.eduBachCGPA) + b('Bach Backlogs', p.eduBachBacklogs) + b('Bach Year', p.eduBachYear);
+      // Show Masters details only for Masters
+      if (p.eduHighest === 'Masters') acad += b('Mast Course', p.eduMastCourse) + b('Mast CGPA', p.eduMastCGPA) + b('Mast Backlogs', p.eduMastBacklogs) + b('Mast Year', p.eduMastYear);
+      document.getElementById('sum-acad').innerHTML = acad;
+
+      // WORK
+      let work = b('Work Ex', p.workHas);
+      if (p.workHas === 'Yes') work += b('Role', p.workRole) + b('Years', p.workYears);
+      work += b('Gap Strategy', p.gapYears);
+      document.getElementById('sum-work').innerHTML = work;
+
+      // INTENT
+      let intent = b('Career Outcome', p.fiveYear);
+      intent += b('Target Countries', p.targetCountry);
+      intent += b('Target Intake', p.targetIntake);
+      intent += b('Degree Pref', p.prefDegree);
+      intent += b('Target Course', p.targetCourse);
+      intent += b('Budget', p.targetBudget);
+      intent += b('Financing', p.modeFinancing);
+
+      // Preferences
+      if (p.studentPrefs.length > 0) {
+        intent += `<div style="margin-top:10px; font-weight:700; color:var(--intent); font-size:12px;">Notes on Preferences</div>`;
+        intent += b('Course Pref', p.prefCourseDetail);
+        intent += b('Location Pref', p.prefLocDetail);
+        intent += b('Budget Pref', p.prefFeeDetail);
+        intent += b('Scholarships', p.prefScholarDetail);
+      }
+
+      // ELT
+      intent += `<div style="margin-top:10px; font-weight:700; color:var(--intent); font-size:12px;">ELT Details</div>`;
+      intent += b('Status', p.eltStatus);
+      if (p.eltStatus === 'Appeared' || p.eltStatus === 'Score Ready') intent += b('Exam', p.eltExam) + b('Date', p.eltDate) + b('Score', p.eltScore);
+      else if (p.eltStatus === 'Not Appeared') intent += b('Willing?', p.eltWilling) + b('Plan', p.eltPlanWhen) + b('Waiver Prep', p.eltWaiver || p.eltPrepStage);
+
+      document.getElementById('sum-intent').innerHTML = intent;
+      document.getElementById('sum-slot').innerHTML = p.slotDate ? `<strong>${p.slotDate}</strong> at ${fmtTime(p.slotTime)}` : 'Not scheduled';
+    }
+
+    async function submitToSheets() {
+      const btn = document.getElementById('btn-submit');
+      const oldTxt = btn.textContent;
+      btn.textContent = '⏱️ Submitting...'; btn.disabled = true;
+
+      const p = S.prof;
+      const payload = {
+        userId: p.userId,
+        duration: S.callDuration,
+        highest_edu: p.eduHighest,
+        edu_12_grade: p.edu12Grade,
+        edu_12_maths: p.edu12Maths,
+        edu_bach_course: p.eduBachCourse,
+        edu_bach_cgpa: p.eduBachCGPA,
+        edu_bach_backlogs: p.eduBachBacklogs,
+        edu_bach_year: p.eduBachYear,
+        edu_mast_course: p.eduMastCourse,
+        edu_mast_cgpa: p.eduMastCGPA,
+        edu_mast_backlogs: p.eduMastBacklogs,
+        edu_mast_year: p.eduMastYear,
+        edu_12_board: p.edu12Board,
+        edu_12_year: p.edu12Year,
+        edu_12_english: p.edu12Eng,
+        has_work_ex: p.workHas,
+        work_role: p.workRole,
+        work_years: p.workYears,
+        gap_years: p.gapYears,
+        preferred_degree: p.prefDegree,
+        target_course: p.targetCourse,
+        target_country: p.targetCountry,
+        target_intake: p.targetIntake,
+        budget: p.targetBudget,
+        mode_financing: p.modeFinancing,
+        preferences: p.studentPrefs.join(', '),
+        five_year_goal: p.fiveYear,
+        elt_status: p.eltStatus,
+        elt_exam: p.eltExam,
+        elt_score: p.eltScore,
+        elt_date: p.eltDate,
+        elt_willing: p.eltWilling,
+        elt_plan: p.eltPlanWhen,
+        elt_prep_stage: p.eltPrepStage,
+        elt_waiver: p.eltWaiver,
+        elt_reason: p.eltReason,
+        pref_course_notes: p.prefCourseDetail,
+        pref_location_notes: p.prefLocDetail,
+        pref_ranking_notes: p.prefRankDetail,
+        pref_low_fee_notes: p.prefFeeDetail,
+        pref_scholarship_notes: p.prefScholarDetail,
+        follow_up_date: p.slotDate,
+        follow_up_time: p.slotTime,
+        counselor_notes: p.counselorNotes,
+        student_questions: p.studentQs
+      };
+
+      try {
+        const resp = await fetch(SHEET_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const res = await resp.json();
+        if (res.status === 'ok') {
+          goTo('success');
+          // Auto-redirect to new call after 4 seconds
+          setTimeout(() => { if (S.cur === 'success') resetForNextCall(); }, 4000);
+        }
+        else alert('Error: ' + res.message);
+      } catch (err) {
+        alert('Submission failed. Check console.');
+        console.error(err);
+      } finally {
+        btn.textContent = oldTxt; btn.disabled = false;
+      }
+    }
+    function captureQs() {
+      document.getElementById('ns1').classList.add('done');
+      document.getElementById('ns2').classList.remove('disabled');
+    }
+    function planDelivered() {
+      document.getElementById('ns2').classList.add('done');
+      document.getElementById('ns3').classList.remove('disabled');
+    }
+
+    function resetForNextCall() {
+      if (confirm("Reset all data and start a new call?")) {
+        if (S.timerInt) clearInterval(S.timerInt);
+        S.prof = freshProf();
+        S.cl = freshCL();
+        S.callDuration = '00:00';
+        S.callStart = null;
+        
+        // UI Reset
+        document.getElementById('timer-disp').textContent = '00:00';
+        document.getElementById('td').classList.remove('live');
+        document.querySelectorAll('.ve,.slot-err, .error-msg').forEach(el => el.style.display = 'none');
+        document.getElementById('e-slot').style.display = 'none';
+
+        // Clear all native inputs
+        document.querySelectorAll('input, select, textarea').forEach(el => {
+          if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
+          else el.value = '';
+        });
+
+        // Clear custom UI components
+        document.querySelectorAll('.cl-item').forEach(el => el.classList.remove('chk'));
+        document.querySelectorAll('.chip, .elt-btn, .edu-card, .wex-btn, .goal-chip').forEach(el => el.classList.remove('sel'));
+        
+        // Reset Progress
+        ['academics', 'work', 'i1', 'i2'].forEach(cat => updateProgress(cat));
+        
+        // Hide conditional panels
+        ['edu-12-fields', 'edu-bach-fields', 'edu-mast-fields', 'work-fields', 'elt-fields-common', 'elt-fields-none', 'elt-score-field', 'elt-details-yes', 'elt-details-no'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.style.display = 'none';
+        });
+
+        // Reset Steps UI
+        ['ns1', 'ns2', 'ns3'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.classList.remove('done');
+            if (id === 'ns1') el.classList.remove('disabled');
+            else el.classList.add('disabled');
+          }
+        });
+
+        // Scheduling reset
+        S.selectedSlotDate = null;
+        S.calMonth = new Date().getMonth();
+        S.calYear = new Date().getFullYear();
+        const tgc = document.getElementById('time-grid-container'); if (tgc) tgc.style.display = 'none';
+        const conf = document.getElementById('slot-confirm'); if (conf) conf.style.display = 'none';
+        renderCalendar();
+
+        const sb = document.getElementById('btn-submit'); 
+        if (sb) { sb.textContent = '📤 Submit to Google Sheets'; sb.disabled = false; }
+
+        goTo('intro');
+        window.scrollTo(0, 0);
+        showToast("System Reset for New Call");
+      }
+    }
+
+    // ════════════════════════════════════════════
+    //  TOAST
+    // ════════════════════════════════════════════
+    let toastTimer;
+    function showToast(msg, type) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'show' + (type === 'err' ? ' err' : '');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.className = '', 3200);
+    }
+
+    // ════════════════════════════════════════════
+    //  INIT
+    // ════════════════════════════════════════════
+    (function () {
+      const now = new Date();
+      S.calYear = now.getFullYear();
+      S.calMonth = now.getMonth();
+      renderCalendar();
+      updateTabs('intro');
+      // -- STAY AWAKE LOGIC (Keep Render Active) --
+      const PING_URL = 'https://copilot-first-call-backend.onrender.com/ping';
+      const wakeUp = () => fetch(PING_URL).catch(() => { });
+      wakeUp(); // Wake up immediately
+      setInterval(wakeUp, 600000); // Ping every 10 minutes
+    })();
+  </script>
+</body>
+
+</html>< ! - -   H e a r t b e a t   V 2   - - > 
+   
+   
